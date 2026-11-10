@@ -1,0 +1,46 @@
+# 全国探偵検索：掲載が承認されたら（GAS が tantei-portal-data を更新したら）、
+# その探偵社のホームページの最初の1画面を撮って「お近くの掲載済み探偵」のカード背景に使う。
+name: listed-hero
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tantei-portal-data/permitted.json'
+      - 'tantei-portal-data/biz_extra.json'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '撮り直す届出番号（カンマ区切り）'
+        required: false
+        default: ''
+permissions:
+  contents: write
+concurrency:
+  group: listed-hero
+  cancel-in-progress: false
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 日本語フォントと Pillow
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk >/dev/null
+          pip install -q pillow
+      - name: 撮影
+        env:
+          FORCE: ${{ github.event.inputs.force }}
+        run: python tantei-portal-tools/listed_heroes.py
+      - name: 変更があればコミット
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add img/listed biz
+          if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
+          git commit -m "全国探偵検索: 掲載済み探偵社のヒーロー画像と掲載証の背景を更新（自動）"
+          for n in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done

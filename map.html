@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>地図から探す | 全国探偵無料検索サービス</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y67CRKZJW"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-5Y67CRKZJW");</script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@700;900&family=Barlow+Condensed:wght@500;600&display=swap');
+:root{
+  --navy:#0d1b2a;
+  --navy-2:#152b40;
+  --ink:#1a2430;
+  --body:#4a5665;
+  --line:#c9d3df;
+  --bg:#eef2f7;
+  --bg-soft:#dae2ec;
+  --card:#f2f5f9;
+  --accent:#1668d8;
+  --accent-2:#6ea8ee;
+  --accent-ink:#0f4fa8;
+  --serif:"Zen Old Mincho",serif;
+  --sans:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic Medium","Yu Gothic",Meiryo,sans-serif;
+  --en:"Barlow Condensed",sans-serif;
+}
+*{box-sizing:border-box}
+body{font-family:var(--sans);margin:0;background:var(--bg);color:var(--body);letter-spacing:.02em;overflow-x:hidden}
+a{color:inherit}
+header{background:var(--navy);color:#fff;padding:34px 16px 30px;text-align:center}
+header .eyebrow{display:block;font-family:var(--en);font-size:11px;letter-spacing:.35em;color:var(--accent-2);text-transform:uppercase;margin:0 0 12px}
+header h1{margin:0;font-size:clamp(1rem,4.6vw,1.4rem);font-family:var(--serif);font-weight:700;letter-spacing:.05em;color:#fff;overflow-wrap:anywhere}
+.hw-line{display:block}
+@media(min-width:600px){.hw-line{display:inline}}
+header p{color:rgba(255,255,255,.72);font-size:.85rem;margin:12px 0 0}
+header a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.82rem;display:inline-block;margin-top:16px;border-bottom:1px solid rgba(255,255,255,.4);padding-bottom:2px;transition:color .3s,border-color .3s}
+header a:hover{color:var(--accent-2);border-color:var(--accent-2)}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 60px}
+.note{background:var(--bg-soft);border-left:3px solid var(--accent);padding:12px 16px;font-size:.85rem;margin-bottom:16px;color:var(--ink)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border:1px solid var(--line)}
+table{width:100%;min-width:680px;border-collapse:collapse;background:#fff;font-size:.85rem}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;word-break:break-word;overflow-wrap:anywhere}
+th{background:var(--bg-soft);color:var(--ink);font-weight:500;position:sticky;top:0;white-space:nowrap}
+th:nth-child(1){min-width:100px}
+th:nth-child(2){min-width:220px}
+th:nth-child(3){min-width:260px}
+th:nth-child(4){min-width:140px}
+tr:hover td{background:var(--card)}
+@media (max-width:480px){
+  main{padding:16px 12px 44px}
+  table{font-size:.8rem}
+}
+.pref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.pref-grid a{display:block;background:var(--card);border:1px solid var(--line);padding:10px;text-decoration:none;color:var(--accent-ink);text-align:center;transition:border-color .3s,color .3s}
+.pref-grid a:hover{border-color:var(--accent);color:var(--accent)}
+.pref-grid a span{display:block;color:var(--body);font-size:.75rem;margin-top:4px}
+.region-block{margin-bottom:20px}
+.region-block h2{font-size:1rem;font-family:var(--serif);font-weight:700;color:var(--ink);border-left:3px solid var(--accent);padding-left:10px;margin:0 0 10px}
+footer{text-align:center;color:rgba(255,255,255,.55);font-size:.75rem;padding:28px 16px;background:var(--navy)}
+footer a{color:rgba(255,255,255,.75);border-bottom:1px solid rgba(255,255,255,.35)}
+footer a:hover{color:var(--accent-2);border-color:var(--accent-2)}
+.search-box{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.search-box input[type=text]{flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--line);font-size:.95rem;font:inherit;color:var(--ink)}
+.search-box select{padding:10px 12px;border:1px solid var(--line);font-size:.95rem;background:#fff;font:inherit;color:var(--ink)}
+.search-box input:focus,.search-box select:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px rgba(22,104,216,.18)}
+.search-count{font-size:.8rem;color:var(--body);margin:-8px 0 12px}
+.no-hit{padding:24px;text-align:center;color:var(--body)}
+#results a.result-item{display:block;background:#fff;border:1px solid var(--line);padding:10px 12px;margin-bottom:8px;text-decoration:none;color:var(--ink)}
+#results a.result-item:hover{border-color:var(--accent)}
+#results .r-name{font-weight:700;color:var(--accent-ink)}
+#results .r-addr{font-size:.85rem;color:var(--body);margin-top:2px}
+.mosaic{display:inline-block;filter:blur(3px);user-select:none;color:#555;background:#dfe2e7;padding:0 3px;border-radius:3px;letter-spacing:1px}
+.mosaic-note{font-size:.72em;color:#b23b3b;background:#fdecea;border:1px solid #f5c2c0;border-radius:4px;padding:1px 6px;margin-left:6px;white-space:nowrap;display:inline-block}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border:1px solid var(--accent);color:var(--accent-ink);font-size:13.5px;letter-spacing:.1em;font-weight:500;background:transparent;text-decoration:none;transition:background .3s,color .3s,border-color .3s}
+.btn:hover{background:var(--accent);color:#fff}
+.btn--solid{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 14px 34px -16px rgba(22,104,216,.5)}
+.btn--solid:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+.free-banner{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:22px 20px;margin-bottom:18px;text-align:center;border:1px solid var(--accent)}
+.free-banner .tag{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;letter-spacing:.1em;padding:4px 12px;margin-bottom:10px}
+.free-banner h2{margin:0 0 8px;font-size:1.25rem;font-family:var(--serif);font-weight:700}
+.free-banner p{margin:0 0 16px;font-size:.9rem;color:rgba(255,255,255,.85);line-height:1.7}
+.free-banner .btn--solid{box-shadow:none}
+.stats-section{background:#fff;border:1px solid var(--line);padding:24px 20px;margin:28px 0}
+.stats-section h2{font-size:1.05rem;font-family:var(--serif);font-weight:700;color:var(--ink);border-left:3px solid var(--accent);padding-left:10px;margin:0 0 6px}
+.stats-lead{font-size:.85rem;color:var(--body);line-height:1.8;margin:0 0 18px}
+.year-chart{display:flex;align-items:flex-end;gap:3px;height:160px;padding:0 0 6px;border-bottom:1px solid var(--line)}
+.year-chart .bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.year-chart .bar{width:100%;background:var(--accent);border-radius:2px 2px 0 0}
+.year-chart .bar.partial{background:var(--accent-2)}
+.year-chart .bar-count{font-size:.62rem;color:var(--body);margin-bottom:2px;white-space:nowrap}
+.year-chart .bar-label{font-size:.62rem;color:var(--body);margin-top:6px;writing-mode:vertical-rl;text-orientation:mixed;height:34px}
+@media(max-width:640px){
+.year-chart{overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}
+.year-chart .bar-wrap{flex:0 0 26px;min-width:26px;max-width:26px}
+.year-chart .bar-count{writing-mode:vertical-rl;text-orientation:mixed;height:32px;margin-bottom:4px}
+}
+.stats-foot{font-size:.75rem;color:var(--body);margin-top:14px;line-height:1.7}
+.pref-rank{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:4px}
+.pref-rank .rank-item{display:flex;justify-content:space-between;align-items:baseline;background:var(--bg-soft);padding:8px 12px;font-size:.85rem}
+.pref-rank .rank-num{color:var(--accent-ink);font-weight:700;margin-right:6px}
+.pref-rank .rank-count{color:var(--body);font-size:.78rem}
+.knowledge-grid{display:grid;gap:16px;margin-top:4px}
+.knowledge-grid .k-item h3{font-size:.92rem;color:var(--accent-ink);margin:0 0 6px}
+.knowledge-grid .k-item p{font-size:.85rem;color:var(--ink);line-height:1.8;margin:0}
+.col-mini-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.col-mini{display:block;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .3s}
+.col-mini:hover{border-color:var(--accent)}
+.col-mini img{display:block;width:100%;height:auto}
+.col-mini span{display:block;padding:10px 12px;font-size:.85rem;font-weight:700;line-height:1.6}
+
+main{max-width:none;padding:0}
+#map{width:100%;height:calc(100vh - 120px)}
+.map-note{margin:0;padding:8px 16px}
+.leaflet-popup-content b{color:var(--accent-ink)}
+</style></head><body>
+<header><span class="eyebrow">Tantei Search</span><h1>地図から探す</h1>
+<a href="./index.html">← 一覧に戻る</a></header>
+<div class="note map-note">住所から機械的に変換した位置情報のため、実際の地点と多少ずれる場合があります。地図データ: OpenStreetMap contributors。マーカーをクリックすると詳細ページへ移動できます。<span style="display:inline-block;width:10px;height:10px;background:#d0392b;border-radius:50%;vertical-align:middle;margin:0 4px 0 8px"></span>赤色のマーカーは掲載許可済み（業者名・住所を実データで表示）の業者です。その他は、掲載許可をいただくまでモザイク表示にしています。</div>
+<main><div id="map"></div></main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script>
+(function(){
+  var map = L.map('map').setView([36.5, 137.5], 6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+  var permittedIcon = L.divIcon({
+    className: 'pin-permitted',
+    html: '<div style="width:16px;height:16px;background:#d0392b;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.5)"></div>',
+    iconSize: [16, 16],
+    iconAnchor: [8, 8]
+  });
+  var cluster = L.markerClusterGroup();
+  Promise.all([
+    fetch('./geo.json').then(function(r){return r.json();}),
+    fetch('./all.json').then(function(r){return r.json();})
+  ]).then(function(res){
+    var geoData = res[0], allData = res[1];
+    var byId = {};
+    allData.forEach(function(r){ byId[r.i] = r; });
+    Object.keys(geoData).forEach(function(id){
+      var g = geoData[id], r = byId[id];
+      if(!r) return;
+      var marker = L.marker([g.lat, g.lng], r.m === 0 ? { icon: permittedIcon } : {});
+      var nameHtml = r.m ? '<span style="filter:blur(3px);display:inline-block;background:#dfe2e7;padding:0 3px;border-radius:3px">非非非非非非非非</span> <span style="font-size:11px;color:#b23b3b">掲載許可待ち</span>' : r.n;
+      var addrHtml = r.m ? (r.a + ' <span style="filter:blur(3px);display:inline-block;background:#dfe2e7;padding:0 3px;border-radius:3px">非非非非</span>') : r.a;
+      marker.bindPopup(
+        '<div style="font-size:13px;max-width:220px">' +
+        '<b>' + nameHtml + '</b><br>' +
+        '<span style="color:#666">' + addrHtml + '</span><br>' +
+        '<a href="./biz/' + id + '.html" target="_blank">詳細を見る →</a></div>'
+      );
+      cluster.addLayer(marker);
+    });
+    map.addLayer(cluster);
+  });
+})();
+</script>
+</body></html>

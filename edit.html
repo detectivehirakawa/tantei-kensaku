@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>掲載内容の編集 | 全国探偵無料検索サービス</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y67CRKZJW"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-5Y67CRKZJW");</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./portal.css?v=20261108b">
+<style>
+.intro-card{background:var(--bg-soft);border-left:3px solid var(--accent);padding:18px 20px;margin-bottom:18px;font-size:1rem;line-height:1.8}
+.intro-card b{color:var(--accent-ink)}
+.form-card{background:#fff;border:1px solid var(--line);padding:24px 20px;font-size:1rem}
+.form-card fieldset{border:0;padding:0;margin:0 0 22px}
+.form-card fieldset legend{font-size:.92rem;color:var(--accent-ink);font-weight:700;letter-spacing:.05em;padding:0 0 10px;border-bottom:1px solid var(--line);width:100%;margin-bottom:4px}
+.form-card label{display:block;margin:16px 0 7px;font-size:1rem;color:var(--ink);font-weight:500}
+.form-card label small{color:var(--body);font-weight:400;font-size:.85rem}
+.form-card input[type=text],.form-card input[type=tel],.form-card input[type=email],.form-card textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid var(--line);font-size:1.05rem;font:inherit;color:var(--ink)}
+.form-card input[type=text],.form-card input[type=tel],.form-card input[type=email]{text-overflow:ellipsis}
+.form-card input:focus,.form-card textarea:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px rgba(22,104,216,.18)}
+.form-card textarea{min-height:90px}
+.form-card textarea#service{min-height:140px}
+.form-card .check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px 12px;margin-top:10px}
+.form-card .check-grid label{display:flex;align-items:center;gap:10px;margin:0;font-size:1rem;font-weight:400}
+.form-card .check-grid input{width:22px;height:22px;margin:0;flex:none}
+.photo-input-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.photo-input-row input[type=file]{font-size:.95rem}
+.photo-thumbs{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.photo-thumbs img{width:90px;height:90px;border:1px solid var(--line);object-fit:cover}
+.condition-box{background:#fff7e6;border:1px solid #e8c76b;padding:18px;margin:8px 0 4px}
+.condition-box p{margin:0 0 12px;font-size:.95rem;line-height:1.8}
+.condition-box label{display:flex;align-items:flex-start;gap:10px;margin:0;font-size:1rem;font-weight:500}
+.condition-box input{width:22px;height:22px;margin:2px 0 0;flex:none}
+.form-card button{margin-top:18px;background:var(--accent);color:#fff;border:1px solid var(--accent);padding:14px 28px;font-size:1rem;letter-spacing:.08em;cursor:pointer;transition:background .3s,border-color .3s}
+.form-card button:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.form-card button[disabled]{opacity:.6;cursor:default}
+.form-card button.btn-secondary{background:transparent;color:var(--accent-ink);border:1px solid var(--accent)}
+.form-card button.btn-secondary:hover{background:var(--bg-soft)}
+.form-foot{margin-top:10px;font-size:.85rem;color:var(--body);line-height:1.8}
+.form-msg{margin-top:12px;font-size:1rem}
+.form-msg.ok{color:#0f7a3d}
+.form-msg.err{color:#c0392b}
+.preview-panel{display:none;margin:20px 0;border:2px dashed var(--accent-2);padding:16px;background:var(--bg-soft)}
+.preview-panel .preview-tag{font-size:.78rem;color:var(--accent-ink);font-weight:700;letter-spacing:.05em;margin:0 0 10px}
+.preview-panel .biz-card{margin-bottom:0}
+.preview-panel .pv-catch{color:var(--accent-ink);font-weight:700;margin:0 0 10px;font-size:1rem}
+.preview-panel .pv-photo{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.preview-panel .pv-photo img{max-width:150px;max-height:150px;border:1px solid var(--line)}
+.preview-panel .preview-note{font-size:.8rem;color:var(--body);margin-top:12px;line-height:1.7}
+
+.biz-card{background:#fff;border:1px solid var(--line);padding:20px;margin-bottom:16px}
+.biz-card dl{margin:0;display:grid;grid-template-columns:7em 1fr;row-gap:10px;column-gap:12px}
+.biz-card dt{color:var(--body);font-size:.85rem}
+.biz-card dd{margin:0;color:var(--ink)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.cta-row a{flex:1;min-width:220px;justify-content:center;text-align:center;padding:15px 12px;font-size:.9rem}
+
+@keyframes certShine{0%{background-position:0% 0}100%{background-position:250% 0}}
+@keyframes certTwinkle{0%,100%{opacity:.3;transform:scale(.8) rotate(0deg)}50%{opacity:1;transform:scale(1.25) rotate(15deg)}}
+@keyframes certGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,0),0 18px 40px -24px rgba(15,20,30,.4)}50%{box-shadow:0 0 34px 8px rgba(255,215,0,.65),0 18px 40px -24px rgba(15,20,30,.4)}}
+@keyframes certSweep{0%{transform:translateX(0) rotate(20deg)}100%{transform:translateX(480%) rotate(20deg)}}
+
+.cert-frame{
+  position:relative;background:#fffdf3;
+  background-image:
+    radial-gradient(circle at 10% 15%,rgba(255,255,255,.95) 0 2px,transparent 3px),
+    radial-gradient(circle at 85% 20%,rgba(255,255,255,.9) 0 1.6px,transparent 2.6px),
+    radial-gradient(circle at 30% 85%,rgba(255,255,255,.9) 0 1.6px,transparent 2.6px),
+    radial-gradient(circle at 70% 75%,rgba(255,255,255,.9) 0 2px,transparent 3px),
+    radial-gradient(circle at 92% 60%,rgba(255,255,255,.85) 0 1.4px,transparent 2.4px),
+    radial-gradient(circle at 6% 55%,rgba(255,255,255,.85) 0 1.4px,transparent 2.4px),
+    repeating-linear-gradient(45deg,rgba(212,175,55,.08) 0 2px,transparent 2px 24px),
+    radial-gradient(circle at 50% 0%,rgba(255,215,0,.22),transparent 62%);
+  border:10px double #d4af37;
+  padding:56px 24px 34px;margin-bottom:16px;text-align:center;overflow:hidden;
+  animation:certGlow 3s ease-in-out infinite;
+}
+.cert-corner{position:absolute;width:30px;height:30px;border:3px solid #d4af37;z-index:1}
+.cert-corner.tl{top:12px;left:12px;border-right:0;border-bottom:0}
+.cert-corner.tr{top:12px;right:12px;border-left:0;border-bottom:0}
+.cert-corner.bl{bottom:12px;left:12px;border-right:0;border-top:0}
+.cert-corner.br{bottom:12px;right:12px;border-left:0;border-top:0}
+.cert-sparkle{position:absolute;font-size:1.15rem;color:#fff1a6;text-shadow:0 0 6px #fff,0 0 14px gold;animation:certTwinkle 1.7s ease-in-out infinite;z-index:1}
+.cert-seal{
+  width:104px;height:104px;border-radius:50%;position:relative;z-index:3;overflow:hidden;
+  margin:-88px auto 16px;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 35% 30%,#fff6d0,#ffd700 38%,#b8860b 78%,#6e5314 100%);
+  border:3px solid #7a5c14;color:#3a2a05;font-family:var(--serif);font-weight:900;font-size:1.15rem;letter-spacing:.02em;
+  line-height:1.25;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.35);
+  box-shadow:0 8px 20px -6px rgba(0,0,0,.5),inset 0 0 0 3px rgba(255,255,255,.45),0 0 26px 6px rgba(255,215,0,.8);
+}
+.cert-seal::before{
+  content:'';position:absolute;top:-60%;left:-70%;width:45%;height:220%;
+  background:linear-gradient(75deg,transparent,rgba(255,255,255,.9),transparent);
+  animation:certSweep 2.4s ease-in-out infinite;
+}
+.cert-eyebrow{
+  font-family:var(--en);letter-spacing:.35em;font-size:.85rem;font-weight:700;text-transform:uppercase;margin-bottom:14px;
+  color:#6b4e0e;text-shadow:0 1px 0 #fff;position:relative;z-index:2;
+}
+.cert-name{
+  position:relative;z-index:2;font-family:var(--serif);font-weight:900;font-size:clamp(1.15rem,6vw,2.1rem);letter-spacing:.02em;line-height:1.6;margin-bottom:4px;
+  word-break:break-word;overflow-wrap:anywhere;text-shadow:0 1px 3px rgba(0,0,0,.18);
+  background:linear-gradient(100deg,#6b4e0e 0%,#e0b53a 18%,#8a6d1f 36%,#f0cf6e 52%,#6b4e0e 70%,#b8860b 88%,#e0b53a 100%);
+  background-size:280% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:certShine 5s linear infinite;
+}
+.cert-name span{background:none;-webkit-text-fill-color:#6b4e0e;color:#6b4e0e;text-shadow:0 1px 0 #fff}
+.cert-divider{position:relative;z-index:2;color:#b8860b;font-size:1.1rem;margin:16px auto 20px;width:70%}
+.cert-divider::before,.cert-divider::after{content:'';position:absolute;top:50%;width:36%;height:1px;background:linear-gradient(90deg,transparent,#b8860b)}
+.cert-divider::before{left:0}
+.cert-divider::after{right:0;background:linear-gradient(90deg,#b8860b,transparent)}
+.cert-frame dl{position:relative;z-index:2;margin:0;text-align:left;max-width:420px;margin-left:auto;margin-right:auto;word-break:break-word;overflow-wrap:anywhere}
+.cert-frame dt{font-family:var(--en);font-size:.75rem;font-weight:700;letter-spacing:.15em;color:#6b4e0e;text-transform:uppercase;margin-top:18px}
+.cert-frame dd{margin:3px 0 0;color:var(--ink);font-size:1.15rem;font-weight:600}
+.cert-foot{position:relative;z-index:2;margin-top:26px;font-family:var(--en);font-size:.72rem;font-weight:700;letter-spacing:.22em;color:#6b4e0e;text-transform:uppercase}
+@media(max-width:480px){
+  .cert-frame{padding:64px 14px 26px}
+  .cert-seal{width:86px;height:86px;font-size:1rem;margin-top:-72px}
+}
+@media(prefers-reduced-motion:reduce){
+  .cert-frame,.cert-seal::before,.cert-name,.cert-sparkle{animation:none}
+}
+
+</style></head><body class="top" id="top">
+<div class="t-head"><div class="t-head-in"><a class="t-logo" href="./"><img class="mark" src="./img/logo-mark.svg" width="40" height="40" alt=""><span><small>公安委員会の届出業者から探す</small><b>全国探偵無料検索</b></span></a><nav class="t-nav"><a href="./#area"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>エリアから探す</a><a href="./#map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg>地図から探す</a><a href="./#ranking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>件数ランキング</a><a href="./column/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16"/></svg>コラム</a><a href="./contact.html#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>掲載のお申込み</a></nav></div></div>
+<div class="t-pagehero"><div class="in">
+<nav class="t-crumb" aria-label="パンくずリスト"><a href="./">全国探偵無料検索</a> ＞ 掲載内容の編集</nav>
+<h1 id="pageTitle">掲載内容の編集（無料）</h1>
+<p>掲載ページの充実（無料）・掲載情報の削除のご依頼を受け付けています</p>
+</div></div>
+<div class="t-wrap t-wrap--single">
+<main style="max-width:none;margin:0;padding:0">
+<div class="intro-card" id="introCard"></div>
+<div class="note" id="targetNote"></div>
+<div class="form-card">
+<form id="f">
+
+<fieldset id="idBlock">
+<legend>掲載ページの特定</legend>
+<label>届出番号（8桁）<small>　※必須。掲載ページ取り違えを防ぐため、必ずご記入ください。ご自身の掲載ページのURL（.../biz/xxxxxxxx.html）の8桁の数字です。ご不明な場合は<a href="./index.html" target="_blank">トップページの検索</a>から業者名でお探しください</small>
+<input type="text" id="selfId" inputmode="numeric" pattern="\d{8}" maxlength="8" placeholder="例：13012345" required></label>
+</fieldset>
+
+<fieldset id="upgradeBlock">
+<legend>掲載ページに追加する内容（無料）</legend>
+<p style="font-size:.85rem;color:var(--body);margin:0 0 4px">掲載ページにそのまま反映しますので、公開してよい内容をご記入ください。空欄の項目は掲載しません。<b style="color:var(--accent-ink)">都道府県別一覧での掲載済み事務所同士の表示順は、ご記入いただいた内容の充実度（項目数・文章量）で決まります。</b>詳しく・具体的にご記入いただくほど、上位に表示されやすくなります。</p>
+
+<label>キャッチコピー・一言PR<small>　※40字程度</small>
+<input type="text" id="catch" placeholder="例：着手金0円・完全成功報酬制"></label>
+
+<label>サービス内容・強み・実績<small>　※できるだけ詳しくご記入いただくと反映後の完成度が上がります</small>
+<textarea id="service" placeholder="例：夫婦関係調査・浮気調査を専門に24時間対応。相談実績○件、着手金0円の完全成功報酬制など"></textarea></label>
+
+<label>対応可能な調査<small>　※複数選択可</small></label>
+<div class="check-grid" id="svcTypes">
+<label><input type="checkbox" value="浮気調査">浮気調査</label>
+<label><input type="checkbox" value="素行調査">素行調査</label>
+<label><input type="checkbox" value="人探し">人探し</label>
+<label><input type="checkbox" value="企業・信用調査">企業・信用調査</label>
+<label><input type="checkbox" value="盗聴発見">盗聴発見</label>
+<label><input type="checkbox" value="ストーカー対策">ストーカー対策</label>
+<label><input type="checkbox" value="結婚前調査">結婚前調査</label>
+<label><input type="checkbox" value="その他">その他（下記にご記入）</label>
+</div>
+<input type="text" id="svcOther" placeholder="その他の調査内容をご記入" style="margin-top:8px">
+
+<label>対応エリア<input type="text" id="area" placeholder="例：東京都全域・横浜市周辺"></label>
+<label>料金プランの概要<input type="text" id="price" placeholder="例：1時間8,000円〜、着手金なし"></label>
+<label>営業時間・定休日<input type="text" id="hours" placeholder="例：24時間受付・年中無休"></label>
+
+<label>事務所の住所（都道府県から番地・建物名まで、任意）<small>　※届出情報ではなく、ここにご記入いただいた内容を掲載ページの住所として優先して公開します（現在は番地以降を非公開にしています）</small>
+<input type="text" id="officeAddress" placeholder="例：埼玉県三郷市〇〇1-2-3 〇〇ビル3F"></label>
+<label>代表者名（任意）<small>　※ご記入いただくと、掲載ページに公開されます</small>
+<input type="text" id="repName" placeholder="例：山田太郎"></label>
+
+<label>ご相談方法<small>　※複数選択可</small></label>
+<div class="check-grid" id="contactMethods">
+<label><input type="checkbox" value="電話">電話</label>
+<label><input type="checkbox" value="LINE">LINE</label>
+<label><input type="checkbox" value="メール">メール</label>
+<label><input type="checkbox" value="対面">対面</label>
+</div>
+
+<label>掲載してよい電話番号（表示用・任意）<input type="text" id="pubphone" placeholder="表示してよい電話番号"></label>
+<label>ホームページ・SNSのURL（お持ちの場合）<small>　※複数ある場合は改行して入力</small>
+<textarea id="url" placeholder="https://&#10;https://x.com/...&#10;https://instagram.com/..."></textarea></label>
+
+<label>写真（任意）<small>　※ロゴ・事務所外観など、掲載してよい画像を最大5枚までアップロードできます（1枚5MBまで）</small></label>
+<div class="photo-input-row">
+<div id="keepPhotos"></div>
+<input type="file" id="photoFile" accept="image/*" multiple>
+</div>
+<div class="photo-thumbs" id="photoThumbs"></div>
+<input type="text" id="photo" placeholder="写真についての補足（あれば）" style="margin-top:10px">
+
+<label>その他、追記・修正してほしい内容<textarea id="other" placeholder="上記に当てはまらないご要望があればご記入ください"></textarea></label>
+
+<div class="condition-box">
+<p><b>【掲載条件】</b>掲載ページの充実（無料）は、貴社のホームページに「全国探偵無料検索サービス」（<a href="https://tantei-kensaku.jp/" target="_blank" rel="noopener">https://tantei-kensaku.jp/</a>）へのリンクを設置していただくことを条件としております。</p>
+<p style="margin:10px 0 0"><b>貼り付け用のリンク</b>（どれか1つを貴社ホームページに貼ってください）</p>
+<style>
+.lk{display:grid;gap:12px;margin:12px 0 4px}
+.lk-item{border:1px solid var(--t-line);border-radius:8px;background:#fff;overflow:hidden}
+.lk-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;background:#f3f7fc;font-weight:700;font-size:.88rem;color:var(--t-blue-d)}
+.t-wrap .form-card .lk-copy,.t-wrap .lk-copy{font:inherit;font-size:.8rem;font-weight:700;background:var(--t-blue);border:0;color:#fff;border-radius:4px;padding:6px 16px;cursor:pointer;margin:0!important;box-shadow:none!important;letter-spacing:0}
+.t-wrap .form-card .lk-copy.done,.t-wrap .lk-copy.done{background:#1f9a86}
+.lk-prev{padding:12px;border-bottom:1px dashed var(--t-line);font-size:.92rem}
+.lk-prev a{color:var(--t-blue)}
+.t-wrap .form-card .lk-code,.t-wrap .lk-code{display:block;width:100%;box-sizing:border-box;border:0;padding:10px 12px;font-family:ui-monospace,Consolas,'Courier New',monospace!important;font-size:.8rem!important;line-height:1.7;color:#3c4c60;background:#fafcff;resize:none;min-height:58px;border:0!important;border-radius:0!important}
+.lk-hint{font-size:.8rem;color:#5a6b80;margin:4px 0 0;line-height:1.7}
+</style><div class="lk"><div class="lk-item"><div class="lk-head"><span>テキストリンク</span><button type="button" class="lk-copy" data-i="0">コピー</button></div><div class="lk-prev" data-i="0"></div><textarea class="lk-code" data-i="0" readonly rows="3"></textarea></div><div class="lk-item"><div class="lk-head"><span>掲載証リンク（貴社の掲載ページへ）</span><button type="button" class="lk-copy" data-i="1">コピー</button></div><div class="lk-prev" data-i="1"></div><textarea class="lk-code" data-i="1" readonly rows="3"></textarea></div><div class="lk-item"><div class="lk-head"><span>バナー（234×60）</span><button type="button" class="lk-copy" data-i="2">コピー</button></div><div class="lk-prev" data-i="2"></div><textarea class="lk-code" data-i="2" readonly rows="3"></textarea></div></div><p class="lk-hint">使いたいものの「コピー」を押して、貴社ホームページのHTMLに貼り付けてください（フッターや「リンク」「関連サイト」の欄など）。</p><script>
+(function(){
+  var TPL = ["<a href=\"https://tantei-kensaku.jp/\">全国探偵無料検索サービス</a>", "<a href=\"https://tantei-kensaku.jp/biz/__ID__.html\">当事務所は「全国探偵無料検索サービス」に掲載されています</a>", "<a href=\"https://tantei-kensaku.jp/\"><img src=\"https://tantei-kensaku.jp/img/banner-234x60.png\" width=\"234\" height=\"60\" alt=\"全国探偵無料検索サービス\"></a>"], idEl = document.getElementById("selfId");
+  function cur(){ var v = (idEl && idEl.value || '').trim(); return /^\d{8}$/.test(v) ? v : ''; }
+  function code(n){ var c = TPL[n]; if (c.indexOf('__ID__') === -1) return c; var id = cur(); return id ? c.replace('__ID__', id) : ''; }
+  function render(){
+    TPL.forEach(function(_, n){
+      var c = code(n), pv = document.querySelector('.lk-prev[data-i="' + n + '"]'), ta = document.querySelector('.lk-code[data-i="' + n + '"]');
+      pv.innerHTML = c || '<span style="color:#8796a8">届出番号（8桁）を入れると表示されます</span>';
+      ta.value = c;
+    });
+  }
+  document.querySelectorAll('.lk-copy').forEach(function(b){
+    b.addEventListener('click', function(){
+      var n = +b.getAttribute('data-i'), c = code(n);
+      if (!c) { b.textContent = '届出番号を先に入力'; setTimeout(function(){ b.textContent = 'コピー'; }, 1800); return; }
+      var ok = function(){ b.textContent = 'コピーしました'; b.classList.add('done'); setTimeout(function(){ b.textContent = 'コピー'; b.classList.remove('done'); }, 1800); };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(c).then(ok, function(){ fallback(n); ok(); });
+      else { fallback(n); ok(); }
+    });
+  });
+  function fallback(n){ var ta = document.querySelector('.lk-code[data-i="' + n + '"]'); ta.focus(); ta.select(); try { document.execCommand('copy'); } catch (e) {} }
+  if (idEl) { idEl.addEventListener('input', render); idEl.addEventListener('change', render); }
+  render(); setTimeout(render, 300);
+})();
+</script>
+<label style="margin-top:12px"><input type="checkbox" id="agree" required><span>上記の掲載条件に同意します（リンクの設置は後日で構いません。設置が完了したら、<a href="./linkcheck.html" target="_blank" rel="noopener">リンク設置確認フォーム</a>からURLをお知らせください）</span></label>
+</div>
+</fieldset>
+
+<fieldset id="removeBlock" style="display:none">
+<legend>削除のご希望</legend>
+<label>削除をご希望の理由（任意）<textarea id="reason" placeholder="廃業、掲載を望まない、内容に誤りがある、など"></textarea></label>
+</fieldset>
+
+<fieldset>
+<legend>ご連絡先</legend>
+<label>ご担当者名<input type="text" id="name" required></label>
+<label>ご担当者様の電話番号<small>　※必須</small><input type="tel" id="contact" placeholder="例：090-1234-5678" required></label>
+<label>メールアドレス<small>　※必須</small><input type="email" id="email" placeholder="担当者様のメールアドレス" required></label>
+</fieldset>
+
+<button type="button" id="previewBtn" class="btn-secondary">この内容の掲載イメージを確認する</button>
+
+<div class="preview-panel" id="previewPanel">
+<p class="preview-tag">掲載イメージ（プレビュー）</p>
+<div class="biz-card">
+<p class="pv-catch" id="pvCatch"></p>
+<div class="pv-photo" id="pvPhoto"></div>
+<dl>
+<dt>サービス内容・強み</dt><dd id="pvService"></dd>
+<dt>対応可能な調査</dt><dd id="pvTypes"></dd>
+<dt>対応エリア</dt><dd id="pvArea"></dd>
+<dt>料金プランの概要</dt><dd id="pvPrice"></dd>
+<dt>営業時間・定休日</dt><dd id="pvHours"></dd>
+<dt>ご相談方法</dt><dd id="pvMethods"></dd>
+<dt>電話番号</dt><dd id="pvPubphone"></dd>
+<dt>URL</dt><dd id="pvUrl"></dd>
+<dt>事務所の住所（掲載用・優先）</dt><dd id="pvOfficeAddress"></dd>
+<dt>代表者名</dt><dd id="pvRepName"></dd>
+<dt>その他</dt><dd id="pvOther"></dd>
+</dl>
+</div>
+<p class="preview-note">※これは入力内容をもとにした簡易的なイメージです。実際の掲載ページはデザインが多少異なります。空欄の項目は掲載ページにも表示されません。</p>
+</div>
+
+<button type="submit" id="btn">送信する</button>
+<div class="form-msg" id="formMsg"></div>
+<div class="form-foot">送信いただいた内容は、自動で掲載されることはありません。担当者が内容を確認し、手動で掲載ページに反映いたします（反映まで数日いただく場合があります）。ご記入いただいた連絡先が外部に公開されることはありません。</div>
+</form>
+</div>
+</main>
+</div>
+<footer class="t-foot"><div class="t-foot-in"><div><b>全国探偵無料検索</b><p style="margin:8px 0 0;max-width:360px;line-height:1.8">探偵業法に基づく届出情報（R8.5.31時点データ）を基に作成しています。</p></div><ul><li><a href="./#area">エリアから探す</a></li><li><a href="./#map">地図から探す</a></li><li><a href="./column/">コラム</a></li></ul><ul><li><a href="./contact.html#top">掲載のお申込み・削除</a></li><li><a href="./privacy.html#top">プライバシーポリシー</a></li><li><a href="https://exeresearch.jp/">運営：ラクーン探偵社</a></li></ul></div><div class="copy">運営：ラクーン探偵社（合同会社EXE RESEARCH）</div></footer><a class="t-top" href="#top" aria-label="ページの先頭へ">↑</a>
+<script>
+(function(){
+  var GAS_URL = "https://script.google.com/macros/s/AKfycbw5fWMGBB5glT-CAK0E_RUurrdMMw8tlRvU2g7dSs0LM2yVP9GJS2K11-pdbtv4BXAJOw/exec";
+  var GAS_KEY = "tanteiportal";
+  var q = new URLSearchParams(location.search);
+  var id = q.get('id') || '';
+  var name = q.get('name') || '';
+  var type = q.get('type') || 'edit';
+  var isRemove = type === 'remove';
+
+  document.getElementById('pageTitle').textContent = isRemove ? '掲載情報の削除に関するお問い合わせ' : '掲載ページ充実に関するお問い合わせ（無料）';
+  document.getElementById('upgradeBlock').style.display = isRemove ? 'none' : '';
+  document.getElementById('removeBlock').style.display = isRemove ? '' : 'none';
+  if (id) document.getElementById('selfId').value = id;
+
+  document.getElementById('introCard').innerHTML = isRemove
+    ? '掲載情報の削除をご希望の場合は、下記フォームからお申し込みください。確認のうえ、担当者より対応いたします。'
+    : '<b>掲載ページの充実は完全無料です。</b>下記の項目にご記入いただいた内容を、そのまま掲載ページに反映します。なお、無料での掲載には<b>貴社ホームページへの当サイトへのリンク設置</b>を条件としております（フォーム内でご案内しています）。';
+
+  var targetText;
+  if (name) {
+    targetText = '対象：' + name + '（届出番号 ' + id + '）';
+  } else if (id) {
+    targetText = '対象：届出番号 ' + id + '（業者名は非公開のため表示していません。ご自身の業者名はご記入内容に含めてください）';
+  } else {
+    targetText = '';
+  }
+  document.getElementById('targetNote').textContent = targetText;
+  document.getElementById('targetNote').style.display = targetText ? '' : 'none';
+
+  /* 編集モード（2026-11-08）：掲載済みの事務所は現在の掲載内容を読み込み、変更したい所だけ直して送れる。
+     編集は運営者の確認（メールのワンクリック承認）を経て反映。リンク確認からの自動承認はしない。 */
+  var isEdit = false, keepPhotos = [];
+  var extraAll = null;
+  function setVal(elId, v){ var el = document.getElementById(elId); if (el && v) el.value = v; }
+  function checkBoxes(containerId, vals){
+    var rest = (vals || []).slice();
+    Array.prototype.forEach.call(document.querySelectorAll('#' + containerId + ' input[type=checkbox]'), function(cb){
+      var i = rest.indexOf(cb.value);
+      if (i !== -1) { cb.checked = true; rest.splice(i, 1); }
+    });
+    return rest;
+  }
+  function renderKeep(){
+    var box = document.getElementById('keepPhotos');
+    if (!box) return;
+    box.innerHTML = keepPhotos.length ? '<p style="margin:0 0 6px;font-size:.88rem">現在掲載中の写真（外すと掲載から消えます）</p>' + keepPhotos.map(function(u, i){
+      return '<label style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin:0 10px 10px 0;font-size:.8rem"><img src="' + u.replace(/"/g, '') + '" alt="" style="width:90px;height:90px;object-fit:cover;border:1px solid #cbd9ea;border-radius:4px"><span><input type="checkbox" data-keep="' + i + '" checked> 残す</span></label>';
+    }).join('') : '';
+  }
+  function enterEdit(entry){
+    isEdit = true;
+    document.getElementById('pageTitle').textContent = '掲載内容の編集（無料）';
+    document.getElementById('introCard').innerHTML = '<b>現在の掲載内容を読み込みました。</b>変更したい項目だけ書き換えて送信してください。運営者が内容を確認したうえで掲載ページに反映します（反映のお知らせはメールでお送りします）。';
+    var cb = document.querySelector('.condition-box'); if (cb) cb.style.display = 'none';
+    var ag = document.getElementById('agree'); if (ag) ag.required = false;
+    ['catch','service','area','price','hours','officeAddress','repName','pubphone','url','other'].forEach(function(k){ setVal(k, entry[k]); });
+    var otherTypes = checkBoxes('svcTypes', entry.types);
+    if (otherTypes.length) { checkBoxes('svcTypes', ['その他']); setVal('svcOther', otherTypes.join('、')); }
+    checkBoxes('contactMethods', entry.methods);
+    keepPhotos = (entry.photoUrls || (entry.photoUrl ? [entry.photoUrl] : [])).slice(0, 5);
+    renderKeep();
+  }
+  function loadExisting(theId){
+    if (isRemove || !/^\d{8}$/.test(theId)) return;
+    var go = function(all){ var e = all && all[theId]; if (e) enterEdit(e); else if (type === 'edit') {
+      document.getElementById('introCard').innerHTML = 'この届出番号はまだ掲載されていません。下記のフォームから、新しく掲載ページの充実をお申し込みいただけます。';
+      document.getElementById('pageTitle').textContent = '掲載ページ充実に関するお問い合わせ（無料）'; } };
+    if (extraAll) return go(extraAll);
+    fetch('../tantei-portal-data/biz_extra.json', {cache: 'no-cache'}).then(function(r){ return r.ok ? r.json() : {}; })
+      .then(function(j){ extraAll = j; go(j); }).catch(function(){});
+  }
+  if (type === 'edit') {
+    document.getElementById('pageTitle').textContent = '掲載内容の編集（無料）';
+    document.getElementById('introCard').innerHTML = '掲載済みの事務所様は、届出番号を入れると現在の掲載内容が読み込まれます。変更したい項目だけ書き換えて送信してください。';
+  }
+  loadExisting(id);
+  document.getElementById('selfId').addEventListener('change', function(){ if (!isEdit) loadExisting(this.value.trim()); });
+
+  function checkedValues(containerId){
+    return Array.prototype.slice.call(document.querySelectorAll('#' + containerId + ' input:checked'))
+      .map(function(el){ return el.value; });
+  }
+
+  function svcTypesText(){
+    var vals = checkedValues('svcTypes').filter(function(v){ return v !== 'その他'; });
+    var svcOther = document.getElementById('svcOther').value.trim();
+    if (svcOther) vals.push(svcOther);
+    return vals.join('、');
+  }
+
+  function buildMessage(){
+    var email = document.getElementById('email').value.trim();
+    var emailLine = email ? '【メールアドレス】\n' + email : '';
+    if (isRemove) {
+      var reason = document.getElementById('reason').value.trim();
+      return [reason, emailLine].filter(Boolean).join('\n\n');
+    }
+    var parts = [];
+    if (emailLine) parts.push(emailLine);
+    var catchCopy = document.getElementById('catch').value.trim();
+    if (catchCopy) parts.push('【キャッチコピー】\n' + catchCopy);
+    var service = document.getElementById('service').value.trim();
+    if (service) parts.push('【サービス内容・強み】\n' + service);
+    var svcTypesJoined = svcTypesText();
+    if (svcTypesJoined) parts.push('【対応可能な調査】\n' + svcTypesJoined);
+    var area = document.getElementById('area').value.trim();
+    if (area) parts.push('【対応エリア】\n' + area);
+    var price = document.getElementById('price').value.trim();
+    if (price) parts.push('【料金プランの概要】\n' + price);
+    var hours = document.getElementById('hours').value.trim();
+    if (hours) parts.push('【営業時間・定休日】\n' + hours);
+    var officeAddress = document.getElementById('officeAddress').value.trim();
+    if (officeAddress) parts.push('【事務所の住所（掲載用・優先）】\n' + officeAddress);
+    var repName = document.getElementById('repName').value.trim();
+    if (repName) parts.push('【代表者名】\n' + repName);
+    var methods = checkedValues('contactMethods');
+    if (methods.length) parts.push('【ご相談方法】\n' + methods.join('、'));
+    var pubphone = document.getElementById('pubphone').value.trim();
+    if (pubphone) parts.push('【掲載してよい電話番号】\n' + pubphone);
+    var url = document.getElementById('url').value.trim();
+    if (url) parts.push('【URL】\n' + url);
+    var photo = document.getElementById('photo').value.trim();
+    if (photo) parts.push('【写真について】\n' + photo);
+    var other = document.getElementById('other').value.trim();
+    if (other) parts.push('【その他】\n' + other);
+    parts.push('【掲載条件（相互リンク）】\n同意：はい（リンク設置は後日、別フォームで確認します）');
+    return parts.join('\n\n');
+  }
+
+  function svcTypesArray(){
+    var vals = checkedValues('svcTypes').filter(function(v){ return v !== 'その他'; });
+    var svcOther = document.getElementById('svcOther').value.trim();
+    if (svcOther) vals.push(svcOther);
+    return vals;
+  }
+
+  function buildFields(){
+    var val = function(elId){ return (document.getElementById(elId).value || '').trim(); };
+    return {
+      catch: val('catch'), service: val('service'), types: svcTypesArray(),
+      area: val('area'), price: val('price'), hours: val('hours'),
+      methods: checkedValues('contactMethods'), pubphone: val('pubphone'),
+      url: val('url'), other: val('other'),
+      officeAddress: val('officeAddress'), repName: val('repName')
+    };
+  }
+
+  var MAX_PHOTOS = 5;
+  var selectedPhotos = []; // data / name / mime / dataUrl を持つオブジェクトの配列（最大5件）
+
+  function renderThumbs(){
+    var box = document.getElementById('photoThumbs');
+    box.innerHTML = selectedPhotos.map(function(p){ return '<img src="' + p.dataUrl + '" alt="">'; }).join('');
+  }
+
+  document.getElementById('photoFile').addEventListener('change', function(ev){
+    var files = Array.prototype.slice.call(ev.target.files || []);
+    var out = document.getElementById('formMsg');
+    if (selectedPhotos.length + files.length > MAX_PHOTOS) {
+      out.className = 'form-msg err';
+      out.textContent = '写真は最大' + MAX_PHOTOS + '枚までです。';
+      files = files.slice(0, MAX_PHOTOS - selectedPhotos.length);
+    }
+    files.forEach(function(file){
+      if (file.size > 5 * 1024 * 1024) {
+        out.className = 'form-msg err';
+        out.textContent = '「' + file.name + '」はサイズが大きすぎます（5MBまで）。';
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(){
+        var dataUrl = reader.result;
+        selectedPhotos.push({
+          data: dataUrl.slice(dataUrl.indexOf(',') + 1),
+          name: file.name,
+          mime: file.type || 'image/jpeg',
+          dataUrl: dataUrl
+        });
+        renderThumbs();
+      };
+      reader.readAsDataURL(file);
+    });
+    ev.target.value = '';
+  });
+
+  function renderPreview(){
+    var val = function(elId){ return (document.getElementById(elId).value || '').trim(); };
+    document.getElementById('pvCatch').textContent = val('catch') || '（キャッチコピー未入力）';
+    document.getElementById('pvService').textContent = val('service') || '（未入力）';
+    document.getElementById('pvTypes').textContent = svcTypesText() || '（未選択）';
+    document.getElementById('pvArea').textContent = val('area') || '（未入力）';
+    document.getElementById('pvPrice').textContent = val('price') || '（未入力）';
+    document.getElementById('pvHours').textContent = val('hours') || '（未入力）';
+    document.getElementById('pvMethods').textContent = checkedValues('contactMethods').join('、') || '（未選択）';
+    document.getElementById('pvPubphone').textContent = val('pubphone') || '（未入力）';
+    document.getElementById('pvUrl').textContent = val('url') || '（未入力）';
+    document.getElementById('pvOfficeAddress').textContent = val('officeAddress') || '（未入力）';
+    document.getElementById('pvRepName').textContent = val('repName') || '（未入力）';
+    document.getElementById('pvOther').textContent = val('other') || '（未入力）';
+    var photoBox = document.getElementById('pvPhoto');
+    photoBox.innerHTML = selectedPhotos.map(function(p){ return '<img src="' + p.dataUrl + '" alt="">'; }).join('');
+    var panel = document.getElementById('previewPanel');
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.getElementById('previewBtn').addEventListener('click', renderPreview);
+
+  function mailFallback(nm, ct, msg){
+    var subject = (isRemove ? '【探偵ポータル】掲載削除の希望：' : '【探偵ポータル】掲載ページ充実の希望：') + (name || '（業者名未指定）');
+    var body = ['届出番号：' + id, '業者名：' + name, 'お名前：' + nm, 'ご連絡先：' + ct, '', 'ご要望内容：', msg].join('\n');
+    location.href = 'mailto:racoontantei@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
+  var submitId = 'c' + Date.now() + Math.random().toString(36).slice(2, 8);
+  document.getElementById('f').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var out = document.getElementById('formMsg');
+    if (!isRemove && !isEdit && !document.getElementById('agree').checked) {
+      out.className = 'form-msg err';
+      out.textContent = '掲載条件（自社ホームページへのリンク設置）へのご同意が必要です。';
+      return;
+    }
+    var idInput = document.getElementById('selfId').value.trim();
+    if (!/^\d{8}$/.test(idInput)) {
+      out.className = 'form-msg err';
+      out.textContent = '届出番号は半角数字8桁でご記入ください。';
+      return;
+    }
+    var nm = document.getElementById('name').value.trim();
+    var ct = document.getElementById('contact').value.trim();
+    var msg = buildMessage();
+    var btn = document.getElementById('btn');
+    btn.disabled = true;
+    out.className = 'form-msg';
+    out.textContent = '送信しています…';
+    var payload = { key: GAS_KEY, mode: 'contact', id: idInput, name: name, type: isEdit ? 'edit' : type,
+      contactName: nm, contact: ct, email: document.getElementById('email').value.trim(),
+      message: msg, submitId: submitId };
+    if (!isRemove) payload.fields = buildFields();
+    if (isEdit) {
+      payload.fields.keepPhotos = keepPhotos.filter(function(u, i){
+        var c = document.querySelector('#keepPhotos input[data-keep="' + i + '"]'); return !c || c.checked; });
+    }
+    if (selectedPhotos.length) {
+      payload.photos = selectedPhotos.map(function(p){ return { data: p.data, name: p.name, mime: p.mime }; });
+    }
+    fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.ok){
+        out.className = 'form-msg ok';
+        out.textContent = isEdit ? '編集内容を受け付けました。運営者が確認のうえ掲載ページに反映し、メールでお知らせします。' : 'お問い合わせを受け付けました。担当者よりご連絡いたします。';
+        document.getElementById('f').reset();
+        selectedPhotos = [];
+        renderThumbs();
+        document.getElementById('previewPanel').style.display = 'none';
+      } else {
+        throw new Error((j && j.error) || '送信に失敗しました');
+      }
+    }).catch(function(){
+      out.className = 'form-msg err';
+      out.textContent = '送信できませんでした。お手数ですがメールでお送りします。';
+      mailFallback(nm, ct, msg);
+    }).finally(function(){ btn.disabled = false; });
+  });
+})();
+</script>
+</body></html>
