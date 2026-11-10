@@ -2,13 +2,13 @@
 <html lang="ja"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>全国探偵無料検索サービス</title>
-<meta property="og:site_name" content="全国探偵無料検索サービス">
 <meta name="description" content="公安委員会に届出済みの探偵事務所・興信所7,554件を無料で検索。業者名・都道府県・地図から探せます。浮気調査や人探しの依頼先選び、料金相場や届出番号の調べ方のコラムも掲載。">
 <link rel="canonical" href="https://tantei-kensaku.jp/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="全国探偵無料検索サービス｜届出探偵業者7,554件">
 <meta property="og:description" content="公安委員会に届出済みの探偵事務所・興信所7,554件を無料で検索。業者名・都道府県・地図から探せます。">
 <meta property="og:url" content="https://tantei-kensaku.jp/">
+<meta property="og:site_name" content="全国探偵無料検索サービス">
 <meta property="og:locale" content="ja_JP">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"全国探偵無料検索サービス","alternateName":["全国探偵無料検索","tantei-kensaku.jp"],"url":"https://tantei-kensaku.jp/","inLanguage":"ja","publisher":{"@type":"Organization","name":"合同会社EXE RESEARCH","url":"https://exeresearch.jp/"}}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y67CRKZJW"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-5Y67CRKZJW");</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=Barlow+Condensed:wght@500;600&display=swap">
@@ -317,6 +317,26 @@ footer.t-foot a:hover{text-decoration:underline}
 .t-foot .copy{border-top:1px solid #2a4060;padding:12px 16px;font-size:.74rem;color:#8ea3bd;text-align:center}
 .t-top{position:fixed;right:14px;bottom:14px;width:44px;height:44px;border-radius:6px;background:var(--t-blue);color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.1rem;z-index:40;box-shadow:0 4px 12px -4px rgba(0,0,0,.4)}
 .t-logo .mark svg{width:100%;height:100%}
+
+/* ---- 動き（2026-11-11）: データに目を向けてもらう動きだけ。動きを減らす設定では止める ---- */
+.m-on .year-chart .bar{transform:scaleY(0);transform-origin:bottom;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.m-on .year-chart.m-in .bar{transform:none}
+.m-on .t-ratio .bar i{transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.m-on .t-ratio.m-in .bar i{transform:none}
+.t-near-btn{position:relative}
+.t-near-btn::after{content:"";position:absolute;inset:-4px;border-radius:9px;border:2px solid #f0a020;opacity:0;animation:mPulse 2.8s ease-out 1.2s infinite;pointer-events:none}
+.t-near-btn:hover::after,.t-near-btn:focus-visible::after{animation:none}
+@keyframes mPulse{0%{opacity:.7;transform:scale(1)}70%{opacity:0;transform:scale(1.12)}100%{opacity:0}}
+.t-area{transition:transform .2s ease,box-shadow .2s ease}
+.t-area:hover{transform:translateY(-2px);box-shadow:0 8px 18px -10px var(--c)}
+.t-jmap img{transition:transform .35s ease}
+.t-jmap:hover img{transform:scale(1.02)}
+@media (prefers-reduced-motion:reduce){
+  .m-on .year-chart .bar,.m-on .t-ratio .bar i{transform:none!important;transition:none!important}
+  .t-near-btn::after{animation:none}
+  .t-area,.t-jmap img{transition:none}
+  .t-area:hover,.t-jmap:hover img{transform:none}
+}
 </style></head><body class="top" id="top">
 <div class="t-head"><div class="t-head-in">
 <a class="t-logo" href="./"><img class="mark" src="./img/logo-mark.svg" width="40" height="40" alt=""><span><small>公安委員会の届出業者から探す</small><b>全国探偵無料検索</b></span></a>
@@ -435,7 +455,8 @@ footer.t-foot a:hover{text-decoration:underline}
 <a class="t-banner" href="./contact.html"><small>掲載業者様へ</small><b>掲載ページの充実は完全無料</b><span>サービス内容・強み・対応エリア・ホームページURLを追加できます。掲載の削除も同じフォームから承ります。</span><em>無料で申し込む</em></a>
 <div class="t-box" id="ranking"><h2 class="t-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg><b>届出件数ランキング</b><i></i></h2><ol class="t-rank"><li><a href="./tokyo.html"><span class="no">1</span>東京都<span class="cnt">1,232件</span></a></li><li><a href="./osaka.html"><span class="no">2</span>大阪府<span class="cnt">741件</span></a></li><li><a href="./hokkaido.html"><span class="no">3</span>北海道<span class="cnt">547件</span></a></li><li><a href="./kanagawa.html"><span class="no">4</span>神奈川県<span class="cnt">539件</span></a></li><li><a href="./saitama.html"><span class="no">5</span>埼玉県<span class="cnt">316件</span></a></li><li><a href="./fukuoka.html"><span class="no">6</span>福岡県<span class="cnt">292件</span></a></li><li><a href="./hyogo.html"><span class="no">7</span>兵庫県<span class="cnt">289件</span></a></li><li><a href="./aichi.html"><span class="no">8</span>愛知県<span class="cnt">256件</span></a></li><li><a href="./ibaraki.html"><span class="no">9</span>茨城県<span class="cnt">245件</span></a></li><li><a href="./chiba.html"><span class="no">10</span>千葉県<span class="cnt">228件</span></a></li></ol></div>
 <div class="t-box"><h2 class="t-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16"/></svg><b>新着コラム</b><i></i></h2><a class="t-side-col" href="./column/wakaresaseya-uwaki-chosa-chigai.html"><img src="./column/img/wakaresaseya-eyecatch.webp" width="1200" height="630" alt="" loading="lazy">別れさせ屋は本当にある？浮気調査の探偵との違いと、依頼する前に知りたいリスク</a><a class="t-side-col" href="./column/oita-uwaki-chosa-tantei.html"><img src="./column/img/oita-uwaki-eyecatch.webp" width="1200" height="630" alt="" loading="lazy">大分県で浮気調査を探偵に頼むなら｜届出業者51件の市町村別データと失敗しない選び方</a><a class="t-side-col" href="./column/tantei-ryokin-oote-chusho.html"><img src="./column/img/tantei-ryokin-oote-eyecatch.webp" width="1200" height="630" alt="" loading="lazy">大手探偵社と中小探偵事務所の料金相場の違い｜浮気調査の見積もりは「総額÷時間」で比べる</a><a class="t-side-col" href="./column/tantei-ryokin-souba.html"><img src="./column/img/tantei-ryokin-eyecatch.webp" width="1200" height="630" alt="" loading="lazy">探偵の料金相場はいくら？費用を安く抑える5つのコツと料金プランの選び方</a><a class="t-side-col" href="./column/kyoka-bango-shirabekata.html"><img src="./column/img/kyoka-bango-eyecatch.webp" width="1200" height="630" alt="" loading="lazy">探偵の「許可番号」は存在しない？届出番号の正しい調べ方と、悪質な業者の見抜き方・トラブルの対処法</a></div>
-<a class="t-pr" href="https://alaia-gps.com/?utm_source=rakune&amp;utm_medium=partner&amp;utm_campaign=agency_sales" target="_blank" rel="sponsored noopener" style="display:block;position:relative;background:#fff;border:1px solid #d6e2f0;border-radius:8px;overflow:hidden;text-decoration:none;color:#1a2430;margin:16px auto 0;max-width:340px"><span style="position:absolute;top:6px;right:6px;background:rgba(13,27,42,.6);color:#fff;font-size:10px;font-weight:700;line-height:1.6;padding:0 6px;border-radius:3px;letter-spacing:.06em">PR</span><img src="/img/pr/alaia-gps.webp" width="600" height="300" alt="ALAIA GPS" loading="lazy" style="display:block;width:100%;height:auto"><span style="display:block;padding:10px 12px 12px;font-size:.8rem;line-height:1.65;color:#4a5665"><b style="display:block;font-size:.9rem;color:#0d3f8f;margin-bottom:2px">ALAIA GPS</b>プロの業務を支える、日本発の次世代GPS。最短3秒の位置更新。<span style="display:block;margin-top:4px;color:#8796a8;font-size:.72rem">株式会社アライア</span></span></a></aside>
+<a class="t-pr" href="https://alaia-gps.com/?utm_source=rakune&amp;utm_medium=partner&amp;utm_campaign=agency_sales" target="_blank" rel="sponsored noopener" style="display:block;position:relative;background:#fff;border:1px solid #d6e2f0;border-radius:8px;overflow:hidden;text-decoration:none;color:#1a2430;margin:16px auto 0;max-width:340px"><span style="position:absolute;top:6px;right:6px;background:rgba(13,27,42,.6);color:#fff;font-size:10px;font-weight:700;line-height:1.6;padding:0 6px;border-radius:3px;letter-spacing:.06em">PR</span><img src="/img/pr/alaia-gps.webp" width="600" height="300" alt="ALAIA GPS" loading="lazy" style="display:block;width:100%;height:auto"><span style="display:block;padding:10px 12px 12px;font-size:.8rem;line-height:1.65;color:#4a5665"><b style="display:block;font-size:.9rem;color:#0d3f8f;margin-bottom:2px">ALAIA GPS</b>プロの業務を支える、日本発の次世代GPS。最短3秒の位置更新。<span style="display:block;margin-top:4px;color:#8796a8;font-size:.72rem">株式会社アライア</span></span></a>
+</aside>
 </div>
 
 <footer class="t-foot">
@@ -479,6 +500,49 @@ footer.t-foot a:hover{text-decoration:underline}
     input.addEventListener('input', render);
     prefSel.addEventListener('change', render);
   });
+})();
+</script>
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('m-on');
+  // 1) 見出しの件数を数え上げる（表示だけ。HTMLの文字は 7,554 のまま）
+  var h1 = document.querySelector('.t-hero h1');
+  if (h1) {
+    var w = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT), node;
+    while ((node = w.nextNode())) {
+      var m = node.nodeValue.match(/([\d,]{3,})件/);
+      if (!m) continue;
+      var target = parseInt(m[1].replace(/,/g, ''), 10), before = node.nodeValue.slice(0, m.index), after = node.nodeValue.slice(m.index + m[1].length);
+      var span = document.createElement('span'); span.textContent = '0'; span.style.fontVariantNumeric = 'tabular-nums';
+      var frag = document.createDocumentFragment(); frag.appendChild(document.createTextNode(before)); frag.appendChild(span); frag.appendChild(document.createTextNode(after));
+      node.parentNode.replaceChild(frag, node);
+      var t0 = null, dur = 1100;
+      var step = function(ts){ if(!t0) t0 = ts; var k = Math.min(1, (ts - t0) / dur); var e = 1 - Math.pow(1 - k, 3); span.textContent = Math.round(target * e).toLocaleString('ja-JP'); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+      break;
+    }
+  }
+  // 2) 棒グラフを画面に入ったときに順番に伸ばす
+  var charts = document.querySelectorAll('.year-chart, .t-ratio');
+  charts.forEach(function(c){
+    var bars = c.querySelectorAll('.year-chart .bar, .t-ratio .bar i');
+    bars.forEach(function(b, i){ b.style.transitionDelay = Math.min(i * 30, 900) + 'ms'; });
+  });
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('m-in'); io.unobserve(e.target); } });
+  }, { threshold: .25 });
+  charts.forEach(function(c){ io.observe(c); });
+  // 3) コラムの横スクロールを1回だけ少し動かして、横に送れることを見せる
+  var cols = document.querySelector('.t-cols');
+  if (cols && cols.scrollWidth > cols.clientWidth + 20) {
+    var io2 = new IntersectionObserver(function(es){
+      if (!es[0].isIntersecting) return; io2.disconnect();
+      setTimeout(function(){ cols.scrollBy({ left: 70, behavior: 'smooth' }); setTimeout(function(){ cols.scrollBy({ left: -70, behavior: 'smooth' }); }, 650); }, 400);
+    }, { threshold: .6 });
+    io2.observe(cols);
+  }
 })();
 </script>
 <script>
