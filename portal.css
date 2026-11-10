@@ -404,7 +404,7 @@ footer.t-foot a:hover{text-decoration:underline}
 .preview-panel .pv-photo{align-items:flex-start}
 .preview-panel .pv-photo img{width:auto;height:150px;max-width:100%!important;max-height:none!important;object-fit:contain}
 /* 掲載ページのCTA */
-.t-wrap .biz-card>.biz-cta{margin:0;padding:18px;background:linear-gradient(135deg,#0d3f8f,#1559c4);color:#fff;text-align:center}
+.t-wrap .biz-card>.biz-cta{margin:0;padding:18px;background:radial-gradient(ellipse at 85% 0%,rgba(120,190,255,.45),transparent 55%),linear-gradient(120deg,#082b66 0%,#0f4fb0 45%,#1d74e0 80%,#3a9af0 100%);color:#fff;text-align:center}
 .biz-cta-lead{margin:0 0 12px;font-weight:700;font-size:1.05rem;line-height:1.6}
 .biz-cta-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .biz-cta-btns a{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:200px;padding:13px 18px;border-radius:6px;font-weight:700;text-decoration:none;font-size:.98rem;line-height:1.3}
