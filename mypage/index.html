@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>業者マイページ | 全国探偵無料検索サービス</title>
+<meta property="og:site_name" content="全国探偵無料検索サービス">
+<meta name="robots" content="noindex,nofollow">
+
+<style>.mp .t-box p{line-height:1.9;font-size:.92rem}
+.mp-form label{display:block;font-weight:700;font-size:.9rem;margin:14px 0 6px;color:var(--t-blue-d)}
+.mp-row{display:flex;gap:8px;flex-wrap:wrap}
+.mp-row input{flex:1 1 180px;min-width:0;font:inherit;font-size:1.15rem;letter-spacing:.12em;padding:10px 12px;border:1px solid #c9d6e6;border-radius:8px;background:#fff}
+.mp-row input:focus{outline:2px solid var(--t-blue);outline-offset:1px}
+.mp-btn{display:inline-flex;align-items:center;justify-content:center;font:inherit;font-weight:700;font-size:.92rem;padding:10px 18px;border-radius:8px;border:0;background:var(--t-blue,#1559c4);color:#fff;text-decoration:none;cursor:pointer;min-height:44px}
+.mp-btn:hover{filter:brightness(1.08)}
+.mp-btn:focus-visible{outline:3px solid #f0a020;outline-offset:2px}
+.mp-btn[disabled]{opacity:.6;cursor:wait}
+.mp-btn--ghost{background:#fff;color:var(--t-blue-d,#0d3f8f);border:1px solid #c9d6e6}
+.mp-msg{margin:12px 0 0;font-weight:700;color:var(--t-blue-d,#0d3f8f)}
+.mp-msg.err{color:#c62828}
+.mp-sub{color:#5a6b80;font-size:.86rem!important}
+.mp-sub a{color:var(--t-blue)}
+.mp-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.mp-head small{color:#5a6b80;font-size:.8rem}
+.mp-head h2{margin:2px 0 0;font-size:1.35rem;color:var(--t-ink,#14263d)}
+.mp-head-btns{display:flex;gap:8px;flex-wrap:wrap}
+.mp-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.mp-tabs{display:inline-flex;border:1px solid #c9d6e6;border-radius:8px;overflow:hidden}
+.mp-tabs button{font:inherit;font-size:.84rem;padding:7px 14px;border:0;background:#fff;color:#4a5b70;cursor:pointer}
+.mp-tabs button.on{background:var(--t-blue-d,#0d3f8f);color:#fff;font-weight:700}
+.mp-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:14px 0 6px}
+.mp-kpi{border:1px solid #dbe5f1;border-radius:10px;padding:12px 12px 10px;background:#f7faff}
+.mp-kpi:first-child{background:var(--t-blue-d,#0d3f8f);border-color:var(--t-blue-d,#0d3f8f);color:#fff}
+.mp-kpi span{display:block;font-size:.78rem;color:inherit;opacity:.85}
+.mp-kpi b{display:block;font-size:1.9rem;line-height:1.15;font-variant-numeric:tabular-nums;margin-top:4px}
+.mp-kpi i{display:block;font-style:normal;font-size:.75rem;margin-top:2px;opacity:.85}
+.mp-kpi i.up{color:#0f7a3d}.mp-kpi:first-child i.up{color:#9ff0bd}
+.mp-kpi i.down{color:#c62828}.mp-kpi:first-child i.down{color:#ffc4c4}
+.mp-chart{margin:16px 0 0}
+.mp-chart figcaption{font-size:.8rem;color:#5a6b80;margin-bottom:6px}
+.mp-chart svg{display:block;width:100%;height:auto}
+.mp-note{font-size:.78rem!important;color:#7a8a9c}
+.mp-check{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px}
+.mp-check li{display:flex;align-items:center;gap:8px;font-size:.9rem;padding:6px 0;border-bottom:1px dashed #e1e8f1}
+.mp-check li::before{content:"";flex:0 0 18px;height:18px;border-radius:50%;background:#e8eef6 center/12px no-repeat}
+.mp-check li.ok::before{background-color:#0f7a3d;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5l2.5 2.5L10 3.5' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E")}
+.mp-check li.no{color:#8a5a00}
+.mp-check li.no small{margin-left:auto;font-size:.75rem;color:#b07400}
+.mp-out{text-align:right}
+.mp-link{font:inherit;font-size:.85rem;background:none;border:0;color:#5a6b80;text-decoration:underline;cursor:pointer;padding:8px}
+@media(max-width:760px){.mp-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.mp-kpi:first-child{grid-column:1/-1}.mp-check{grid-template-columns:minmax(0,1fr)}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y67CRKZJW"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-5Y67CRKZJW");</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="stylesheet" href="/portal.css?v=20261111a"></head><body class="top" id="top">
+<div class="t-head"><div class="t-head-in"><a class="t-logo" href="/"><img class="mark" src="/img/logo-mark.svg" width="40" height="40" alt=""><span><small>公安委員会の届出業者から探す</small><b>全国探偵無料検索</b></span></a><nav class="t-nav"><a href="/#area"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>エリアから探す</a><a href="/#map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg>地図から探す</a><a href="/#ranking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>件数ランキング</a><a href="/column/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16"/></svg>コラム</a><a href="/contact.html#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>掲載のお申込み</a></nav></div></div>
+<div class="t-pagehero"><div class="in">
+<nav class="t-crumb" aria-label="パンくずリスト"><a href="/">全国探偵無料検索</a> ＞ 業者マイページ</nav>
+<h1>業者マイページ</h1>
+<p>掲載ページがどれだけ見られ、何回お問い合わせにつながったかを確認できます</p>
+</div></div>
+<div class="t-wrap t-wrap--single">
+<main class="mp" style="max-width:none;margin:0;padding:0">
+
+<section class="t-box mp-login" id="mpLogin" hidden>
+<h2 class="t-sub-h">ログイン</h2>
+<p>掲載済みの業者様は、届出番号（8桁）を入れてください。掲載のお申込みのときにご登録いただいたメールアドレスへ、ログイン用のリンクをお送りします。パスワードは要りません。</p>
+<form id="mpLoginForm" class="mp-form" autocomplete="on">
+<label for="mpId">届出番号（8桁）</label>
+<div class="mp-row"><input id="mpId" name="id" inputmode="numeric" pattern="\d{8}" maxlength="8" placeholder="例：30240039" required>
+<button type="submit" class="mp-btn">ログイン用リンクを受け取る</button></div>
+</form>
+<p class="mp-msg" id="mpLoginMsg" role="status"></p>
+<p class="mp-sub">まだ掲載していない業者様は、<a href="/contact.html#top">掲載のお申込み（無料）</a>をすると使えるようになります。</p>
+</section>
+
+<div id="mpDash" hidden>
+<section class="t-box mp-head">
+<div><small>届出番号 <span id="mpNum"></span></small><h2 id="mpName">　</h2></div>
+<div class="mp-head-btns"><a class="mp-btn mp-btn--ghost" id="mpPage" href="#" target="_blank" rel="noopener">掲載ページを見る</a><a class="mp-btn" id="mpEdit" href="#">掲載内容を編集する</a></div>
+</section>
+
+<section class="t-box">
+<div class="mp-h"><h2 class="t-sub-h">あなたの掲載ページの反応</h2><div class="mp-tabs" role="tablist"><button type="button" data-r="7" class="on" role="tab">直近7日</button><button type="button" data-r="28" role="tab">直近28日</button></div></div>
+<div class="mp-kpis" id="mpKpis"></div>
+<figure class="mp-chart"><figcaption>ページが見られた回数（日別）</figcaption><div id="mpChart"></div></figure>
+<p class="mp-note" id="mpStatNote"></p>
+</section>
+
+<section class="t-box">
+<h2 class="t-sub-h">掲載内容のチェック</h2>
+<p class="mp-sub">入力が多いページほど、相談につながりやすくなります。空いている項目は「掲載内容を編集する」から追加できます（無料）。</p>
+<ul class="mp-check" id="mpCheck"></ul>
+</section>
+
+<p class="mp-out"><button type="button" id="mpLogout" class="mp-link">ログアウト</button></p>
+</div>
+
+<section class="t-box" id="mpLoading"><p class="mp-msg">読み込み中です…</p></section>
+</main>
+</div>
+<script>(function(){
+  var GAS = "https://script.google.com/macros/s/AKfycbw5fWMGBB5glT-CAK0E_RUurrdMMw8tlRvU2g7dSs0LM2yVP9GJS2K11-pdbtv4BXAJOw/exec", KEY = "tanteiportal", SKEY = "tk_mypage";
+  var $ = function(id){ return document.getElementById(id); };
+  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
+  function post(body){
+    body.key = KEY;
+    return fetch(GAS, { method: "POST", body: JSON.stringify(body) }).then(function(r){ return r.json(); });
+  }
+  function show(which){
+    $("mpLoading").hidden = which !== "loading";
+    $("mpLogin").hidden = which !== "login";
+    $("mpDash").hidden = which !== "dash";
+  }
+  function fmt(n){ return Number(n || 0).toLocaleString("ja-JP"); }
+
+  // ---- ログイン ----
+  $("mpLoginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var id = $("mpId").value.replace(/[^\d]/g, ""), btn = this.querySelector("button"), msg = $("mpLoginMsg");
+    msg.className = "mp-msg";
+    if (!/^\d{8}$/.test(id)) { msg.textContent = "届出番号は8桁の数字で入力してください。"; msg.className = "mp-msg err"; return; }
+    btn.disabled = true; msg.textContent = "送信しています…";
+    post({ mode: "mypage_login", id: id }).then(function(d){
+      msg.textContent = d.ok ? d.message : (d.error || "送信できませんでした。");
+      if (!d.ok) msg.className = "mp-msg err";
+    }).catch(function(){ msg.textContent = "送信できませんでした。通信状態をご確認ください。"; msg.className = "mp-msg err"; })
+      .then(function(){ btn.disabled = false; });
+  });
+  $("mpLogout").addEventListener("click", function(){ store(SKEY, null); show("login"); });
+
+  // ---- データ ----
+  var DATA = null, RANGE = 7;
+  var TYPES = [["views", "ページが見られた回数"], ["tel", "電話ボタン"], ["web", "公式サイトへ"], ["line", "LINEボタン"], ["mail", "メール"]];
+  function sum(days, k){ return days.reduce(function(a, d){ return a + (d[k] || 0); }, 0); }
+  function renderStats(){
+    var st = DATA.stats || {}, days = st.days || [];
+    var cur = days.slice(-RANGE), prev = RANGE === 7 ? days.slice(-14, -7) : null;
+    $("mpKpis").innerHTML = TYPES.map(function(t){
+      var v = sum(cur, t[0]), diff = "";
+      if (prev) {
+        var p = sum(prev, t[0]);
+        if (p || v) diff = v > p ? '<i class="up">前の7日より +' + fmt(v - p) + '</i>' : v < p ? '<i class="down">前の7日より −' + fmt(p - v) + '</i>' : "<i>前の7日と同じ</i>";
+      }
+      return '<div class="mp-kpi"><span>' + t[1] + "</span><b>" + fmt(v) + "</b>" + diff + "</div>";
+    }).join("");
+    drawChart(cur);
+    $("mpStatNote").textContent = (st.error ? st.error + "。" : "") + "Googleアナリティクスの集計です（" + (st.fetchedAt || "") + "時点・数時間ごとに更新）。ボタンの回数は2026年11月12日から数えています。";
+  }
+  function drawChart(days){
+    var W = 720, H = 180, P = 24, n = days.length || 1, mx = Math.max(1, Math.max.apply(null, days.map(function(d){ return d.views; })));
+    var bw = (W - P * 2) / n, bars = "", labels = "";
+    days.forEach(function(d, i){
+      var h = Math.round((d.views / mx) * (H - 46)), x = P + i * bw;
+      bars += '<rect x="' + (x + bw * .15).toFixed(1) + '" y="' + (H - 22 - h) + '" width="' + (bw * .7).toFixed(1) + '" height="' + h + '" rx="2" fill="#1559c4"><title>' + d.date.slice(4, 6) + "/" + d.date.slice(6) + " " + d.views + "回</title></rect>";
+      if (d.views) bars += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + (H - 26 - h) + '" text-anchor="middle" font-size="11" fill="#0d3f8f">' + d.views + "</text>";
+      if (n <= 7 || i % 7 === 0 || i === n - 1) labels += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="11" fill="#5a6b80">' + Number(d.date.slice(4, 6)) + "/" + Number(d.date.slice(6)) + "</text>";
+    });
+    $("mpChart").innerHTML = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="日別の閲覧数"><line x1="' + P + '" x2="' + (W - P) + '" y1="' + (H - 22) + '" y2="' + (H - 22) + '" stroke="#c9d6e6"/>' + bars + labels + "</svg>";
+  }
+  var CHECK = [["catch", "キャッチコピー"], ["service", "サービス内容・強み"], ["types", "対応できる調査"], ["area", "対応エリア"], ["price", "料金"], ["hours", "営業時間"], ["methods", "相談方法"], ["pubphone", "電話番号"], ["url", "公式サイトのURL"], ["photos", "写真"]];
+  function renderCheck(){
+    var L = DATA.listing || {};
+    $("mpCheck").innerHTML = CHECK.map(function(c){
+      var has = c[0] === "photos" ? DATA.photos > 0 : (Array.isArray(L[c[0]]) ? L[c[0]].length : !!L[c[0]]);
+      return '<li class="' + (has ? "ok" : "no") + '">' + c[1] + (has ? "" : "<small>未入力</small>") + "</li>";
+    }).join("");
+  }
+  function load(tok){
+    show("loading");
+    post({ mode: "mypage_data", token: tok }).then(function(d){
+      if (!d.ok) { store(SKEY, null); show("login"); var m = $("mpLoginMsg"); m.textContent = d.error || ""; m.className = "mp-msg err"; return; }
+      if (d.session) store(SKEY, d.session);
+      DATA = d;
+      $("mpNum").textContent = d.id;
+      $("mpName").textContent = d.name || "掲載業者様";
+      $("mpPage").href = d.pageUrl; $("mpEdit").href = d.editUrl;
+      renderStats(); renderCheck(); show("dash");
+    }).catch(function(){ show("login"); var m = $("mpLoginMsg"); m.textContent = "読み込めませんでした。通信状態をご確認のうえ、もう一度お試しください。"; m.className = "mp-msg err"; });
+  }
+  document.querySelectorAll(".mp-tabs button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".mp-tabs button").forEach(function(x){ x.classList.toggle("on", x === b); });
+      RANGE = Number(b.dataset.r); if (DATA) renderStats();
+    });
+  });
+
+  // メールのリンク(#t=...)で来たらそのトークンを使い、アドレスバーからは消す
+  var m = location.hash.match(/[#&]t=([\w.-]+)/), tok = m ? m[1] : store(SKEY);
+  if (m) history.replaceState(null, "", location.pathname);
+  if (tok) load(tok); else show("login");
+})();
+</script>
+<footer class="t-foot"><div class="t-foot-in"><div><b>全国探偵無料検索</b><p style="margin:8px 0 0;max-width:360px;line-height:1.8">探偵業法に基づく届出情報（R8.5.31時点データ）を基に作成しています。</p></div><ul><li><a href="/#area">エリアから探す</a></li><li><a href="/#map">地図から探す</a></li><li><a href="/column/">コラム</a></li></ul><ul><li><a href="/contact.html#top">掲載のお申込み・削除</a></li><li><a href="/privacy.html#top">プライバシーポリシー</a></li><li><a href="https://exeresearch.jp/">運営：合同会社EXE RESEARCH</a></li></ul></div><div class="copy">運営：合同会社EXE RESEARCH</div></footer><a class="t-top" href="#top" aria-label="ページの先頭へ">↑</a>
+</body></html>
