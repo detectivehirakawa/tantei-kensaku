@@ -589,7 +589,7 @@ window.loadLeaflet=(function(){
   var items=[], map=null, layer=null, me=null, heroes={};
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function km(a,b,c,d){var R=6371,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r,h=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(h));}
-  function firstUrl(u){var m=String(u||'').match(/https?:\/\/[^\s]+/);return m?m[0]:'';}
+  function firstUrl(u){var a=String(u||'').match(/https?:\/\/[^\s]+/g)||[];for(var i=0;i<a.length;i++){if(!/line\.me|lin\.ee/.test(a[i]))return a[i];}return '';}
   function card(it){
     var x=it.x||{}, tel=String(x.pubphone||'').replace(/[^0-9+]/g,''), url=firstUrl(x.url);
     var dist=(it.d!=null)?'<span class="d">約'+(it.d<10?it.d.toFixed(1):Math.round(it.d))+'km</span>':'';
