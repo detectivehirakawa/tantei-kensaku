@@ -73,4 +73,51 @@
   input.addEventListener('input', render);
 })();
 </script>
+<!--pref-sp--><style>
+@media(max-width:700px){
+ .t-pagehero p{line-height:1.7}
+ .t-pagehero p .t-stat{margin:0 6px 4px 0}
+ .table-scroll{overflow:visible!important}
+ #tbl.sp-cards{display:block;width:100%;min-width:0!important;border:0;background:none}
+ #tbl.sp-cards thead{display:none}
+ #tbl.sp-cards tbody{display:block}
+ #tbl.sp-cards tr{display:flex;flex-direction:column;gap:3px;padding:12px 14px;margin:0 0 8px;border:1px solid var(--t-line,#d6e2f0);border-radius:8px;background:#fff}
+ #tbl.sp-cards tr.pref-row-featured{background:#f4faf6;border-color:#bfe3cb}
+ #tbl.sp-cards td{display:block;box-shadow:none!important;border:0!important;padding:0!important;background:none!important;width:auto!important}
+ #tbl.sp-cards td.sp-name{order:1;font-size:1rem;line-height:1.5}
+ #tbl.sp-cards td.sp-name a{font-weight:700}
+ #tbl.sp-cards td.sp-sub{order:2;font-size:.82rem;color:#4a5b70;line-height:1.6}
+ #tbl.sp-cards td.sp-sub::before{content:attr(data-label)"：";color:#7a8a9c}
+ #tbl.sp-cards td.sp-hide{display:none}
+ #tbl.sp-cards.sp-lim tbody tr:nth-child(n+31){display:none!important}
+ .sp-more{display:block;width:100%;font:inherit;font-weight:700;font-size:.95rem;color:#fff;background:var(--t-blue,#1559c4);border:0;border-radius:8px;padding:13px;margin:4px 0 0;cursor:pointer}
+}
+</style>
+<script>
+(function(){
+  if(!window.matchMedia('(max-width:700px)').matches)return;
+  var t=document.getElementById('tbl');if(!t||!t.tHead)return;
+  var heads=[].map.call(t.tHead.rows[0].cells,function(c){return c.textContent.trim();});
+  var rows=[].slice.call(t.tBodies[0].rows);
+  rows.forEach(function(tr){
+    [].forEach.call(tr.cells,function(td,i){
+      var txt=td.textContent.replace(/\s+/g,'');
+      var onlyMosaic=td.querySelector('.mosaic')&&!td.textContent.replace(td.querySelector('.mosaic').textContent,'').trim();
+      if(td.querySelector('a[href*="biz/"]'))td.className+=' sp-name';
+      else if(!txt||onlyMosaic)td.className+=' sp-hide';
+      else{td.className+=' sp-sub';td.setAttribute('data-label',heads[i]||'');}
+    });
+  });
+  t.classList.add('sp-cards');
+  var N=30;if(rows.length<=N)return;
+  t.classList.add('sp-lim');
+  var btn=document.createElement('button');btn.type='button';btn.className='sp-more';
+  btn.textContent='残り'+(rows.length-N)+'件をすべて表示';
+  (t.parentNode.classList.contains('table-scroll')?t.parentNode:t).insertAdjacentElement('afterend',btn);
+  var open=false;
+  btn.addEventListener('click',function(){open=true;t.classList.remove('sp-lim');btn.remove();});
+  var q=document.getElementById('q');
+  if(q)q.addEventListener('input',function(){if(open)return;var on=!q.value.trim();t.classList.toggle('sp-lim',on);btn.style.display=on?'':'none';});
+})();
+</script>
 </body></html>
