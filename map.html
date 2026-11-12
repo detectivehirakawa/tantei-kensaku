@@ -134,11 +134,24 @@ main{max-width:none;padding:0}
     iconSize: [16, 16],
     iconAnchor: [8, 8]
   });
+window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
+  /* 掲載済みの業者が入力した住所（自宅を伏せて市区町村までの場合も）の位置にピンを立てる。届出住所の位置は使わない（2026-11-13） */
+  var ids=Object.keys(extra||{}).filter(function(id){return extra[id]&&extra[id].officeAddress;});
+  return Promise.all(ids.map(function(id){
+    var q=String(extra[id].officeAddress), k='tkgeo:'+q, c=null;
+    try{c=JSON.parse(sessionStorage.getItem(k)||'null');}catch(e){}
+    var p=c?Promise.resolve(c):fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+      var g=(j&&j[0]&&j[0].geometry)?{lat:j[0].geometry.coordinates[1],lng:j[0].geometry.coordinates[0]}:{none:1};
+      try{sessionStorage.setItem(k,JSON.stringify(g));}catch(e){} return g;});
+    return p.then(function(g){ if(g&&g.lat!=null){geo[id]={lat:g.lat,lng:g.lng};}else{delete geo[id];} }).catch(function(){ delete geo[id]; });
+  })).then(function(){return geo;});
+};
   var cluster = L.markerClusterGroup();
   Promise.all([
     fetch('./geo.json').then(function(r){return r.json();}),
-    fetch('./all.json').then(function(r){return r.json();})
-  ]).then(function(res){
+    fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}),
+    fetch('/tantei-portal-data/biz_extra.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};})
+  ]).then(function(res){ return window.tkOfficeGeo(res[0],res[2]).then(function(){return res;}); }).then(function(res){
     var geoData = res[0], allData = res[1];
     var byId = {};
     allData.forEach(function(r){ byId[r.i] = r; });

@@ -588,7 +588,7 @@ footer.t-foot a:hover{text-decoration:underline}
         '<span class="r-addr">'+(dq ? '届出番号 '+esc(r.i)+'　' : '')+esc(r.a)+'</span></a>';
     }).join('') || '<div class="no-hit">該当する業者が見つかりません</div>';
   }
-  fetch('./all.json').then(function(r){return r.json();}).then(function(j){
+  fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){
     data = j;
     data.forEach(function(r){ r._s = nz(r.n) + '\n' + nz(r.k) + '\n' + nz(r.a); });
     input.addEventListener('input', render);
@@ -656,6 +656,18 @@ window.loadLeaflet=(function(){
 })();
 </script>
 <script>
+window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
+  /* 掲載済みの業者が入力した住所（自宅を伏せて市区町村までの場合も）の位置にピンを立てる。届出住所の位置は使わない（2026-11-13） */
+  var ids=Object.keys(extra||{}).filter(function(id){return extra[id]&&extra[id].officeAddress;});
+  return Promise.all(ids.map(function(id){
+    var q=String(extra[id].officeAddress), k='tkgeo:'+q, c=null;
+    try{c=JSON.parse(sessionStorage.getItem(k)||'null');}catch(e){}
+    var p=c?Promise.resolve(c):fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+      var g=(j&&j[0]&&j[0].geometry)?{lat:j[0].geometry.coordinates[1],lng:j[0].geometry.coordinates[0]}:{none:1};
+      try{sessionStorage.setItem(k,JSON.stringify(g));}catch(e){} return g;});
+    return p.then(function(g){ if(g&&g.lat!=null){geo[id]={lat:g.lat,lng:g.lng};}else{delete geo[id];} }).catch(function(){ delete geo[id]; });
+  })).then(function(){return geo;});
+};
 (function(){
   var mapEl=document.getElementById('nearMap'), listEl=document.getElementById('nearList'),
       btn=document.getElementById('nearBtn'), msg=document.getElementById('nearMsg');
@@ -690,12 +702,14 @@ window.loadLeaflet=(function(){
   }
   var red;
   Promise.all([
-    fetch('./all.json').then(function(r){return r.json();}),
+    fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}),
     fetch('./geo.json').then(function(r){return r.json();}),
-    fetch('../tantei-portal-data/biz_extra.json').then(function(r){return r.ok?r.json():{};}).catch(function(){return {};}),
+    fetch('../tantei-portal-data/biz_extra.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};}),
     window.loadLeaflet(false),
     fetch('./img/listed/index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};})
   ]).then(function(res){
+    return window.tkOfficeGeo(res[1],res[2]).then(function(){return res;});
+  }).then(function(res){
     var all=res[0], geo=res[1], extra=res[2]; heroes=res[4]||{};
     items=all.filter(function(r){return r.m===0;}).map(function(r){var g=geo[r.i]||{};
       return {i:r.i,n:r.n,a:r.a,lat:(g.lat!=null?g.lat:null),lng:(g.lng!=null?g.lng:null),x:extra[r.i]||null,d:null};});
@@ -743,7 +757,7 @@ window.loadLeaflet=(function(){
       var red=L.divIcon({className:'pin-permitted',html:'<div style="width:16px;height:16px;background:#d0392b;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.5)"></div>',iconSize:[16,16],iconAnchor:[8,8]});
       var cl=L.markerClusterGroup();
       var blur='filter:blur(3px);display:inline-block;background:#dfe2e7;padding:0 3px;border-radius:3px';
-      Promise.all([fetch('./geo.json').then(function(r){return r.json();}),fetch('./all.json').then(function(r){return r.json();})]).then(function(res){
+      Promise.all([fetch('./geo.json').then(function(r){return r.json();}),fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}),fetch('/tantei-portal-data/biz_extra.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};})]).then(function(res){return window.tkOfficeGeo(res[0],res[2]).then(function(){return res;});}).then(function(res){
         var g=res[0],by={};res[1].forEach(function(r){by[r.i]=r;});
         Object.keys(g).forEach(function(id){
           var p=g[id],r=by[id]; if(!p||!r) return;
