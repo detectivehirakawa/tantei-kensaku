@@ -14,6 +14,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y67CRKZJW"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-5Y67CRKZJW");(function(){var m=location.pathname.match(/\/biz\/(\d+)\.html/);if(!m)return;document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.getAttribute("href")||"",t=null;if(/^tel:/.test(h))t="tel";else if(/line\.me|lin\.ee/.test(h))t="line";else if(/^mailto:/.test(h))t="mail";else if(/^https?:/.test(h)&&a.hostname!==location.hostname)t="web";if(t)gtag("event","biz_click",{biz_id:m[1],click_type:t,transport_type:"beacon"});},true);})();</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
+/* iPhoneは16px未満の入力欄を押すと画面が拡大され両端が見切れるため（2026-11-13） */
+@media(max-width:700px){input,select,textarea{font-size:16px!important}}
 :root{
   --navy:#0d1b2a;
   --navy-2:#152b40;
