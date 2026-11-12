@@ -391,14 +391,14 @@ footer.t-foot a:hover{text-decoration:underline}
 .col-list{display:grid;gap:16px}
 .col-card{display:grid;grid-template-columns:240px 1fr;background:#fff;border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .3s}
 .col-card:hover{border-color:var(--accent)}
-.col-card img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:1200/630}
+.col-card img{width:100%;height:auto;object-fit:cover;display:block;aspect-ratio:1200/630;align-self:start}
 .col-card .c-body{padding:16px 18px}
 .col-card .c-date{font-size:.75rem;color:var(--body)}
 .col-card .c-title{font-family:var(--serif);font-weight:700;font-size:1.05rem;line-height:1.6;margin:4px 0 6px;color:var(--ink)}
 .col-card .c-desc{font-size:.82rem;color:var(--body);line-height:1.7;margin:0}
 @media(max-width:600px){.col-card{grid-template-columns:1fr}}
 
-.crumb{max-width:none;padding:0 0 10px;color:#5a6b80}
+.crumb{max-width:none;padding:0 0 10px;color:#5a6b80;line-height:1.6}
 .crumb a{color:var(--t-blue)}
 .col-wrap{max-width:none;margin:0;padding:0}
 .col-article{border-color:var(--t-line);border-radius:8px}
