@@ -10,7 +10,7 @@
 <meta property="og:url" content="https://tantei-kensaku.jp/">
 <meta property="og:site_name" content="全国探偵無料検索サービス">
 <meta property="og:locale" content="ja_JP">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"全国探偵無料検索サービス","alternateName":["全国探偵無料検索","tantei-kensaku.jp"],"url":"https://tantei-kensaku.jp/","inLanguage":"ja","publisher":{"@type":"Organization","name":"合同会社EXE RESEARCH","url":"https://exeresearch.jp/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"全国探偵無料検索サービス","alternateName":["全国探偵無料検索","tantei-kensaku.jp"],"url":"https://tantei-kensaku.jp/","sameAs":["https://www.instagram.com/tantei_kensaku/"],"inLanguage":"ja","publisher":{"@type":"Organization","name":"合同会社EXE RESEARCH","url":"https://exeresearch.jp/"}}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y67CRKZJW"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-5Y67CRKZJW");(function(){var m=location.pathname.match(/\/biz\/(\d+)\.html/);if(!m)return;document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.getAttribute("href")||"",t=null;if(/^tel:/.test(h))t="tel";else if(/line\.me|lin\.ee/.test(h))t="line";else if(/^mailto:/.test(h))t="mail";else if(/^https?:/.test(h)&&a.hostname!==location.hostname)t="web";if(t)gtag("event","biz_click",{biz_id:m[1],click_type:t,transport_type:"beacon"});},true);})();</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
@@ -408,7 +408,7 @@ footer.t-foot a:hover{text-decoration:underline}
 <div class="t-panel">
 <p class="t-panel-ttl">お近くの探偵事務所を探す<small>業者名か都道府県を入れると、すぐ下に結果が出ます</small></p>
 <div class="t-panel-body">
-<input type="text" id="q" placeholder="業者名で検索（例：ABC探偵事務所）">
+<input type="text" id="q" placeholder="業者名・届出番号で検索（例：ABC探偵事務所／43230060）">
 <select id="prefFilter"><option value="">都道府県を選択</option><option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
 <option value="岩手県">岩手県</option>
@@ -553,7 +553,7 @@ footer.t-foot a:hover{text-decoration:underline}
 
 <footer class="t-foot">
 <div class="t-foot-in">
-<div><b>全国探偵無料検索</b><p style="margin:8px 0 0;max-width:360px;line-height:1.8">都道府県公安委員会への届出資料（R8.5.31時点）を自社で収集・データ化し、毎年更新しています。掲載・充実は無料。探偵会社からの広告費・掲載料は0円です。</p></div>
+<div><b>全国探偵無料検索</b><p style="margin:8px 0 0;max-width:360px;line-height:1.8">都道府県公安委員会への届出資料（R8.5.31時点）を自社で収集・データ化し、毎年更新しています。掲載・充実は無料。探偵会社からの広告費・掲載料は0円です。</p><p style="margin:12px 0 0"><a href="https://www.instagram.com/tantei_kensaku/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;color:inherit;text-decoration:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;font-size:.82rem"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" style="vertical-align:-4px;margin-right:6px"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram @tantei_kensaku</a></p></div>
 <ul><li><a href="#area">エリアから探す</a></li><li><a href="./map.html">地図から探す</a></li><li><a href="./column/">コラム</a></li></ul>
 <ul><li><a href="./contact.html">掲載のお申込み・削除</a></li><li><a href="./about.html#top">運営者情報</a></li><li><a href="./policy.html#top">掲載基準・編集方針</a></li><li><a href="./column/todokede-data-konkyo-shiryo.html">情報の根拠資料</a></li><li><a href="./privacy.html">プライバシーポリシー</a></li><li><a href="https://exeresearch.jp/">運営：合同会社EXE RESEARCH</a></li></ul>
 </div>
@@ -573,17 +573,18 @@ footer.t-foot a:hover{text-decoration:underline}
     var q = (input.value||'').trim();
     var nq = nz(q) || q.toLowerCase();
     var pref = prefSel.value;
+    var dq = /^\d{4,8}$/.test(nq) ? nq : '';
     if(!q && !pref){ results.innerHTML=''; countEl.textContent=''; return; }
     var hits = data.filter(function(r){
       var okPref = !pref || r.p === pref;
-      var okQ = !q || r._s.indexOf(nq) !== -1 || (r.m===0 && /^\d{8}$/.test(q) && r.i===q);
+      var okQ = !q || r._s.indexOf(nq) !== -1 || (dq && r.i.indexOf(dq) === 0);
       return okPref && okQ;
     }).slice(0, 200);
     countEl.textContent = hits.length + '件表示（最大200件）';
     results.innerHTML = hits.map(function(r){
       return '<a class="result-item" href="./biz/'+r.i+'.html">'+
         '<span class="r-name">'+esc(r.n)+'</span>'+
-        '<span class="r-addr">'+esc(r.a)+'</span></a>';
+        '<span class="r-addr">'+(dq ? '届出番号 '+esc(r.i)+'　' : '')+esc(r.a)+'</span></a>';
     }).join('') || '<div class="no-hit">該当する業者が見つかりません</div>';
   }
   fetch('./all.json').then(function(r){return r.json();}).then(function(j){
@@ -591,6 +592,8 @@ footer.t-foot a:hover{text-decoration:underline}
     data.forEach(function(r){ r._s = nz(r.n) + '\n' + nz(r.k) + '\n' + nz(r.a); });
     input.addEventListener('input', render);
     prefSel.addEventListener('change', render);
+    var pq = new URLSearchParams(location.search).get('q');
+    if(pq){ input.value = pq; render(); }
   });
 })();
 </script>
