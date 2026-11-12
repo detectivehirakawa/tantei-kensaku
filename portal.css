@@ -447,6 +447,23 @@ footer.t-foot a:hover{text-decoration:underline}
 }
 .t-wrap .cert-seal{margin-top:0}
 @media(max-width:480px){.t-wrap .cert-frame{padding-top:30px}.t-wrap .cert-seal{margin-top:0}}
+@media(max-width:699px){
+.t-wrap .cert-frame{container-type:inline-size;aspect-ratio:16/9;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:3cqw 6cqw;border-width:5px}
+.t-wrap .cert-corner{width:5cqw;height:5cqw;border-width:2px}
+.t-wrap .cert-corner.tl,.t-wrap .cert-corner.tr{top:2cqw}.t-wrap .cert-corner.bl,.t-wrap .cert-corner.br{bottom:2cqw}
+.t-wrap .cert-corner.tl,.t-wrap .cert-corner.bl{left:2cqw}.t-wrap .cert-corner.tr,.t-wrap .cert-corner.br{right:2cqw}
+.t-wrap .cert-sparkle{font-size:3cqw}
+.t-wrap .cert-seal{position:absolute;top:4cqw;right:5cqw;margin:0;width:15cqw;height:15cqw;font-size:2.6cqw;border-width:2px;transform:rotate(-8deg);box-shadow:0 4px 10px -4px rgba(0,0,0,.5),inset 0 0 0 2px rgba(255,255,255,.45),0 0 12px 3px rgba(255,215,0,.8)}
+.t-wrap .cert-eyebrow{font-size:2.3cqw;letter-spacing:.3em;margin-bottom:1.2cqw}
+.t-wrap .cert-name{font-size:5.6cqw;line-height:1.3;max-width:62%;margin-bottom:0}
+.t-wrap .cert-divider{font-size:2.6cqw;margin:1.2cqw auto 2cqw}
+.t-wrap .cert-frame dl{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;justify-content:center;column-gap:5cqw;max-width:none;width:100%}
+.t-wrap .cert-frame dt{margin-top:0;text-align:center;font-size:2cqw;letter-spacing:.1em}
+.t-wrap .cert-frame dd{text-align:center;margin-top:.6cqw;font-size:3cqw;line-height:1.35}
+.t-wrap .cert-foot{margin-top:2.4cqw;font-size:2cqw;letter-spacing:.15em}
+.t-wrap .cert-name .hw-line{display:inline}
+.t-wrap .cert-name>span[style]{font-size:.55em!important;margin-top:.3cqw!important;line-height:1.3}
+}
 .t-wrap .biz-card{border-radius:8px;border-color:var(--t-line);padding:0;overflow:hidden}
 .t-wrap .biz-card>p:first-child{background:var(--t-pale);margin:0!important;padding:14px 18px;font-size:1.05rem}
 .t-wrap .biz-card>div{padding:14px 18px 0}
