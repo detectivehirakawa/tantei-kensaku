@@ -344,6 +344,13 @@ footer.t-foot a:hover{text-decoration:underline}
 .t-cratio-sel select{font:inherit;font-weight:400;padding:6px 10px;border:1px solid var(--t-rule,#d6e2f0);border-radius:6px;background:#fff}
 .t-cratio-note{font-size:.8rem;color:#5a6b80;margin:0 0 10px}
 
+.t-panel #results.t-presults:not(:empty){max-height:340px;overflow-y:auto;padding:8px;margin:0;border-radius:8px;background:#f4f8fd;-webkit-overflow-scrolling:touch}
+.t-panel #results.t-presults a.result-item{border-radius:6px;margin-bottom:6px;padding:9px 11px}
+.t-panel #results.t-presults a.result-item:last-child{margin-bottom:0}
+.t-panel #results .r-name,.t-panel #results .r-addr{display:block}
+.t-panel #results .no-hit{padding:10px;font-size:.88rem;color:#5a6b80;text-align:center}
+.t-pcount{margin:2px 0 6px;font-size:.8rem;font-weight:700;color:var(--t-blue-d,#0d3f8f)}
+.t-pcount:empty{display:none}
 .t-dtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px;border-bottom:2px solid var(--t-blue)}
 .t-dtabs button{font:inherit;font-size:.88rem;font-weight:700;padding:9px 16px;border:1px solid var(--t-line);border-bottom:0;border-radius:8px 8px 0 0;background:#eef3fa;color:#3c4c60;cursor:pointer}
 .t-dtabs button[aria-selected=true]{background:var(--t-blue);border-color:var(--t-blue);color:#fff}
@@ -447,6 +454,8 @@ footer.t-foot a:hover{text-decoration:underline}
 <option value="宮崎県">宮崎県</option>
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option></select>
+<div class="search-count t-pcount" id="searchCount" aria-live="polite"></div>
+<div id="results" class="t-presults"></div>
 <a class="t-pbtn" href="#near"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>現在地の近くで探す</a>
 <a class="t-pbtn" href="#area"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>エリアから探す</a>
 <a class="t-pbtn" href="#map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg>地図から探す</a>
@@ -458,8 +467,6 @@ footer.t-foot a:hover{text-decoration:underline}
 
 <div class="t-wrap">
 <main style="max-width:none;margin:0;padding:0">
-<div class="search-count" id="searchCount" style="margin:0 0 8px"></div>
-<div id="results"></div>
 
 <section class="t-box t-near" id="near"><h2 class="t-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg><b>お近くの掲載済み探偵に依頼する</b><i>現在地から近い順に、掲載済みの探偵事務所を地図と一覧で表示します</i></h2>
 <div class="t-near-bar"><button type="button" class="t-near-btn" id="nearBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>現在地から探す</button>
