@@ -9,7 +9,9 @@
   たびに実行する。何度実行しても結果は同じ（変更がなければ何も書き換えない）。
 
 データ：
-  tantei-portal-data/biz_extra.json    … GAS が管理する掲載内容（フォームの入力）
+  tantei-portal-data/biz_extra.json    … GAS が管理する掲載内容（フォームの入力。プロフィール項目
+                                          corpName / founded / staff / payment / successFee / expenses /
+                                          estimate / lawyer / groups / awards を含む）
   tantei-portal-data/biz_profile.json  … このリポジトリだけで管理する追加情報（GAS は触らない）
       "_legacy": ["届出番号", …]   以前の構成のまま残す業者（ここから外すと新しい構成になる）
       "<届出番号>": {
@@ -18,6 +20,11 @@
           "profile_add": [["項目", "値"], …]  自動のプロフィール表の末尾に足す行
           "note": "…"                         カード末尾の注記（省略時は「ご提供情報（○○更新）」）
       }
+
+GAS 側の対応（2026-11-13、Web エディタで直接変更・バージョン56・VERSION '2026-11-13d'）：
+  プロフィール項目を受け取れるように、Code.gs の sanitizeFields_ ／ doApprove_ の extraEntry ／
+  editDiffText_ の labels に上記10個のキーを追加した。手元の Code.gs から GAS をデプロイし直すときは、
+  先に同じ変更を手元にも入れること（入れないと、フォームのプロフィール項目が保存されなくなる）。
 
 紹介文は、ページにすでにある本文（<div class="biz-svc">…</div>）をそのまま使う。
 フォームの「サービス内容」に【どんな探偵社？】のような見出し行があれば、GAS がそれを
@@ -92,6 +99,7 @@ def auto_summary(entry):
     return [
         ["対応できる調査", joined(entry.get("types") or [])],
         ["料金の目安", entry.get("price")],
+        ["支払い方法", entry.get("payment")],
         ["対応エリア", entry.get("area")],
         ["相談受付", reception],
     ]
@@ -101,14 +109,25 @@ def auto_profile(bid, name, entry, biz):
     pref = (biz or {}).get("p") or ""
     # 北海道は方面ごとに公安委員会が分かれるので、委員会名は書かない
     todokede = ("%s公安委員会 第%s号" % (pref, bid)) if pref and pref != "北海道" else "第%s号" % bid
+    # 法人名〜受賞・資格は、掲載フォームのプロフィール欄（2026-11-13 追加）。空欄の行は出さない。
     return [
         ["屋号", name],
+        ["法人名", entry.get("corpName")],
+        ["設立", entry.get("founded")],
         ["代表者", entry.get("repName")],
         ["所在地", entry.get("officeAddress") or (biz or {}).get("a")],
         ["探偵業届出番号", todokede],
+        ["所属団体", entry.get("groups")],
+        ["受賞・資格", entry.get("awards")],
+        ["従業員数", entry.get("staff")],
         ["対応可能な調査", joined(entry.get("types") or [])],
         ["対応エリア", entry.get("area")],
         ["料金の目安", entry.get("price")],
+        ["成功報酬の有無", entry.get("successFee")],
+        ["諸経費", entry.get("expenses")],
+        ["支払い方法", entry.get("payment")],
+        ["相談・見積もり", entry.get("estimate")],
+        ["弁護士との連携", entry.get("lawyer")],
         ["営業時間", entry.get("hours")],
         ["ご相談方法", joined(entry.get("methods") or [])],
         ["電話番号", entry.get("pubphone")],

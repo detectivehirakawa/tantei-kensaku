@@ -189,6 +189,30 @@
 <label>代表者名（任意）<small>　※ご記入いただくと、掲載ページに公開されます</small>
 <input type="text" id="repName" placeholder="例：山田太郎"></label>
 
+<div class="svc4">
+<p class="svc4-lead"><b>プロフィール</b><small>　※掲載ページの「プロフィール」の表に表示されます。書けるところだけで構いません</small></p>
+<label>法人名（運営会社）<small>　※個人事業の場合は空欄で構いません</small>
+<input type="text" id="corpName" maxlength="80" placeholder="例：株式会社〇〇"></label>
+<label>設立・創業
+<input type="text" id="founded" maxlength="40" placeholder="例：2015年4月"></label>
+<label>従業員数
+<input type="text" id="staff" maxlength="60" placeholder="例：5名（女性調査員2名）"></label>
+<label>支払い方法
+<input type="text" id="payment" maxlength="120" placeholder="例：現金・銀行振込・クレジットカード、分割払い可"></label>
+<label>成功報酬の有無
+<input type="text" id="successFee" maxlength="120" placeholder="例：なし／人探しのみ成功報酬制"></label>
+<label>諸経費（料金のほかにかかる費用）
+<input type="text" id="expenses" maxlength="200" placeholder="例：交通費などの実費のみ。車両費・報告書の作成費は料金に含む"></label>
+<label>相談・見積もり
+<input type="text" id="estimate" maxlength="120" placeholder="例：無料（匿名での相談も可）"></label>
+<label>弁護士との連携
+<input type="text" id="lawyer" maxlength="120" placeholder="例：あり（提携の法律事務所を紹介できます）"></label>
+<label>所属団体
+<input type="text" id="groups" maxlength="200" placeholder="例：一般社団法人〇〇調査業協会"></label>
+<label>受賞・資格・登録
+<input type="text" id="awards" maxlength="300" placeholder="例：探偵業務取扱主任者、〇〇認定"></label>
+</div>
+
 <label>ご相談方法<small>　※複数選択可</small></label>
 <div class="check-grid" id="contactMethods">
 <label><input type="checkbox" value="電話">電話</label>
@@ -284,6 +308,16 @@
 <dt>URL</dt><dd id="pvUrl"></dd>
 <dt>事務所の住所（掲載用・優先）</dt><dd id="pvOfficeAddress"></dd>
 <dt>代表者名</dt><dd id="pvRepName"></dd>
+<dt>法人名（運営会社）</dt><dd id="pv_corpName"></dd>
+<dt>設立・創業</dt><dd id="pv_founded"></dd>
+<dt>従業員数</dt><dd id="pv_staff"></dd>
+<dt>支払い方法</dt><dd id="pv_payment"></dd>
+<dt>成功報酬の有無</dt><dd id="pv_successFee"></dd>
+<dt>諸経費（料金のほかにかかる費用）</dt><dd id="pv_expenses"></dd>
+<dt>相談・見積もり</dt><dd id="pv_estimate"></dd>
+<dt>弁護士との連携</dt><dd id="pv_lawyer"></dd>
+<dt>所属団体</dt><dd id="pv_groups"></dd>
+<dt>受賞・資格・登録</dt><dd id="pv_awards"></dd>
 <dt>その他</dt><dd id="pvOther"></dd>
 </dl>
 </div>
@@ -337,6 +371,8 @@
 
   /* 紹介文の4つの見出し（2026-11-13）：4つの欄を【見出し】つきの1つの本文にまとめ、これまでと同じ service として送る。
      掲載ページでは【見出し】だけの行が見出しになる。見出しのない既存の本文は、紹介文の欄に手を入れるまで元のまま送る。 */
+  /* プロフィール項目（2026-11-13）：GAS の sanitizeFields_ と同じキー名で送る。 */
+  var PROFILE_FIELDS = [['corpName', '法人名（運営会社）'], ['founded', '設立・創業'], ['staff', '従業員数'], ['payment', '支払い方法'], ['successFee', '成功報酬の有無'], ['expenses', '諸経費（料金のほかにかかる費用）'], ['estimate', '相談・見積もり'], ['lawyer', '弁護士との連携'], ['groups', '所属団体'], ['awards', '受賞・資格・登録']];
   var SVC_HEADS = ['どんな探偵社？', '調査内容と料金の目安', '注目ポイント', '相談を考えている方へ'];
   var SVC_IDS = ['svc1', 'svc2', 'svc3', 'svc4t'];
   var SVC_MAX = 2000;
@@ -393,6 +429,7 @@
     var ag = document.getElementById('agree'); if (ag) ag.required = false;
     ['catch','service','area','price','hours','officeAddress','repName','pubphone','url','other'].forEach(function(k){ setVal(k, entry[k]); });
     splitService(entry.service);
+    PROFILE_FIELDS.forEach(function(kv){ setVal(kv[0], entry[kv[0]]); });
     var otherTypes = checkBoxes('svcTypes', entry.types);
     if (otherTypes.length) { checkBoxes('svcTypes', ['その他']); setVal('svcOther', otherTypes.join('、')); }
     checkBoxes('contactMethods', entry.methods);
@@ -452,6 +489,10 @@
     if (officeAddress) parts.push('【事務所の住所（掲載用・優先）】\n' + officeAddress);
     var repName = document.getElementById('repName').value.trim();
     if (repName) parts.push('【代表者名】\n' + repName);
+    PROFILE_FIELDS.forEach(function(kv){
+      var v = document.getElementById(kv[0]).value.trim();
+      if (v) parts.push('【' + kv[1] + '】\n' + v);
+    });
     var methods = checkedValues('contactMethods');
     if (methods.length) parts.push('【ご相談方法】\n' + methods.join('、'));
     var pubphone = document.getElementById('pubphone').value.trim();
@@ -475,13 +516,15 @@
 
   function buildFields(){
     var val = function(elId){ return (document.getElementById(elId).value || '').trim(); };
-    return {
+    var fields = {
       catch: val('catch'), service: val('service'), types: svcTypesArray(),
       area: val('area'), price: val('price'), hours: val('hours'),
       methods: checkedValues('contactMethods'), pubphone: val('pubphone'),
       url: val('url'), other: val('other'),
       officeAddress: val('officeAddress'), repName: val('repName')
     };
+    PROFILE_FIELDS.forEach(function(kv){ fields[kv[0]] = val(kv[0]); });
+    return fields;
   }
 
   var MAX_PHOTOS = 5;
@@ -535,6 +578,7 @@
     document.getElementById('pvUrl').textContent = val('url') || '（未入力）';
     document.getElementById('pvOfficeAddress').textContent = val('officeAddress') || '（未入力）';
     document.getElementById('pvRepName').textContent = val('repName') || '（未入力）';
+    PROFILE_FIELDS.forEach(function(kv){ document.getElementById('pv_' + kv[0]).textContent = val(kv[0]) || '（未入力）'; });
     document.getElementById('pvOther').textContent = val('other') || '（未入力）';
     var photoBox = document.getElementById('pvPhoto');
     photoBox.innerHTML = selectedPhotos.map(function(p){ return '<img src="' + p.dataUrl + '" alt="">'; }).join('');
