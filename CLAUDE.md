@@ -56,3 +56,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - `tantei-portal-data/biz_web.json` … 未掲載の業者の「ホームページで確認できた調査項目」。サイトに届出番号が載っていて本人と確かめられたものだけ（大分県で試行：51件中12件）。`render_hp_types.py` が業者ページの `<!--/biz-facts-->` の後に書き込み、トップの「調査の種類」の絞り込みにも使う（「HPで確認」表示）。
 - `tantei-portal-data/gbp.json` … 掲載済み業者の Googleマップの★・件数。`google_rating.py render` が「〇〇を利用したことがあるユーザーの感想」として書き込む（本文は課金のため出さない）。`gbp-rating.yml` が週1回取り直す（Secrets の PLACES_API_KEY が必要）。新しく掲載された業者は名前と市区町村が一致すれば自動で place_id を登録。
 - どちらも listed-hero.yml の中で毎回実行（APIは呼ばない）。
+
+## 届出番号と管理番号（2026-11-14、GAS バージョン61・VERSION 2026-11-14c）
+
+- 公安委員会の一覧は「届出証明書番号」「管理番号」の2欄。当サイトのページ番号は1欄目。約2,600件は値が違い、業者が管理番号を名乗ることがある（例: 総合探偵社insight 10249010 / 10240018）。
+- all.json の `j` に管理番号（違うものだけ）。トップの番号検索・edit.html の名前の自動入力・GAS の申込/承認/リンク確認/マイページのログインは、どちらの番号でも同じ業者になる（GAS の resolveBizId_）。
+- 表示する番号の差し替えは `tantei-portal-data/display_no.json`（ページ番号→表示番号）を `render_display_no.py` が反映（listed-hero.yml 内）。管理番号で申し込まれた業者は、承認時に GAS が自動で display_no.json に入れる（運営者指示: 事業者の要望を優先）。
