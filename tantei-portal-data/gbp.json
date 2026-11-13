@@ -24,11 +24,10 @@
   "searched": "2026-11-13"
  },
  "44250079": {
-  "searched": "2026-11-13",
-  "place_id": "ChIJ-S-GiReHGGARvqNsV1IVL7o",
-  "rating": 5,
-  "count": 1,
-  "uri": "https://maps.google.com/?cid=13415965258358236094&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-  "fetched": "2026-11-13"
+  "searched": "2026-11-14",
+  "place_id": "",
+  "rejected": [
+   "ChIJ-S-GiReHGGARvqNsV1IVL7o"
+  ]
  }
 }

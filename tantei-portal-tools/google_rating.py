@@ -3,7 +3,8 @@
 口コミ本文は出さない（本文の取得は課金が増えるため運営者判断で見送り）。出すのは ★評価・件数・Googleマップの口コミへのリンクだけ。
 
 データ: tantei-portal-data/gbp.json
-  { "<届出番号>": { "place_id": "ChIJ...",       … 手で確認して入れる（find で候補を調べる）
+  { "<届出番号>": { "place_id": "ChIJ...",       … 手で確認して入れる（find で候補を調べる）。自動で見つけたものもある
+                    "rejected": ["ChIJ..."],      … 別の業者だった登録（自動で再び選ばない）
                     "rating": 4.8, "count": 23,   … fetch が書き込む
                     "uri": "https://maps.google.com/?cid=...",
                     "fetched": "2026-11-14" } }
@@ -71,6 +72,9 @@ def norm(x):
     return re.sub(r"[\s・･.,、。()（）「」]|株式会社|有限会社|合同会社|\(株\)|\(有\)", "", x)
 
 
+GENERIC = r"総合|探偵事務所|探偵社|探偵|興信所|調査事務所|調査室|調査|事務所|リサーチ|research|office|オフィス"
+
+
 def auto_find(d, today):
     """掲載済みなのに place_id が無い業者を探す。名前と市区町村の両方が一致したときだけ採用（30日に1回まで探し直す）。"""
     permitted = json.load(open(os.path.join(DATA, "permitted.json"), encoding="utf-8"))
@@ -92,9 +96,14 @@ def auto_find(d, today):
                 "places.id,places.displayName,places.formattedAddress", {"textQuery": "%s %s" % (b.get("n"), b.get("a"))})
         calls += 1
         hit = None
+        core = re.sub(GENERIC, "", name)
         for p in j.get("places", []):
+            if p["id"] in (e.get("rejected") or []):
+                continue
             dn, addr = norm(p.get("displayName", {}).get("text")), p.get("formattedAddress") or ""
-            if len(name) >= 4 and (name in dn or dn in name) and dn and (not city or city.group(2) in addr):
+            # 「探偵事務所」のような一般名だけで一致させない（2026-11-14 EDGE探偵事務所が「探偵事務所」という別の登録と誤って一致した）
+            dcore = re.sub(GENERIC, "", dn)
+            if len(core) >= 2 and core in dcore and (not city or city.group(2) in addr):
                 hit = p; break
         e["searched"] = today
         if hit:
