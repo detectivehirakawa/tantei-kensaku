@@ -1,5 +1,7 @@
 # 全国探偵検索：掲載が承認されたら（GAS が tantei-portal-data を更新したら）、
-# その探偵社のホームページの最初の1画面を撮って「お近くの掲載済み探偵」のカード背景に使う。
+# 1) 掲載ページを「ひと目でわかる表・紹介文・プロフィール表」の構成に組み直す（render_listed.py）。
+#    承認時の GAS や手元のフルリビルドは以前の構成で書き出すので、業者ページが更新されたときも実行する。
+# 2) その探偵社のホームページの最初の1画面を撮って「お近くの掲載済み探偵」のカード背景に使う。
 name: listed-hero
 on:
   push:
@@ -7,6 +9,9 @@ on:
     paths:
       - 'tantei-portal-data/permitted.json'
       - 'tantei-portal-data/biz_extra.json'
+      - 'tantei-portal-data/biz_profile.json'
+      - 'tantei-portal-tools/render_listed.py'
+      - 'biz/*.html'
   workflow_dispatch:
     inputs:
       force:
@@ -27,6 +32,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: 掲載ページを新しい構成に組み直す
+        continue-on-error: true
+        run: python tantei-portal-tools/render_listed.py
       - name: 日本語フォントと Pillow
         run: |
           sudo apt-get update -qq
@@ -42,5 +50,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add img/listed biz
           if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
-          git commit -m "全国探偵検索: 掲載済み探偵社のヒーロー画像と掲載証の背景を更新（自動）"
+          git commit -m "全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
           for n in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
