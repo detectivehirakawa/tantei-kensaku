@@ -45,3 +45,8 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - edit.html に「事務所名」「事務所名のふりがな」欄（キー `dispName` / `dispKana`）。今の表示名を all.json から入れておき、業者が書き換えられる。
 - 承認時（doApprove_）に、名前が今と違えば all.json の n/k、掲載ページ内の名前（タイトル・構造化データ含む）、都道府県一覧・市区町村ページの行と構造化データを差し替える。biz_extra.json にも dispName/dispKana を保存。
 - build_site.py も biz_extra.json の dispName/dispKana を data/name_override.json の後に優先して使う（ビルドし直しても戻らない）。
+
+## 確認バッジと調査の種類の絞り込み（2026-11-14、GAS バージョン59・VERSION 2026-11-14a）
+
+- 掲載済みページのカード先頭に `<div class="biz-badges">`（届出確認済み・事務所が入力・所在地公開・代表者名公開・掲載料0円）。GAS の bizBadgesHtml_ と build_site.py の biz_badges_html が同じものを出し、render_listed.py はそのまま先頭に置く。
+- トップの検索に「調査の種類」（#typeFilter）。biz_extra.json の types を実行時に読み、掲載済みの事務所だけを絞り込む（承認されれば自動で対象になる）。

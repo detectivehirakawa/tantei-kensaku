@@ -353,6 +353,7 @@ footer.t-foot a:hover{text-decoration:underline}
 .t-panel #results.t-presults a.result-item:last-child{margin-bottom:0}
 .t-panel #results .r-name,.t-panel #results .r-addr{display:block}
 .t-panel #results .no-hit{padding:10px;font-size:.88rem;color:#5a6b80;text-align:center}
+.t-panel #results .r-badge{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:700;background:#e7f6ec;color:#0f7a3d;border:1px solid #bfe3cb;vertical-align:1px}
 .t-pcount{margin:2px 0 6px;font-size:.8rem;font-weight:700;color:var(--t-blue-d,#0d3f8f)}
 .t-pcount:empty{display:none}
 .t-dtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px;border-bottom:2px solid var(--t-blue)}
@@ -458,6 +459,7 @@ footer.t-foot a:hover{text-decoration:underline}
 <option value="宮崎県">宮崎県</option>
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option></select>
+<select id="typeFilter" aria-label="調査の種類"><option value="">調査の種類を選択</option><option>浮気調査</option><option>素行調査</option><option>人探し</option><option>企業・信用調査</option><option>盗聴発見</option><option>ストーカー対策</option><option>結婚前調査</option></select>
 <div class="search-count t-pcount" id="searchCount" aria-live="polite"></div>
 <div id="results" class="t-presults"></div>
 <a class="t-pbtn" href="#near"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>現在地の近くで探す</a>
@@ -569,7 +571,8 @@ footer.t-foot a:hover{text-decoration:underline}
   var prefSel = document.getElementById('prefFilter');
   var results = document.getElementById('results');
   var countEl = document.getElementById('searchCount');
-  var data = null;
+  var typeSel = document.getElementById('typeFilter');
+  var data = null, extra = {};
   function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function nz(s){s=String(s||'');if(s.normalize)s=s.normalize('NFKC');s=s.toLowerCase().replace(/[\u3041-\u3096]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+0x60);});return s.replace(/株式会社|有限会社|合同会社|合資会社|合名会社|一般社団法人|\((株|有|同)\)/g,'').replace(/[\s・･.,、。，．\-‐‑–—―−ー〜~_'"’‘”“「」『』()（）\[\]［］【】&＆\/／!！?？:：;；]/g,'');}
   function render(){
@@ -577,24 +580,36 @@ footer.t-foot a:hover{text-decoration:underline}
     var nq = nz(q) || q.toLowerCase();
     var pref = prefSel.value;
     var dq = /^\d{4,8}$/.test(nq) ? nq : '';
-    if(!q && !pref){ results.innerHTML=''; countEl.textContent=''; return; }
+    var typ = typeSel ? typeSel.value : '';
+    if(!q && !pref && !typ){ results.innerHTML=''; countEl.textContent=''; return; }
+    /* 調査の種類（2026-11-14）：掲載済みの事務所が登録した「対応可能な調査」で絞り込む */
+    function hasType(r){
+      var e = extra[r.i]; if(!e || r.m !== 0) return false;
+      var ts = (e.types || []).join('、');
+      return ts.indexOf(typ) !== -1;
+    }
     var hits = data.filter(function(r){
       var okPref = !pref || r.p === pref;
       var okQ = !q || r._s.indexOf(nq) !== -1 || (dq && r.i.indexOf(dq) === 0);
-      return okPref && okQ;
-    }).slice(0, 200);
-    countEl.textContent = hits.length + '件表示（最大200件）';
+      var okT = !typ || hasType(r);
+      return okPref && okQ && okT;
+    });
+    hits.sort(function(a,b){ return (a.m||0) - (b.m||0); });
+    hits = hits.slice(0, 200);
+    countEl.textContent = typ ? hits.length + '件（「' + typ + '」に対応と登録している掲載済みの事務所）' : hits.length + '件表示（最大200件）';
     results.innerHTML = hits.map(function(r){
       return '<a class="result-item" href="./biz/'+r.i+'.html">'+
-        '<span class="r-name">'+esc(r.n)+'</span>'+
+        '<span class="r-name">'+esc(r.n)+(r.m === 0 ? ' <span class="r-badge">✓ 掲載済み</span>' : '')+'</span>'+
         '<span class="r-addr">'+(dq ? '届出番号 '+esc(r.i)+'　' : '')+esc(r.a)+'</span></a>';
-    }).join('') || '<div class="no-hit">該当する業者が見つかりません</div>';
+    }).join('') || '<div class="no-hit">' + (typ ? 'この条件で「' + esc(typ) + '」に対応と登録している掲載済みの事務所は、まだありません。調査の種類を外すと、届出業者すべてから探せます。' : '該当する業者が見つかりません') + '</div>';
   }
   fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){
     data = j;
     data.forEach(function(r){ r._s = nz(r.n) + '\n' + nz(r.k) + '\n' + nz(r.a); });
     input.addEventListener('input', render);
     prefSel.addEventListener('change', render);
+    if(typeSel) typeSel.addEventListener('change', render);
+    fetch('/tantei-portal-data/biz_extra.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).then(function(j){ extra = j || {}; if(typeSel && typeSel.value) render(); }).catch(function(){});
     var pq = new URLSearchParams(location.search).get('q');
     if(pq){ input.value = pq; render(); }
   });

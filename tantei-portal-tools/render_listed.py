@@ -146,6 +146,8 @@ def render_card(bid, page, entry, biz, prof):
     m = re.search(r"<h1>(.*?)</h1>", page, flags=re.S)
     name = re.sub(r"<[^>]+>", "", m.group(1)).strip() if m else (biz or {}).get("n", "")
 
+    # 確認バッジ（2026-11-14）。GAS / build_site.py が書き出したものをそのまま先頭に置く
+    badges = div_block(card, card.find('<div class="biz-badges"'))
     top_cta = div_block(card, card.find('<div class="biz-cta biz-cta--top">'))
     photos = div_block(card, card.find('<div class="biz-photos"'))
     intro = div_block(card, card.find('<div class="biz-svc">'))
@@ -161,7 +163,7 @@ def render_card(bid, page, entry, biz, prof):
         return ('<section class="biz-svc-wrap" style="padding-bottom:14px">'
                 '<h2 class="svc-title">%s</h2></section>' % title)
 
-    parts = []
+    parts = [badges]
     if str(entry.get("catch") or "").strip():
         parts.append('<p style="%s">%s</p>' % (CATCH_STYLE, esc(entry["catch"])))
     parts += [top_cta, photos]
