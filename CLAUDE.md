@@ -39,3 +39,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 - 紹介文は 4 つの欄（どんな探偵社？／調査内容と料金の目安／注目ポイント／相談を考えている方へ）です。送信時に `【見出し】` つきの 1 つの本文にまとめ、これまでと同じ `service` として送ります（合計 2000 字まで。GAS 側の上限と同じ）。
 - プロフィール項目は上の 10 個のキーで送ります。上限の文字数は GAS の `sanitizeFields_` と同じにしてあります。
+
+## 事務所名の変更（2026-11-13、GAS バージョン58・VERSION 2026-11-13f）
+
+- edit.html に「事務所名」「事務所名のふりがな」欄（キー `dispName` / `dispKana`）。今の表示名を all.json から入れておき、業者が書き換えられる。
+- 承認時（doApprove_）に、名前が今と違えば all.json の n/k、掲載ページ内の名前（タイトル・構造化データ含む）、都道府県一覧・市区町村ページの行と構造化データを差し替える。biz_extra.json にも dispName/dispKana を保存。
+- build_site.py も biz_extra.json の dispName/dispKana を data/name_override.json の後に優先して使う（ビルドし直しても戻らない）。

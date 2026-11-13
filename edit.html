@@ -150,6 +150,11 @@
 <legend>掲載ページに追加する内容（無料）</legend>
 <p style="font-size:.85rem;color:var(--body);margin:0 0 4px">掲載ページにそのまま反映しますので、公開してよい内容をご記入ください。空欄の項目は掲載しません。<b style="color:var(--accent-ink)">都道府県別一覧での掲載済み事務所同士の表示順は、ご記入いただいた内容の充実度（項目数・文章量）で決まります。</b>詳しく・具体的にご記入いただくほど、上位に表示されやすくなります。</p>
 
+<label>事務所名（掲載ページに表示する名前）<small>　※届出上の名前と違う屋号で掲載したい場合は書き換えてください。検索・一覧・地図・掲載ページのすべてに反映されます</small>
+<input type="text" id="dispName" maxlength="60" placeholder="例：〇〇探偵事務所"></label>
+<label>事務所名のふりがな（カタカナ）<small>　※事務所名を変えた場合はご記入ください。検索に使います</small>
+<input type="text" id="dispKana" maxlength="80" placeholder="例：マルマルタンテイジムショ"></label>
+
 <label>キャッチコピー・一言PR<small>　※40字程度</small>
 <input type="text" id="catch" placeholder="例：着手金0円・完全成功報酬制"></label>
 
@@ -298,6 +303,7 @@
 <p class="pv-catch" id="pvCatch"></p>
 <div class="pv-photo" id="pvPhoto"></div>
 <dl>
+<dt>事務所名</dt><dd id="pvDispName"></dd>
 <dt>紹介文</dt><dd id="pvService" style="white-space:pre-wrap"></dd>
 <dt>対応可能な調査</dt><dd id="pvTypes"></dd>
 <dt>対応エリア</dt><dd id="pvArea"></dd>
@@ -427,7 +433,7 @@
     document.getElementById('introCard').innerHTML = '<b>現在の掲載内容を読み込みました。</b>変更したい項目だけ書き換えて送信してください。運営者が内容を確認したうえで掲載ページに反映します（反映のお知らせはメールでお送りします）。';
     var cb = document.querySelector('.condition-box'); if (cb) cb.style.display = 'none';
     var ag = document.getElementById('agree'); if (ag) ag.required = false;
-    ['catch','service','area','price','hours','officeAddress','repName','pubphone','url','other'].forEach(function(k){ setVal(k, entry[k]); });
+    ['dispName','dispKana','catch','service','area','price','hours','officeAddress','repName','pubphone','url','other'].forEach(function(k){ setVal(k, entry[k]); });
     splitService(entry.service);
     PROFILE_FIELDS.forEach(function(kv){ setVal(kv[0], entry[kv[0]]); });
     var otherTypes = checkBoxes('svcTypes', entry.types);
@@ -449,8 +455,24 @@
     document.getElementById('pageTitle').textContent = '掲載内容の編集（無料）';
     document.getElementById('introCard').innerHTML = '掲載済みの事務所様は、届出番号を入れると現在の掲載内容が読み込まれます。変更したい項目だけ書き換えて送信してください。';
   }
+  /* 事務所名（2026-11-13）：今の表示名を all.json から入れておく。書き換えると承認時に全ページの名前が変わる。 */
+  var allNames = null;
+  function fillName(theId){
+    if (isRemove || !/^\d{8}$/.test(theId)) return;
+    var put = function(arr){
+      var e = (arr || []).filter(function(x){ return x.i === theId; })[0];
+      if (!e) return;
+      var n = document.getElementById('dispName'), k = document.getElementById('dispKana');
+      if (!n.value) n.value = e.n || '';
+      if (!k.value) k.value = e.k || '';
+    };
+    if (allNames) return put(allNames);
+    fetch('./all.json', {cache: 'no-cache'}).then(function(r){ return r.ok ? r.json() : []; })
+      .then(function(j){ allNames = j; put(j); }).catch(function(){});
+  }
   loadExisting(id);
-  document.getElementById('selfId').addEventListener('change', function(){ if (!isEdit) loadExisting(this.value.trim()); });
+  fillName(id);
+  document.getElementById('selfId').addEventListener('change', function(){ var v = this.value.trim(); if (!isEdit) loadExisting(v); fillName(v); });
 
   function checkedValues(containerId){
     return Array.prototype.slice.call(document.querySelectorAll('#' + containerId + ' input:checked'))
@@ -521,7 +543,8 @@
       area: val('area'), price: val('price'), hours: val('hours'),
       methods: checkedValues('contactMethods'), pubphone: val('pubphone'),
       url: val('url'), other: val('other'),
-      officeAddress: val('officeAddress'), repName: val('repName')
+      officeAddress: val('officeAddress'), repName: val('repName'),
+      dispName: val('dispName'), dispKana: val('dispKana')
     };
     PROFILE_FIELDS.forEach(function(kv){ fields[kv[0]] = val(kv[0]); });
     return fields;
@@ -578,6 +601,7 @@
     document.getElementById('pvUrl').textContent = val('url') || '（未入力）';
     document.getElementById('pvOfficeAddress').textContent = val('officeAddress') || '（未入力）';
     document.getElementById('pvRepName').textContent = val('repName') || '（未入力）';
+    document.getElementById('pvDispName').textContent = val('dispName') || '（未入力）';
     PROFILE_FIELDS.forEach(function(kv){ document.getElementById('pv_' + kv[0]).textContent = val(kv[0]) || '（未入力）'; });
     document.getElementById('pvOther').textContent = val('other') || '（未入力）';
     var photoBox = document.getElementById('pvPhoto');
