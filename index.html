@@ -590,7 +590,7 @@ footer.t-foot a:hover{text-decoration:underline}
     }
     var hits = data.filter(function(r){
       var okPref = !pref || r.p === pref;
-      var okQ = !q || r._s.indexOf(nq) !== -1 || (dq && r.i.indexOf(dq) === 0);
+      var okQ = !q || r._s.indexOf(nq) !== -1 || (dq && (r.i.indexOf(dq) === 0 || (r.j && r.j.indexOf(dq) === 0)));
       var okT = !typ || hasType(r);
       return okPref && okQ && okT;
     });
@@ -600,7 +600,7 @@ footer.t-foot a:hover{text-decoration:underline}
     results.innerHTML = hits.map(function(r){
       return '<a class="result-item" href="./biz/'+r.i+'.html">'+
         '<span class="r-name">'+esc(r.n)+(r.m === 0 ? ' <span class="r-badge">✓ 掲載済み</span>' : (typ && web[r.i] ? ' <span class="r-badge r-badge--hp">HPで確認</span>' : ''))+'</span>'+
-        '<span class="r-addr">'+(dq ? '届出番号 '+esc(r.i)+'　' : '')+esc(r.a)+'</span></a>';
+        '<span class="r-addr">'+(dq ? '届出番号 '+esc(r.j && r.j.indexOf(dq) === 0 ? r.j : r.i)+'　' : '')+esc(r.a)+'</span></a>';
     }).join('') || '<div class="no-hit">' + (typ ? 'この条件で「' + esc(typ) + '」に対応していると確認できた事務所は、まだありません。調査の種類を外すと、届出業者すべてから探せます。' : '該当する業者が見つかりません') + '</div>';
   }
   fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){

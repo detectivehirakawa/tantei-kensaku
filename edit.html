@@ -460,7 +460,7 @@
   function fillName(theId){
     if (isRemove || !/^\d{8}$/.test(theId)) return;
     var put = function(arr){
-      var e = (arr || []).filter(function(x){ return x.i === theId; })[0];
+      var e = (arr || []).filter(function(x){ return x.i === theId; })[0] || (function(m){ return m.length === 1 ? m[0] : null; })((arr || []).filter(function(x){ return x.j === theId; }));
       if (!e) return;
       var n = document.getElementById('dispName'), k = document.getElementById('dispKana');
       if (!n.value) n.value = e.n || '';
