@@ -19,6 +19,8 @@
           "profile": [["項目", "値"], …]      プロフィール表を丸ごと指定（省略時は自動）
           "profile_add": [["項目", "値"], …]  自動のプロフィール表の末尾に足す行
           "note": "…"                         カード末尾の注記（省略時は「ご提供情報（○○更新）」）
+          "gallery": [{"src": "../img/…webp", "w": 横, "h": 縦, "caption": "…"}, …]
+                                              実績・資格の写真（横スクロール・説明つき。プロフィール表の後に出す）
       }
 
 GAS 側の対応（2026-11-13、Web エディタで直接変更・バージョン56・VERSION '2026-11-13d'）：
@@ -74,6 +76,25 @@ def div_block(s, start):
         if depth == 0:
             return s[start:start + m.end()]
     return ""
+
+
+def gallery(items):
+    """実績・資格の写真を横スクロールで並べる（2026-11-14）。写真の下に説明を出す。"""
+    if not items:
+        return ""
+    figs = []
+    for it in items:
+        w, h = int(it.get("w") or 0), int(it.get("h") or 0)
+        size = (' width="%d" height="%d"' % (w, h)) if w and h else ""
+        figs.append(
+            '<figure style="flex:0 0 auto;width:min(68vw,240px);margin:0;scroll-snap-align:start">'
+            '<a href="%s" target="_blank" rel="noopener"><img src="%s" alt="%s"%s loading="lazy" decoding="async" '
+            'style="display:block;width:100%%;height:300px;object-fit:contain;background:#f4f6f9;border:1px solid var(--line,#dde5f0);border-radius:6px"></a>'
+            '<figcaption style="font-size:.82rem;line-height:1.6;color:#3c4c60;margin-top:6px">%s</figcaption></figure>'
+            % (esc(it["src"]), esc(it["src"]), esc(it.get("caption")), size, esc(it.get("caption"))))
+    return ('<div class="biz-gallery" style="display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;'
+            '-webkit-overflow-scrolling:touch;padding:4px 2px 12px;margin-bottom:8px">' + "".join(figs) + '</div>'
+            '<p style="font-size:.78rem;color:#6b7a8c;margin:0 0 12px">横にスクロールできます。写真をタップすると大きく表示します。</p>')
 
 
 def dl(rows):
@@ -171,6 +192,9 @@ def render_card(bid, page, entry, biz, prof):
     if intro:
         parts.append('<section class="biz-svc-wrap"><h2 class="svc-title">%sの紹介</h2>%s</section>' % (name, intro))
     parts.append(head(name + "のプロフィール") + dl(profile))
+    gal = gallery(prof.get("gallery") or [])
+    if gal:
+        parts.append(head(name + "の実績・資格") + gal)
     parts.append(bottom_cta)
     parts.append('<p style="%s">%s</p>' % (NOTE_STYLE, esc(note)))
     new_card = CARD_OPEN + MARK + "".join(p for p in parts if p) + "</div>\n"
