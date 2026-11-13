@@ -1,0 +1,23 @@
+{
+ "43230060": {
+  "place_id": "ChIJ011t5nCbGGARF0xlcbkr0lA",
+  "rating": 5,
+  "count": 5,
+  "uri": "https://maps.google.com/?cid=5823765343614880791&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-14"
+ },
+ "30260063": {
+  "place_id": "ChIJK2RmVfCHGGARj_1Ap5rgsw8",
+  "rating": 5,
+  "count": 1,
+  "uri": "https://maps.google.com/?cid=1131494886235766159&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-14"
+ },
+ "30240039": {
+  "place_id": "ChIJXZeMVpSRGGARnvQxRj_NILk",
+  "rating": 5,
+  "count": 3,
+  "uri": "https://maps.google.com/?cid=13339887767915721886&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-14"
+ }
+}

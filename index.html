@@ -354,6 +354,7 @@ footer.t-foot a:hover{text-decoration:underline}
 .t-panel #results .r-name,.t-panel #results .r-addr{display:block}
 .t-panel #results .no-hit{padding:10px;font-size:.88rem;color:#5a6b80;text-align:center}
 .t-panel #results .r-badge{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:700;background:#e7f6ec;color:#0f7a3d;border:1px solid #bfe3cb;vertical-align:1px}
+.t-panel #results .r-badge--hp{background:#eef4fc;color:#0d3f8f;border-color:#c9daf2}
 .t-pcount{margin:2px 0 6px;font-size:.8rem;font-weight:700;color:var(--t-blue-d,#0d3f8f)}
 .t-pcount:empty{display:none}
 .t-dtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px;border-bottom:2px solid var(--t-blue)}
@@ -572,7 +573,7 @@ footer.t-foot a:hover{text-decoration:underline}
   var results = document.getElementById('results');
   var countEl = document.getElementById('searchCount');
   var typeSel = document.getElementById('typeFilter');
-  var data = null, extra = {};
+  var data = null, extra = {}, web = {};
   function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function nz(s){s=String(s||'');if(s.normalize)s=s.normalize('NFKC');s=s.toLowerCase().replace(/[\u3041-\u3096]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+0x60);});return s.replace(/株式会社|有限会社|合同会社|合資会社|合名会社|一般社団法人|\((株|有|同)\)/g,'').replace(/[\s・･.,、。，．\-‐‑–—―−ー〜~_'"’‘”“「」『』()（）\[\]［］【】&＆\/／!！?？:：;；]/g,'');}
   function render(){
@@ -582,11 +583,10 @@ footer.t-foot a:hover{text-decoration:underline}
     var dq = /^\d{4,8}$/.test(nq) ? nq : '';
     var typ = typeSel ? typeSel.value : '';
     if(!q && !pref && !typ){ results.innerHTML=''; countEl.textContent=''; return; }
-    /* 調査の種類（2026-11-14）：掲載済みの事務所が登録した「対応可能な調査」で絞り込む */
+    /* 調査の種類（2026-11-14）：掲載済みは事務所が登録した「対応可能な調査」、未掲載は当サイトがホームページで確認した調査項目（biz_web.json）で絞り込む */
     function hasType(r){
-      var e = extra[r.i]; if(!e || r.m !== 0) return false;
-      var ts = (e.types || []).join('、');
-      return ts.indexOf(typ) !== -1;
+      var e = r.m === 0 ? extra[r.i] : web[r.i]; if(!e) return false;
+      return (e.types || []).join('、').indexOf(typ) !== -1;
     }
     var hits = data.filter(function(r){
       var okPref = !pref || r.p === pref;
@@ -596,12 +596,12 @@ footer.t-foot a:hover{text-decoration:underline}
     });
     hits.sort(function(a,b){ return (a.m||0) - (b.m||0); });
     hits = hits.slice(0, 200);
-    countEl.textContent = typ ? hits.length + '件（「' + typ + '」に対応と登録している掲載済みの事務所）' : hits.length + '件表示（最大200件）';
+    countEl.textContent = typ ? hits.length + '件（「' + typ + '」に対応している事務所。掲載済みの事務所の登録内容と、当サイトがホームページで確認した内容から）' : hits.length + '件表示（最大200件）';
     results.innerHTML = hits.map(function(r){
       return '<a class="result-item" href="./biz/'+r.i+'.html">'+
-        '<span class="r-name">'+esc(r.n)+(r.m === 0 ? ' <span class="r-badge">✓ 掲載済み</span>' : '')+'</span>'+
+        '<span class="r-name">'+esc(r.n)+(r.m === 0 ? ' <span class="r-badge">✓ 掲載済み</span>' : (typ && web[r.i] ? ' <span class="r-badge r-badge--hp">HPで確認</span>' : ''))+'</span>'+
         '<span class="r-addr">'+(dq ? '届出番号 '+esc(r.i)+'　' : '')+esc(r.a)+'</span></a>';
-    }).join('') || '<div class="no-hit">' + (typ ? 'この条件で「' + esc(typ) + '」に対応と登録している掲載済みの事務所は、まだありません。調査の種類を外すと、届出業者すべてから探せます。' : '該当する業者が見つかりません') + '</div>';
+    }).join('') || '<div class="no-hit">' + (typ ? 'この条件で「' + esc(typ) + '」に対応していると確認できた事務所は、まだありません。調査の種類を外すと、届出業者すべてから探せます。' : '該当する業者が見つかりません') + '</div>';
   }
   fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){
     data = j;
@@ -610,6 +610,7 @@ footer.t-foot a:hover{text-decoration:underline}
     prefSel.addEventListener('change', render);
     if(typeSel) typeSel.addEventListener('change', render);
     fetch('/tantei-portal-data/biz_extra.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).then(function(j){ extra = j || {}; if(typeSel && typeSel.value) render(); }).catch(function(){});
+    fetch('/tantei-portal-data/biz_web.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).then(function(j){ web = j || {}; if(typeSel && typeSel.value) render(); }).catch(function(){});
     var pq = new URLSearchParams(location.search).get('q');
     if(pq){ input.value = pq; render(); }
   });

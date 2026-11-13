@@ -1,0 +1,35 @@
+# 全国探偵検索：掲載済み探偵社の Googleマップの★評価・口コミ件数を週1回取り直す（google_rating.py）。
+# 口コミ本文は取らない（課金が増えるため）。★・件数は Place Details の毎月1,000回の無料枠に収まる回数だけ呼ぶ。
+# APIキーはリポジトリの Secrets「PLACES_API_KEY」（運営者が登録）。未登録の間はこのジョブは失敗するだけで、ページは前回の値のまま。
+# 取り直した gbp.json を push すると listed-hero が掲載ページに反映する。
+name: gbp-rating
+on:
+  schedule:
+    - cron: '0 1 * * 1'   # 毎週月曜 10:00 JST
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gbp-rating
+  cancel-in-progress: false
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: ★評価を取得
+        env:
+          PLACES_API_KEY: ${{ secrets.PLACES_API_KEY }}
+        run: python tantei-portal-tools/google_rating.py fetch
+      - name: 変更があればコミット
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tantei-portal-data/gbp.json
+          if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
+          git commit -m "全国探偵検索: Googleマップの★評価を更新（自動）"
+          for n in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done

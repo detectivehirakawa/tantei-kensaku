@@ -11,6 +11,8 @@ on:
       - 'tantei-portal-data/biz_extra.json'
       - 'tantei-portal-data/biz_profile.json'
       - 'tantei-portal-tools/render_listed.py'
+      - 'tantei-portal-data/gbp.json'
+      - 'tantei-portal-data/biz_web.json'
       - 'biz/*.html'
   workflow_dispatch:
     inputs:
@@ -35,6 +37,11 @@ jobs:
       - name: 掲載ページを新しい構成に組み直す
         continue-on-error: true
         run: python tantei-portal-tools/render_listed.py
+      - name: Googleマップの★評価・ホームページで確認した調査項目を掲載ページに反映（APIは呼ばない）
+        continue-on-error: true
+        run: |
+          python tantei-portal-tools/google_rating.py render
+          python tantei-portal-tools/render_hp_types.py
       - name: 日本語フォントと Pillow
         run: |
           sudo apt-get update -qq

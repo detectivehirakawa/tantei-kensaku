@@ -50,3 +50,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 - 掲載済みページのカード先頭に `<div class="biz-badges">`（届出確認済み・事務所が入力・所在地公開・代表者名公開・掲載料0円）。GAS の bizBadgesHtml_ と build_site.py の biz_badges_html が同じものを出し、render_listed.py はそのまま先頭に置く。
 - トップの検索に「調査の種類」（#typeFilter）。biz_extra.json の types を実行時に読み、掲載済みの事務所だけを絞り込む（承認されれば自動で対象になる）。
+
+## ホームページで確認した調査項目・Googleマップの★評価（2026-11-14）
+
+- `tantei-portal-data/biz_web.json` … 未掲載の業者の「ホームページで確認できた調査項目」。サイトに届出番号が載っていて本人と確かめられたものだけ（大分県で試行：51件中12件）。`render_hp_types.py` が業者ページの `<!--/biz-facts-->` の後に書き込み、トップの「調査の種類」の絞り込みにも使う（「HPで確認」表示）。
+- `tantei-portal-data/gbp.json` … 掲載済み業者の Googleマップの★・件数。`google_rating.py render` が「〇〇を利用したことがあるユーザーの感想」として書き込む（本文は課金のため出さない）。`gbp-rating.yml` が週1回取り直す（Secrets の PLACES_API_KEY が必要）。新しく掲載された業者は名前と市区町村が一致すれば自動で place_id を登録。
+- どちらも listed-hero.yml の中で毎回実行（APIは呼ばない）。
