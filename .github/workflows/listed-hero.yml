@@ -32,6 +32,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 30
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -61,3 +63,6 @@ jobs:
           if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
           git commit -m "全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
           for n in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
+      - name: 変わったページを IndexNow（Bing など）に知らせる
+        continue-on-error: true
+        run: python tantei-portal-tools/indexnow_ping.py "${{ github.event.before }}"
