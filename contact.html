@@ -494,7 +494,7 @@
   function mailFallback(nm, ct, msg){
     var subject = (isRemove ? '【探偵ポータル】掲載削除の希望：' : '【探偵ポータル】掲載ページ充実の希望：') + (name || '（業者名未指定）');
     var body = ['届出番号：' + id, '業者名：' + name, 'お名前：' + nm, 'ご連絡先：' + ct, '', 'ご要望内容：', msg].join('\n');
-    location.href = 'mailto:racoontantei@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    location.href = 'mailto:info@exeresearch.jp?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   }
 
   var submitId = 'c' + Date.now() + Math.random().toString(36).slice(2, 8);
