@@ -380,6 +380,12 @@ footer.t-foot a:hover{text-decoration:underline}
 
 .t-pagehero{background:var(--t-blue-d) url(img/japan-dots.svg) right -60px center/auto 150% no-repeat;color:#fff}
 .t-pagehero .in{max-width:1160px;margin:0 auto;padding:22px 16px 26px}
+/* 掲載済みの事務所は、上部の帯にその事務所のサイトの画像を敷く（2026-11-14、listed_bg.py） */
+.t-pagehero.has-bg{position:relative;background:var(--t-blue-d) var(--bg) center/cover no-repeat}
+.t-pagehero.has-bg::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(9,40,96,.86) 0%,rgba(13,63,143,.55) 45%,rgba(13,63,143,.12) 100%)}
+.t-pagehero.has-bg .in{position:relative;padding:40px 16px 44px}
+.t-pagehero.has-bg h1{text-shadow:0 2px 12px rgba(0,20,60,.5)}
+@media(max-width:640px){.t-pagehero.has-bg .in{padding:28px 16px 30px}.t-pagehero.has-bg::before{background:linear-gradient(180deg,rgba(9,40,96,.55),rgba(9,40,96,.82))}}
 .t-crumb{font-size:.78rem;color:#c9dcf6;margin:0 0 10px}
 .t-crumb a{color:#fff}
 .t-pagehero h1{margin:0;font-size:clamp(1.3rem,3.4vw,1.9rem);font-weight:700;line-height:1.45;overflow-wrap:anywhere}

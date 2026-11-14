@@ -55,6 +55,11 @@ jobs:
         env:
           FORCE: ${{ github.event.inputs.force }}
         run: python tantei-portal-tools/listed_heroes.py
+      - name: 公式サイトの画像を掲載ページ上部の帯の背景にする（掲載済み全社）
+        continue-on-error: true
+        env:
+          FORCE: ${{ github.event.inputs.force }}
+        run: python tantei-portal-tools/listed_bg.py
       - name: 変更があればコミット
         run: |
           git config user.name "github-actions[bot]"
