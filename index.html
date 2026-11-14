@@ -755,7 +755,22 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
       render();
     },function(err){
       btn.disabled=false;
-      msg.textContent=(err.code===1?'位置情報の利用が許可されませんでした。':'現在地を取得できませんでした。')+'全国の掲載済み事務所を表示しています。';
+      /* 拒否（code 1）は端末・ブラウザ側の設定で起きる。サイトからは許可を出し直せないので、直し方を端末ごとに案内する（2026-11-14） */
+      var ua=navigator.userAgent, ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1),
+          inApp=/Instagram|FBAN|FBAV|Line\/|TikTok|musical_ly|BytedanceWebview/i.test(ua), how;
+      if(err.code!==1){
+        how='現在地を取得できませんでした。電波の良い場所でもう一度お試しください。';
+      }else if(inApp){
+        how='位置情報の利用が許可されませんでした。\nアプリ内のブラウザでは現在地が使えないことがあります。画面右上（または下）のメニューから「Safariで開く」「ブラウザで開く」を選び、もう一度お試しください。';
+      }else if(ios){
+        how='位置情報の利用が許可されませんでした。iPhoneでは次の2点をご確認ください。\n①「設定」→「プライバシーとセキュリティ」→「位置情報サービス」をオンにし、「Safari Webサイト」を「使用中のみ」にする\n②Safariのアドレスバー左の「ぁあ」（または「ページ設定」）→「Webサイトの設定」→「位置情報」を「確認」か「許可」にする\n変更後、このページを再読み込みしてボタンを押してください。';
+      }else if(/Android/.test(ua)){
+        how='位置情報の利用が許可されませんでした。端末の「位置情報」をオンにし、アドレスバー左のアイコン→「権限」（またはサイトの設定）で位置情報を「許可」にしてから、再読み込みしてください。';
+      }else{
+        how='位置情報の利用が許可されませんでした。ブラウザのアドレスバー左のアイコンから、このサイトの位置情報を「許可」にして再読み込みしてください。';
+      }
+      msg.style.whiteSpace='pre-line';
+      msg.textContent=how+'\n（今は全国の掲載済み事務所を表示しています。下の「地域・エリアから探す」からも探せます）';
     },{enableHighAccuracy:false,timeout:10000,maximumAge:300000});
   });
 })();
