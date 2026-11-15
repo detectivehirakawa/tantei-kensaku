@@ -1,0 +1,48 @@
+# 全国探偵無料検索サービス（tantei-kensaku.jp）
+
+> 都道府県公安委員会に探偵業の届出をしている全国7,554件の探偵事務所・興信所を、届出番号（8桁）・業者名・都道府県・市区町村・地図から無料で調べられる検索サービスです。掲載料・広告費は0円の中立運営です。運営は合同会社EXE RESEARCH（埼玉県三郷市）。
+
+- データの出典: 都道府県公安委員会への探偵業の届出情報（令和8年5月31日時点）。人口あたりの数は令和7年国勢調査の人口で計算しています。
+- 届出番号は8桁で、1〜2桁目が都道府県（公安委員会）、3〜4桁目が届出をした年（西暦の下2桁）を表します。探偵業に「許可番号」はなく、正しくは「届出番号（探偵業届出証明書番号）」です。
+- 各業者のページ（/biz/届出番号.html）は、届出の情報（業者名・営業所の市区町村・届出番号・届出年）を載せています。代表者名と番地以降の住所は、業者本人の掲載許可があるまで公開していません。
+- 業者本人が申し込んだ「掲載済み」のページには、調査内容・料金の目安・公式サイトなど、業者が入力した情報も載っています。
+- 数字を引用するときは「全国探偵無料検索サービス（tantei-kensaku.jp）調べ」と、該当ページへのリンクを添えてください。
+
+## 主なページ
+
+- [トップ（探偵事務所の検索）](https://tantei-kensaku.jp/): 届出番号・業者名・地域・現在地から探せます
+- [届出データ（統計）](https://tantei-kensaku.jp/data.html): 都道府県別・市区町村別の届出業者数、人口10万人あたりの数、届出年別の推移
+- [地図から探す](https://tantei-kensaku.jp/map.html): 全国の届出業者を地図で表示
+- [掲載基準・編集方針](https://tantei-kensaku.jp/policy.html)
+- [運営者情報](https://tantei-kensaku.jp/about.html)
+- [掲載データの根拠資料](https://tantei-kensaku.jp/column/todokede-data-konkyo-shiryo.html): 届出資料の集め方と個人情報の扱い
+
+## 都道府県別の届出業者一覧
+
+- [東京都](https://tantei-kensaku.jp/tokyo.html)
+- [大阪府](https://tantei-kensaku.jp/osaka.html)
+- [神奈川県](https://tantei-kensaku.jp/kanagawa.html)
+- [埼玉県](https://tantei-kensaku.jp/saitama.html)
+- [愛知県](https://tantei-kensaku.jp/aichi.html)
+- [福岡県](https://tantei-kensaku.jp/fukuoka.html)
+- [北海道](https://tantei-kensaku.jp/hokkaido.html)
+- ほかの県も同じ形式です（例: https://tantei-kensaku.jp/oita.html）。市区町村のページは https://tantei-kensaku.jp/都道府県/市区町村.html（例: https://tantei-kensaku.jp/tokyo/meguro.html）
+
+## コラム（現役の探偵の監修）
+
+- [探偵業の届出番号とは？8桁の読み方と、失敗しない探偵の選び方](https://tantei-kensaku.jp/column/todokede-bango-erabikata.html)
+- [探偵業の届出番号を検索する方法](https://tantei-kensaku.jp/column/todokede-bango-kensaku-hoho.html)
+- [探偵の「許可番号」は存在しない？届出番号の正しい調べ方](https://tantei-kensaku.jp/column/kyoka-bango-shirabekata.html)
+- [探偵の届出番号と警察が管理している番号の違い](https://tantei-kensaku.jp/column/todokede-bango-kanri-bango-chigai.html)
+- [探偵の料金相場と費用を抑えるコツ](https://tantei-kensaku.jp/column/tantei-ryokin-souba.html)
+- [大手探偵社と中小探偵事務所の料金相場の違い](https://tantei-kensaku.jp/column/tantei-ryokin-oote-chusho.html)
+- [浮気調査の探偵紹介サイトは本当に無料？](https://tantei-kensaku.jp/column/tantei-shokai-site-shikumi.html)
+- [届出をしていない探偵に浮気調査を依頼するとどうなる？](https://tantei-kensaku.jp/column/todokede-nashi-tantei-irai.html)
+- [浮気調査のオンライン契約・電子署名だけで大丈夫？](https://tantei-kensaku.jp/column/online-keiyaku-uwaki-chosa.html)
+- [別れさせ屋と浮気調査の探偵の違い](https://tantei-kensaku.jp/column/wakaresaseya-uwaki-chosa-chigai.html)
+- [大分県で浮気調査を探偵に頼むなら](https://tantei-kensaku.jp/column/oita-uwaki-chosa-tantei.html)
+
+## Optional
+
+- [コラム一覧](https://tantei-kensaku.jp/column/)
+- [サイトマップ](https://tantei-kensaku.jp/sitemap.xml)
