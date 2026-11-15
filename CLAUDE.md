@@ -74,3 +74,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - 掲載済みの事務所は、ページ上部の帯（t-pagehero）に、その事務所の公式サイトの画像を背景として敷く。`tantei-portal-tools/listed_bg.py` が listed-hero.yml の中で毎回実行（承認されれば自動）。
 - 画像は `img/listed/<届出番号>-bg.webp`、取得元は `img/listed/bg.json`。ロゴ・文字だけのバナー・og画像は使わず、良い画像がなければホームページの画面（`<届出番号>.webp`）をぼかして使う。
 - 紹介文（biz-svc）は biz_extra.json を直しても再生成されない。紹介文を直すときは「掲載内容の編集」として GAS に送り、承認する（keepPhotos に今の写真URLを入れること）。
+
+## 市区町村ページの「データで見る〇〇の探偵事務所」（2026-11-16、運営者指示「〇〇市 探偵」対策）
+
+- `tantei-portal-tools/render_city_extra.py` が全676の市区町村ページに書き足す：届出をした時期（番号の3〜4桁目）、近くの市区町村（業者の位置から距離。位置が食い違う市区町村は使わない）、管轄の家庭裁判所、よくある質問2問（画面とFAQPage）。
+- 家庭裁判所は `tantei-portal-data/family_courts.json`（裁判所サイトの管轄区域表から作成）。
+- `<!--city-extra-->`〜`<!--/city-extra-->` を毎回作り直す。listed-hero.yml の中で毎回実行（フルビルドで消えても戻る）。

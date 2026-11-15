@@ -47,6 +47,7 @@ jobs:
           python tantei-portal-tools/render_hp_types.py
           python tantei-portal-tools/render_display_no.py
           python tantei-portal-tools/render_llmo.py
+          python tantei-portal-tools/render_city_extra.py
       - name: 日本語フォントと Pillow
         run: |
           sudo apt-get update -qq
@@ -65,7 +66,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add img/listed biz *.html
+          git add img/listed biz *.html */*.html
           if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
           git commit -m "全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
           for n in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
