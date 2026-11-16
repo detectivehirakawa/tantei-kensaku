@@ -80,3 +80,8 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - `tantei-portal-tools/render_city_extra.py` が全676の市区町村ページに書き足す：届出をした時期（番号の3〜4桁目）、近くの市区町村（業者の位置から距離。位置が食い違う市区町村は使わない）、管轄の家庭裁判所、よくある質問2問（画面とFAQPage）。
 - 家庭裁判所は `tantei-portal-data/family_courts.json`（裁判所サイトの管轄区域表から作成）。
 - `<!--city-extra-->`〜`<!--/city-extra-->` を毎回作り直す。listed-hero.yml の中で毎回実行（フルビルドで消えても戻る）。
+
+## 掲載フォームの公式LINE欄・掲載時の探偵社名（2026-11-16）
+
+- edit.html の「公式LINEのURL」（id=lineUrl）は GAS に別キーでは送らない。送信時に URL 欄の最後へ `LINE https://lin.ee/...` としてまとめる（urlWithLine）。掲載ページ（GAS・build_site）とトップの近くのカードは、URL欄の line.me / lin.ee を「LINEで相談する」ボタンにするので、GASの変更は不要。編集時は URL 欄から LINE を取り出して欄に戻す（splitLine）。
+- 「事務所名」欄は「掲載時の探偵社名（屋号）」に改名し、下に今の掲載名（all.json）を表示。キーは従来どおり dispName/dispKana。
