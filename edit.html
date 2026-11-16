@@ -150,9 +150,10 @@
 <legend>掲載ページに追加する内容（無料）</legend>
 <p style="font-size:.85rem;color:var(--body);margin:0 0 4px">掲載ページにそのまま反映しますので、公開してよい内容をご記入ください。空欄の項目は掲載しません。<b style="color:var(--accent-ink)">都道府県別一覧での掲載済み事務所同士の表示順は、ご記入いただいた内容の充実度（項目数・文章量）で決まります。</b>詳しく・具体的にご記入いただくほど、上位に表示されやすくなります。</p>
 
-<label>事務所名（掲載ページに表示する名前）<small>　※届出上の名前と違う屋号で掲載したい場合は書き換えてください。検索・一覧・地図・掲載ページのすべてに反映されます</small>
+<label>掲載時の探偵社名（屋号）<small>　※公安委員会への届出の名前と、ふだん使っている屋号が違う場合は、掲載したい屋号に書き換えてください。検索・一覧・地図・掲載ページのすべてに反映されます</small>
 <input type="text" id="dispName" maxlength="60" placeholder="例：〇〇探偵事務所"></label>
-<label>事務所名のふりがな（カタカナ）<small>　※事務所名を変えた場合はご記入ください。検索に使います</small>
+<p id="regNameNote" style="display:none;font-size:.82rem;color:var(--body);margin:-4px 0 12px">いまの掲載名（届出の情報）：<b id="regName"></b></p>
+<label>探偵社名のふりがな（カタカナ）<small>　※探偵社名を変えた場合はご記入ください。検索に使います</small>
 <input type="text" id="dispKana" maxlength="80" placeholder="例：マルマルタンテイジムショ"></label>
 
 <label>キャッチコピー・一言PR<small>　※40字程度</small>
@@ -227,6 +228,9 @@
 </div>
 
 <label>掲載してよい電話番号（表示用・任意）<input type="text" id="pubphone" placeholder="表示してよい電話番号"></label>
+<label>公式LINEのURL（任意）<small>　※入力すると、掲載ページとトップの「近くの掲載済み探偵」に「LINEで相談する」ボタンが表示されます</small>
+<input type="url" id="lineUrl" placeholder="https://lin.ee/xxxxxxx または https://line.me/R/ti/p/@xxxx" pattern="https://(lin\.ee|line\.me|page\.line\.me)/.+" title="https://lin.ee/ または https://line.me/ で始まる公式LINEのURLを入力してください"></label>
+
 <label>ホームページ・SNSのURL（お持ちの場合）<small>　※複数ある場合は改行して入力</small>
 <textarea id="url" placeholder="https://&#10;https://x.com/...&#10;https://instagram.com/..."></textarea></label>
 
@@ -303,7 +307,7 @@
 <p class="pv-catch" id="pvCatch"></p>
 <div class="pv-photo" id="pvPhoto"></div>
 <dl>
-<dt>事務所名</dt><dd id="pvDispName"></dd>
+<dt>掲載時の探偵社名</dt><dd id="pvDispName"></dd>
 <dt>紹介文</dt><dd id="pvService" style="white-space:pre-wrap"></dd>
 <dt>対応可能な調査</dt><dd id="pvTypes"></dd>
 <dt>対応エリア</dt><dd id="pvArea"></dd>
@@ -427,6 +431,22 @@
       return '<label style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin:0 10px 10px 0;font-size:.8rem"><img src="' + u.replace(/"/g, '') + '" alt="" style="width:90px;height:90px;object-fit:cover;border:1px solid #cbd9ea;border-radius:4px"><span><input type="checkbox" data-keep="' + i + '" checked> 残す</span></label>';
     }).join('') : '';
   }
+  /* 公式LINEのURL（2026-11-16）。送るときはURL欄の最後に「LINE https://...」としてまとめる。
+     掲載ページ・トップのカードは、URL欄の line.me / lin.ee を「LINEで相談する」ボタンにする（GAS・build_site 共通）。 */
+  var LINE_RE = /https?:\/\/(?:lin\.ee|line\.me|page\.line\.me)\/[^\s]*/g;
+  function stripLine(u){
+    return String(u || '').replace(LINE_RE, '').split('\n').map(function(l){ return l.replace(/^\s*LINE[：:\s]*$/i, '').replace(/\s+$/, ''); }).filter(function(l){ return l.trim(); }).join('\n');
+  }
+  function urlWithLine(){
+    var url = stripLine(document.getElementById('url').value);
+    var line = (document.getElementById('lineUrl').value || '').trim();
+    if (line && /^https:\/\/(lin\.ee|line\.me|page\.line\.me)\/.+/.test(line)) url = (url ? url + '\n' : '') + 'LINE ' + line;
+    return url;
+  }
+  function splitLine(entry){
+    var m = String(entry.url || '').match(LINE_RE);
+    if (m) { setVal('lineUrl', m[0]); setVal('url', stripLine(entry.url)); }
+  }
   function enterEdit(entry){
     isEdit = true;
     document.getElementById('pageTitle').textContent = '掲載内容の編集（無料）';
@@ -435,6 +455,7 @@
     var ag = document.getElementById('agree'); if (ag) ag.required = false;
     ['dispName','dispKana','catch','service','area','price','hours','officeAddress','repName','pubphone','url','other'].forEach(function(k){ setVal(k, entry[k]); });
     splitService(entry.service);
+    splitLine(entry);
     PROFILE_FIELDS.forEach(function(kv){ setVal(kv[0], entry[kv[0]]); });
     var otherTypes = checkBoxes('svcTypes', entry.types);
     if (otherTypes.length) { checkBoxes('svcTypes', ['その他']); setVal('svcOther', otherTypes.join('、')); }
@@ -464,6 +485,7 @@
       if (!e) return;
       var n = document.getElementById('dispName'), k = document.getElementById('dispKana');
       if (!n.value) n.value = e.n || '';
+      var rn = document.getElementById('regName'); if (rn) { rn.textContent = e.n || ''; document.getElementById('regNameNote').style.display = e.n ? '' : 'none'; }
       if (!k.value) k.value = e.k || '';
     };
     if (allNames) return put(allNames);
@@ -519,7 +541,7 @@
     if (methods.length) parts.push('【ご相談方法】\n' + methods.join('、'));
     var pubphone = document.getElementById('pubphone').value.trim();
     if (pubphone) parts.push('【掲載してよい電話番号】\n' + pubphone);
-    var url = document.getElementById('url').value.trim();
+    var url = urlWithLine();
     if (url) parts.push('【URL】\n' + url);
     var photo = document.getElementById('photo').value.trim();
     if (photo) parts.push('【写真について】\n' + photo);
@@ -542,7 +564,7 @@
       catch: val('catch'), service: val('service'), types: svcTypesArray(),
       area: val('area'), price: val('price'), hours: val('hours'),
       methods: checkedValues('contactMethods'), pubphone: val('pubphone'),
-      url: val('url'), other: val('other'),
+      url: urlWithLine(), other: val('other'),
       officeAddress: val('officeAddress'), repName: val('repName'),
       dispName: val('dispName'), dispKana: val('dispKana')
     };
@@ -598,7 +620,7 @@
     document.getElementById('pvHours').textContent = val('hours') || '（未入力）';
     document.getElementById('pvMethods').textContent = checkedValues('contactMethods').join('、') || '（未選択）';
     document.getElementById('pvPubphone').textContent = val('pubphone') || '（未入力）';
-    document.getElementById('pvUrl').textContent = val('url') || '（未入力）';
+    document.getElementById('pvUrl').textContent = urlWithLine() || '（未入力）';
     document.getElementById('pvOfficeAddress').textContent = val('officeAddress') || '（未入力）';
     document.getElementById('pvRepName').textContent = val('repName') || '（未入力）';
     document.getElementById('pvDispName').textContent = val('dispName') || '（未入力）';
@@ -679,4 +701,5 @@
   });
 })();
 </script>
+<script>(function(){var l=document.getElementById('lineUrl');if(!l)return;l.addEventListener('change',function(){if(l.value.trim()){var c=document.querySelector('#contactMethods input[value="LINE"]');if(c)c.checked=true;}});})();</script>
 </body></html>
