@@ -4,7 +4,8 @@
   { "<届出番号>": { "types": ["浮気調査", ...],      … トップ検索の「調査の種類」と同じ7分類
                     "other_types": ["いじめ調査", ...], … 7分類に入らない項目（原文の短い名称）
                     "checked": "2026-11-14",            … 確認した日
-                    "url": "https://..." } }            … 確認したサイト（ページには出さない・記録用）
+                    "url": "https://...",               … 確認したサイト（ページには出さない・記録用）
+                    "summary": "…", "points": ["…"] } } … 任意。ホームページの内容を短く要約した紹介文と特徴（2026-11-17）
 
 - そのサイトに届出番号が載っていて、本人のサイトだと確かめられたものだけを入れる（推測で入れない）。
 - 掲載済み（permitted.json）の業者は、業者が入力した「対応可能な調査」を使うので書き込まない。
@@ -46,10 +47,18 @@ def block(name, e):
     checked = esc(e.get("checked") or "")
     y, m, d = (checked.split("-") + ["", "", ""])[:3]
     when = ("%s年%d月%d日" % (y, int(m), int(d))) if y and m and d else checked
-    return (OPEN + '<section class="bf"><h2>%sの調査項目（ホームページで確認）</h2>'
+    # 2026-11-17：短い紹介文（summary）と特徴（points）も出せるように。ホームページに書かれていることだけを短く要約する
+    intro = ""
+    if e.get("summary"):
+        intro += '<p style="margin:0 0 8px">%s</p>' % esc(e["summary"])
+    if e.get("points"):
+        intro += '<ul style="margin:0 0 10px;padding-left:1.3em">' + "".join("<li>%s</li>" % esc(x) for x in e["points"]) + '</ul>'
+    title = "%sの特徴（ホームページで確認）" % esc(name) if intro else "%sの調査項目（ホームページで確認）" % esc(name)
+    what = "内容" if intro else "調査項目"
+    return (OPEN + '<section class="bf"><h2>%s</h2>%s'
             '<div style="margin:2px 0 4px">%s</div>'
-            '<p>当サイトが%sに、この事務所のホームページ（届出番号の表示があるもの）で確認できた調査項目です。'
-            '料金や対応の詳細は、事務所に直接ご確認ください。</p></section>' % (esc(name), chips, when) + CLOSE)
+            '<p>当サイトが%sに、この事務所のホームページ（届出番号の表示があるもの）で確認できた%sです。'
+            '料金や対応の詳細は、事務所に直接ご確認ください。</p></section>' % (title, intro, chips, when, what) + CLOSE)
 
 
 def main():
