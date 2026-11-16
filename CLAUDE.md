@@ -85,3 +85,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 - edit.html の「公式LINEのURL」（id=lineUrl）は GAS に別キーでは送らない。送信時に URL 欄の最後へ `LINE https://lin.ee/...` としてまとめる（urlWithLine）。掲載ページ（GAS・build_site）とトップの近くのカードは、URL欄の line.me / lin.ee を「LINEで相談する」ボタンにするので、GASの変更は不要。編集時は URL 欄から LINE を取り出して欄に戻す（splitLine）。
 - 「事務所名」欄は「掲載時の探偵社名（屋号）」に改名し、下に今の掲載名（all.json）を表示。キーは従来どおり dispName/dispKana。
+
+## 申込者あてメール（2026-11-16、GAS バージョン64・VERSION 2026-11-16a）
+
+- 承認時：approvedMailSubject_/approvedMailBody_。掲載充実は「掲載ページを公開しました」（掲載ページ・マイページ・リンクの貼り付けコード・紹介のお願い）、掲載内容の編集は短い版。リンク確認から自動承認したときはリンクの段が「確認しました」になる（doApprove_ の opts.linkVerified）。
+- リンク設置確認フォーム：linkCheckApplicantMail_ が、その届出番号の申込メールあてに「確認できました／確認できませんでした」を送る（同じ番号へは10分に1通）。自動で掲載まで済んだときは承認メールだけ。
+- GAS の手元の正本は C:\Users\racoo\detective-portal\gas\Code.gs（Web上と一致を確認してから反映した）。
