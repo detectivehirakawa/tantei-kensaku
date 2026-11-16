@@ -4,21 +4,21 @@
   "rating": 5,
   "count": 5,
   "uri": "https://maps.google.com/?cid=5823765343614880791&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-  "fetched": "2026-11-13"
+  "fetched": "2026-11-16"
  },
  "30260063": {
   "place_id": "ChIJK2RmVfCHGGARj_1Ap5rgsw8",
   "rating": 5,
   "count": 1,
   "uri": "https://maps.google.com/?cid=1131494886235766159&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-  "fetched": "2026-11-13"
+  "fetched": "2026-11-16"
  },
  "30240039": {
   "place_id": "ChIJXZeMVpSRGGARnvQxRj_NILk",
   "rating": 5,
   "count": 3,
   "uri": "https://maps.google.com/?cid=13339887767915721886&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-  "fetched": "2026-11-13"
+  "fetched": "2026-11-16"
  },
  "30240308": {
   "searched": "2026-11-13"
@@ -29,5 +29,64 @@
   "rejected": [
    "ChIJ-S-GiReHGGARvqNsV1IVL7o"
   ]
+ },
+ "10249010": {
+  "searched": "2026-11-16",
+  "place_id": "ChIJveRUwYgpC18RKiX2Ix6BmuY",
+  "rating": 5,
+  "count": 1,
+  "uri": "https://maps.google.com/?cid=16616735741589202218&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-16"
+ },
+ "97260005": {
+  "searched": "2026-11-16",
+  "place_id": "ChIJE1eqes5n5TQRHlumdAajJ88",
+  "rating": 5,
+  "count": 4,
+  "uri": "https://maps.google.com/?cid=14927078738064988958&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-16"
+ },
+ "97250023": {
+  "searched": "2026-11-16",
+  "place_id": "ChIJ1fupBylt5TQRMxURJDgGlJQ",
+  "rating": 5,
+  "count": 57,
+  "uri": "https://maps.google.com/?cid=10706189052359546163&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-16"
+ },
+ "97250024": {
+  "searched": "2026-11-16",
+  "place_id": "ChIJ1cMNx8pr5TQRxYMOGuCNxdM",
+  "rating": 5,
+  "count": 119,
+  "uri": "https://maps.google.com/?cid=15259758906064143301&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-16"
+ },
+ "30240280": {
+  "searched": "2026-11-16",
+  "place_id": "ChIJkQ2TXFSa8IYRHX_XoabLP5I",
+  "rating": null,
+  "count": 0,
+  "uri": "https://maps.google.com/?cid=10538365569610514205&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-16"
+ },
+ "90249011": {
+  "searched": "2026-11-16",
+  "place_id": "ChIJQQ3s_0W_QzUR_DbESJAOUhE",
+  "rating": 4.8,
+  "count": 22,
+  "uri": "https://maps.google.com/?cid=1248076059593946876&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-16"
+ },
+ "91250011": {
+  "searched": "2026-11-16",
+  "place_id": "ChIJ-ai2HEbLQTURYSIFoBKjVC0",
+  "rating": 4.6,
+  "count": 14,
+  "uri": "https://maps.google.com/?cid=3266414930139882081&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "fetched": "2026-11-16"
+ },
+ "94210010": {
+  "searched": "2026-11-16"
  }
 }
