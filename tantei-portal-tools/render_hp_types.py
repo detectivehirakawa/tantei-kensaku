@@ -40,7 +40,7 @@ def esc(s):
 def block(name, e):
     types = [t for t in (e.get("types") or []) if t]
     others = [t for t in (e.get("other_types") or []) if t]
-    if not types and not others:
+    if not types and not others and not e.get("summary"):
         return ""
     chips = "".join('<span style="%s">%s</span>' % (CHIP, esc(t)) for t in types)
     chips += "".join('<span style="%s">%s</span>' % (CHIP2, esc(t)) for t in others)
