@@ -196,6 +196,11 @@ body.top a:focus-visible,body.top input:focus-visible,body.top select:focus-visi
 .t-near-btn svg{width:20px;height:20px}
 .t-near-btn:hover{background:#f5b03e}
 .t-near-btn[disabled]{opacity:.6;cursor:wait}
+.t-near-addr{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 14px}
+.t-near-addr label{font-weight:700;white-space:nowrap}
+.t-near-addr input{flex:1 1 220px;min-width:0;font:inherit;font-size:1rem;padding:11px 12px;border:1px solid #c7cfdb;border-radius:6px;background:#fff}
+.t-near-addr button{font:inherit;font-weight:700;font-size:1rem;background:#1668d8;color:#fff;border:0;border-radius:6px;padding:12px 20px;cursor:pointer}
+.t-near-addr button:hover{background:#0f4fa8}
 #nearMsg{font-size:.82rem;color:#5a6b80;line-height:1.6}
 .t-near-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px;align-items:start}
 @media(max-width:760px){.t-near-grid{grid-template-columns:minmax(0,1fr)}}
@@ -475,9 +480,10 @@ footer.t-foot a:hover{text-decoration:underline}
 <div class="t-wrap">
 <main style="max-width:none;margin:0;padding:0">
 
-<section class="t-box t-near" id="near"><h2 class="t-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg><b>お近くの掲載済み探偵に依頼する</b><i>現在地から近い順に、掲載済みの探偵事務所を地図と一覧で表示します</i></h2>
+<section class="t-box t-near" id="near"><h2 class="t-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg><b>お近くの掲載済み探偵に依頼する</b><i>現在地や住所から近い順に、掲載済みの探偵事務所を地図と一覧で表示します</i></h2>
 <div class="t-near-bar"><button type="button" class="t-near-btn" id="nearBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>現在地から探す</button>
 <span id="nearMsg">ボタンを押すと位置情報を使って近い順に並べます。あわせて、おおよその地域（約1km単位）と日時を利用状況の把握のために記録します（<a href="./privacy.html">プライバシーポリシー</a>）。</span></div>
+<form class="t-near-addr" id="nearAddrForm" role="search"><label for="nearAddr">住所で探す</label><input id="nearAddr" type="text" inputmode="text" autocomplete="street-address" placeholder="例：埼玉県三郷市 / 大分市府内町"><button type="submit">この住所から探す</button></form>
 <div class="t-near-grid"><div id="nearMap" role="region" aria-label="掲載済みの探偵事務所の地図"></div><ol class="t-near-list" id="nearList"><li class="t-near-empty">読み込み中…</li></ol></div>
 </section>
 
@@ -691,7 +697,7 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
   var mapEl=document.getElementById('nearMap'), listEl=document.getElementById('nearList'),
       btn=document.getElementById('nearBtn'), msg=document.getElementById('nearMsg');
   if(!mapEl) return;
-  var items=[], map=null, layer=null, me=null, heroes={};
+  var items=[], map=null, layer=null, me=null, meLabel='現在地', heroes={};
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function km(a,b,c,d){var R=6371,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r,h=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(h));}
   function firstUrl(u){var a=String(u||'').match(/https?:\/\/[^\s]+/g)||[];for(var i=0;i<a.length;i++){if(!/line\.me|lin\.ee/.test(a[i]))return a[i];}return '';}
@@ -714,7 +720,7 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
     items.forEach(function(it){ if(it.lat==null) return;
       var m=L.marker([it.lat,it.lng],{icon:red}).bindPopup('<b>'+esc(it.n)+'</b><br>'+esc(it.a)+'<br><a href="./biz/'+it.i+'.html">詳しく見る</a>');
       layer.addLayer(m); pts.push([it.lat,it.lng]); });
-    if(me){ layer.addLayer(L.circleMarker(me,{radius:9,color:'#fff',weight:3,fillColor:'#1559c4',fillOpacity:1}).bindPopup('現在地'));
+    if(me){ layer.addLayer(L.circleMarker(me,{radius:9,color:'#fff',weight:3,fillColor:'#1559c4',fillOpacity:1}).bindPopup(esc(meLabel)));
       var near=items.filter(function(it){return it.lat!=null;}).slice(0,3).map(function(it){return [it.lat,it.lng];});
       map.fitBounds(L.latLngBounds([me].concat(near)).pad(0.25),{maxZoom:13});
     } else if(pts.length){ map.fitBounds(L.latLngBounds(pts).pad(0.3),{maxZoom:11}); }
@@ -743,7 +749,7 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
     if(!navigator.geolocation){ msg.textContent='この端末では位置情報が使えません。下の「地域・エリアから探す」から都道府県を選んでください。'; return; }
     btn.disabled=true; msg.textContent='現在地を確認しています…';
     navigator.geolocation.getCurrentPosition(function(pos){
-      me=[pos.coords.latitude,pos.coords.longitude];
+      me=[pos.coords.latitude,pos.coords.longitude]; meLabel='現在地';
       try{
         var ua=navigator.userAgent, dev=/iPad|Tablet/i.test(ua)?'タブレット':(/Mobi|Android|iPhone/i.test(ua)?'スマホ':'PC');
         fetch('https://script.google.com/macros/s/AKfycbw5fWMGBB5glT-CAK0E_RUurrdMMw8tlRvU2g7dSs0LM2yVP9GJS2K11-pdbtv4BXAJOw/exec',{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
@@ -773,6 +779,25 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
       msg.style.whiteSpace='pre-line';
       msg.textContent=how+'\n（今は全国の掲載済み事務所を表示しています。下の「地域・エリアから探す」からも探せます）';
     },{enableHighAccuracy:false,timeout:10000,maximumAge:300000});
+  });
+
+  var af=document.getElementById('nearAddrForm'), ai=document.getElementById('nearAddr');
+  if(af) af.addEventListener('submit',function(e){
+    e.preventDefault();
+    var q=String(ai.value||'').trim();
+    msg.style.whiteSpace='';
+    if(!q){ msg.textContent='住所を入力してください（例：埼玉県三郷市）。'; ai.focus(); return; }
+    msg.textContent='住所の位置を調べています…';
+    fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+      var g=j&&j[0]&&j[0].geometry;
+      if(!g){ msg.textContent='その住所の位置が見つかりませんでした。「〇〇県〇〇市」のように市区町村まででもお試しください。'; return; }
+      var t=(j[0].properties&&j[0].properties.title)||q;
+      me=[g.coordinates[1],g.coordinates[0]]; meLabel=t;
+      items.forEach(function(it){ it.d=(it.lat!=null)?km(me[0],me[1],it.lat,it.lng):null; });
+      items.sort(function(a,b){return (a.d==null)-(b.d==null)||(a.d||0)-(b.d||0);});
+      msg.textContent='「'+t+'」から近い順に並べました。';
+      render();
+    }).catch(function(){ msg.textContent='位置の確認に失敗しました。時間をおいてもう一度お試しください。'; });
   });
 })();
 </script>
