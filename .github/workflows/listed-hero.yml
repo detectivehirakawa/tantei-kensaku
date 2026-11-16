@@ -46,6 +46,7 @@ jobs:
           python tantei-portal-tools/google_rating.py render
           python tantei-portal-tools/render_hp_types.py
           python tantei-portal-tools/render_display_no.py
+          python tantei-portal-tools/render_kanri_no.py
           python tantei-portal-tools/render_llmo.py
           python tantei-portal-tools/render_city_extra.py
       - name: 日本語フォントと Pillow
