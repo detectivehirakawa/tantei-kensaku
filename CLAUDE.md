@@ -102,3 +102,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - `tantei-portal-tools/listed_geo.py` が掲載済み（all.json の m=0）全社の位置を国土地理院の住所検索で求め、`tantei-portal-data/listed_geo.json` に書く。住所は biz_extra.json の officeAddress（無ければ届出住所の市区町村まで。届出住所の番地は使わない）。〒・ビル名などで失敗するので、短くしながら順に試す。listed-hero.yml の中で毎回実行（承認＝biz_extra.json / all.json の更新で動く）。
 - 地図（トップの地図・近くの掲載済み・map.html）の `tkOfficeGeo` はこのファイルを先に読み、まだ載っていない新しい掲載だけブラウザで検索する。index.html・map.html・build_site.py（NEAR_JS とトップのテンプレート）の3か所に同じものがある。
 - listed-hero.yml の書き戻し（2026-11-17）：承認（GAS）と同時に走って rebase が競合したら、最新の main に戻し、撮影・背景画像・listed_geo.json は直前の結果を戻したうえで `tantei-portal-tools/listed_all.sh`（組み直しの全スクリプト）をやり直して再コミットする（最大6回）。GAS 側の変更は消さない。最後まで push できなければジョブが失敗表示になる。組み直しのスクリプトを足したら listed_all.sh にも足すこと。
+
+## 「同じ市区町村のほかの届出業者」の一覧（2026-11-18、運営者指示「承認の自動処理に組み込んで」）
+
+- 承認で屋号（dispName）が変わると、GAS は本人のページと一覧ページの名前は直すが、ほかの業者ページの「〇〇のほかの届出業者」の一覧は直さない。`tantei-portal-tools/render_neighbors.py` が all.json から全ページの一覧を作り直す（同じ市区町村を届出番号順に並べ、本人の次から8件・最後まで行ったら先頭に戻る。見出しは「8件を表示・全N件」）。変わったページだけ書き換え、「このページの更新日」を今日にする。
+- listed-hero.yml（render_display_no.py の前）と listed_all.sh で毎回実行。all.json の更新でも listed-hero.yml が動くようにした。
+- サイト全体の整合性点検は運営者PCの detective-portal/fix/audit.py（リポジトリ外）。

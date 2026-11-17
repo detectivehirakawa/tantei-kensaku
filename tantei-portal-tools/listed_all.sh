@@ -5,6 +5,7 @@ cd "$(dirname "$0")/.."
 python tantei-portal-tools/render_listed.py || true
 python tantei-portal-tools/google_rating.py render || true
 python tantei-portal-tools/render_hp_types.py || true
+python tantei-portal-tools/render_neighbors.py || true
 python tantei-portal-tools/render_display_no.py || true
 python tantei-portal-tools/render_kanri_no.py || true
 python tantei-portal-tools/render_llmo.py || true

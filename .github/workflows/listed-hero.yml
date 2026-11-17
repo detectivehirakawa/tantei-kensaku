@@ -14,6 +14,7 @@ on:
       - 'tantei-portal-data/gbp.json'
       - 'tantei-portal-data/biz_web.json'
       - 'tantei-portal-data/display_no.json'
+      - 'all.json'
       - 'tantei-portal-tools/listed_geo.py'
       - 'all.json'
       - 'biz/*.html'
@@ -47,6 +48,7 @@ jobs:
         run: |
           python tantei-portal-tools/google_rating.py render
           python tantei-portal-tools/render_hp_types.py
+          python tantei-portal-tools/render_neighbors.py
           python tantei-portal-tools/render_display_no.py
           python tantei-portal-tools/render_kanri_no.py
           python tantei-portal-tools/render_llmo.py
