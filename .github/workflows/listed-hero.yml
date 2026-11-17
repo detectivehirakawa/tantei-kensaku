@@ -14,6 +14,8 @@ on:
       - 'tantei-portal-data/gbp.json'
       - 'tantei-portal-data/biz_web.json'
       - 'tantei-portal-data/display_no.json'
+      - 'tantei-portal-tools/listed_geo.py'
+      - 'all.json'
       - 'biz/*.html'
   workflow_dispatch:
     inputs:
@@ -63,11 +65,14 @@ jobs:
         env:
           FORCE: ${{ github.event.inputs.force }}
         run: python tantei-portal-tools/listed_bg.py
+      - name: 掲載済み全社の地図ピンの位置を計算（listed_geo.json。承認のたびに自動・2026-11-17 運営者指示）
+        continue-on-error: true
+        run: python tantei-portal-tools/listed_geo.py
       - name: 変更があればコミット
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add img/listed biz *.html */*.html
+          git add img/listed biz *.html */*.html tantei-portal-data/listed_geo.json
           if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
           git commit -m "全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
           for n in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done

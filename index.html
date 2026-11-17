@@ -682,16 +682,23 @@ window.loadLeaflet=(function(){
 </script>
 <script>
 window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
-  /* 掲載済みの業者が入力した住所（自宅を伏せて市区町村までの場合も）の位置にピンを立てる。届出住所の位置は使わない（2026-11-13） */
-  var ids=Object.keys(extra||{}).filter(function(id){return extra[id]&&extra[id].officeAddress;});
-  return Promise.all(ids.map(function(id){
-    var q=String(extra[id].officeAddress), k='tkgeo:'+q, c=null;
-    try{c=JSON.parse(sessionStorage.getItem(k)||'null');}catch(e){}
-    var p=c?Promise.resolve(c):fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+  /* 掲載済みの業者が入力した住所（自宅を伏せて市区町村までの場合も）の位置にピンを立てる。届出住所の位置は使わない（2026-11-13）。
+     位置は listed_geo.json（listed_geo.py が承認のたびに計算）を先に使い、まだ載っていない新しい掲載だけブラウザで検索する（2026-11-17） */
+  function norm(s){return String(s||'').replace(/〒?\s*\d{3}[-‐－ー−]?\d{4}/g,' ').replace(/　/g,' ').replace(/\s+/g,' ').trim();}
+  function look(q){var k='tkgeo:'+q,c=null;try{c=JSON.parse(sessionStorage.getItem(k)||'null');}catch(e){}
+    return c?Promise.resolve(c):fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
       var g=(j&&j[0]&&j[0].geometry)?{lat:j[0].geometry.coordinates[1],lng:j[0].geometry.coordinates[0]}:{none:1};
-      try{sessionStorage.setItem(k,JSON.stringify(g));}catch(e){} return g;});
-    return p.then(function(g){ if(g&&g.lat!=null){geo[id]={lat:g.lat,lng:g.lng};}else{delete geo[id];} }).catch(function(){ delete geo[id]; });
-  })).then(function(){return geo;});
+      try{sessionStorage.setItem(k,JSON.stringify(g));}catch(e){} return g;});}
+  return fetch('/tantei-portal-data/listed_geo.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};}).then(function(pre){
+    Object.keys(pre||{}).forEach(function(id){var p=pre[id];if(p&&p.lat!=null)geo[id]={lat:p.lat,lng:p.lng};});
+    var ids=Object.keys(extra||{}).filter(function(id){return extra[id]&&extra[id].officeAddress&&!(pre&&pre[id]&&pre[id].src===String(extra[id].officeAddress).trim());});
+    return Promise.all(ids.map(function(id){
+      var s=norm(extra[id].officeAddress),h=s.split(' ')[0],m=h.match(/^(.+?\d+(?:[-‐－ー−丁目番地号の]\d+)*(?:番地|号)?)/),c=h.match(/^(.+?(?:郡.+?[町村]|市.+?区|[市区町村]))/),qs=[s,h];
+      if(m)qs.push(m[1]); if(c)qs.push(c[1]);
+      var i=0; function next(){ if(i>=qs.length) return Promise.resolve(null); return look(qs[i++]).then(function(g){return (g&&g.lat!=null)?g:next();},next); }
+      return next().then(function(g){ if(g){geo[id]={lat:g.lat,lng:g.lng};}else if(!(pre&&pre[id])){delete geo[id];} });
+    }));
+  }).then(function(){return geo;});
 };
 (function(){
   var mapEl=document.getElementById('nearMap'), listEl=document.getElementById('nearList'),

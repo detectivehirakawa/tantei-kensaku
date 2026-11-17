@@ -96,3 +96,8 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 ## 管理番号でも検索に出るように（2026-11-16、運営者指示「あくまで検索にヒットさせるだけ」）
 
 - `tantei-portal-tools/render_kanri_no.py`：all.json の j（管理番号）がある約2,560社の掲載ページに、届出情報の最後へ2つの番号を併記した一文（`<!--kno-->`）と、構造化データ identifier に管理番号を追加。表示番号・URL・リンクは変えない。display_no.json の業者は対象外（render_display_no.py が両方出す）。listed-hero.yml で毎回実行。
+
+## 地図のピン（2026-11-17、運営者指示「掲載しているところは全件ピンを立てる・今後の新規も必ず」）
+
+- `tantei-portal-tools/listed_geo.py` が掲載済み（all.json の m=0）全社の位置を国土地理院の住所検索で求め、`tantei-portal-data/listed_geo.json` に書く。住所は biz_extra.json の officeAddress（無ければ届出住所の市区町村まで。届出住所の番地は使わない）。〒・ビル名などで失敗するので、短くしながら順に試す。listed-hero.yml の中で毎回実行（承認＝biz_extra.json / all.json の更新で動く）。
+- 地図（トップの地図・近くの掲載済み・map.html）の `tkOfficeGeo` はこのファイルを先に読み、まだ載っていない新しい掲載だけブラウザで検索する。index.html・map.html・build_site.py（NEAR_JS とトップのテンプレート）の3か所に同じものがある。
