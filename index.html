@@ -746,13 +746,15 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
   }).then(function(res){
     var all=res[0], geo=res[1], extra=res[2]; heroes=res[4]||{};
     items=all.filter(function(r){return r.m===0;}).map(function(r){var g=geo[r.i]||{};
-      return {i:r.i,n:r.n,a:r.a,lat:(g.lat!=null?g.lat:null),lng:(g.lng!=null?g.lng:null),x:extra[r.i]||null,d:null};});
+      return {i:r.i,n:r.n,a:r.a,c:r.c||'',lat:(g.lat!=null?g.lat:null),lng:(g.lng!=null?g.lng:null),x:extra[r.i]||null,d:null};});
     red=L.divIcon({className:'pin-permitted',html:'<div style="width:18px;height:18px;background:#d0392b;border:3px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.5)"></div>',iconSize:[18,18],iconAnchor:[9,9]});
     map=L.map('nearMap',{scrollWheelZoom:false}).setView([36.2,138.5],5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
     map.on('click',function(){map.scrollWheelZoom.enable();});
-    layer=L.layerGroup().addTo(map);
-    render();
+    /* 同じ市区町村の掲載済みが100件を超えたら、ピンを数字の丸でまとめる（2026-11-17 運営者指示） */
+    var cc={},mx=0; items.forEach(function(it){ if(!it.c) return; cc[it.c]=(cc[it.c]||0)+1; if(cc[it.c]>mx) mx=cc[it.c]; });
+    var useCl=mx>100;
+    return (useCl?window.loadLeaflet(true):Promise.resolve()).then(function(){ layer=(useCl&&L.markerClusterGroup?L.markerClusterGroup():L.layerGroup()).addTo(map); render(); });
   }).catch(function(){ msg.textContent='読み込みに失敗しました。ページを再読み込みしてください。'; });
   return ready; }
   if('IntersectionObserver' in window){ var nio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ nio.disconnect(); start(); } },{rootMargin:'600px'}); nio.observe(mapEl); } else start();
