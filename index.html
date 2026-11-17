@@ -715,8 +715,8 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
     var dist=(it.d!=null)?'<span class="d">約'+(it.d<10?it.d.toFixed(1):Math.round(it.d))+'km</span>':'';
     var btns='<a class="go" href="./biz/'+it.i+'.html">詳しく見る</a>'+
       (tel?'<a class="tel" href="tel:'+esc(tel)+'">電話で相談する</a>':'')+
-      (line?'<a class="line" href="'+esc(line)+'" target="_blank" rel="noopener">LINEで相談する</a>':'')+
-      (url?'<a class="web" href="'+esc(url)+'" target="_blank" rel="noopener">公式サイト</a>':'');
+      (line?'<a class="line" href="'+esc(line)+'" target="_blank" rel="noopener">LINEで相談する</a>':'');
+    /* 公式サイトボタンは出さない（掲載ページに載っているので。サイト内の滞在を優先 2026-11-17 運営者指示） */
     var hero=heroes[it.i]?' has-hero" style="background-image:linear-gradient(100deg,rgba(9,28,60,.88) 0%,rgba(9,28,60,.62) 50%,rgba(9,28,60,.15) 100%),url(./img/listed/'+it.i+'.webp?v='+encodeURIComponent(heroes[it.i]).length+')':'';
     return '<li class="t-near-item'+hero+'">'+dist+'<a class="nm" href="./biz/'+it.i+'.html">'+esc(it.n)+'</a>'+
       (x.catch?'<p class="cp">'+esc(x.catch)+'</p>':'')+'<p class="ad">'+esc(it.a)+'</p><div class="bt">'+btns+'</div></li>';
