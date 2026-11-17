@@ -480,7 +480,7 @@ footer.t-foot a:hover{text-decoration:underline}
 <div class="t-wrap">
 <main style="max-width:none;margin:0;padding:0">
 
-<section class="t-box t-near" id="near"><h2 class="t-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg><b>お近くの掲載済み探偵に依頼する</b><i>現在地や住所から近い順に、掲載済みの探偵事務所を地図と一覧で表示します</i></h2>
+<section class="t-box t-near" id="near"><h2 class="t-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg><b>お近くの掲載済み探偵に依頼する</b><i>現在地や住所から、掲載済みの探偵事務所を地図と一覧で表示します。一覧は近い順で表示されます（30件まで）</i></h2>
 <div class="t-near-bar"><button type="button" class="t-near-btn" id="nearBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.6"/></svg>現在地から探す</button>
 <span id="nearMsg">ボタンを押すと位置情報を使って近い順に並べます。あわせて、おおよその地域（約1km単位）と日時を利用状況の把握のために記録します（<a href="./privacy.html">プライバシーポリシー</a>）。</span></div>
 <form class="t-near-addr" id="nearAddrForm" role="search"><label for="nearAddr">住所で探す</label><input id="nearAddr" type="text" inputmode="text" autocomplete="street-address" placeholder="例：埼玉県三郷市 / 大分市府内町"><button type="submit">この住所から探す</button></form>
@@ -705,6 +705,7 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
       btn=document.getElementById('nearBtn'), msg=document.getElementById('nearMsg');
   if(!mapEl) return;
   var items=[], map=null, layer=null, me=null, meLabel='現在地', heroes={};
+  var NEAR_MAX=30; /* 一覧は近い順に30件まで（地図のピンは全件）2026-11-17 運営者指示 */
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function km(a,b,c,d){var R=6371,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r,h=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(h));}
   function firstUrl(u){var a=String(u||'').match(/https?:\/\/[^\s]+/g)||[];for(var i=0;i<a.length;i++){if(!/line\.me|lin\.ee/.test(a[i]))return a[i];}return '';}
@@ -721,7 +722,7 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
       (x.catch?'<p class="cp">'+esc(x.catch)+'</p>':'')+'<p class="ad">'+esc(it.a)+'</p><div class="bt">'+btns+'</div></li>';
   }
   function render(){
-    listEl.innerHTML=items.map(card).join('')||'<li class="t-near-empty">掲載済みの探偵事務所はまだありません。</li>';
+    listEl.innerHTML=items.slice(0,NEAR_MAX).map(card).join('')||'<li class="t-near-empty">掲載済みの探偵事務所はまだありません。</li>';
     if(!map) return;
     layer.clearLayers(); var pts=[];
     items.forEach(function(it){ if(it.lat==null) return;
@@ -732,8 +733,9 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
       map.fitBounds(L.latLngBounds([me].concat(near)).pad(0.25),{maxZoom:13});
     } else if(pts.length){ map.fitBounds(L.latLngBounds(pts).pad(0.3),{maxZoom:11}); }
   }
-  var red;
-  Promise.all([
+  var red, ready=null;
+  /* 読み込みはこの欄に近づいてから始める（ページを開いた直後の通信を軽くする）2026-11-17 */
+  function start(){ if(ready) return ready; ready=Promise.all([
     fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}),
     fetch('./geo.json').then(function(r){return r.json();}),
     fetch('../tantei-portal-data/biz_extra.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};}),
@@ -752,6 +754,8 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
     layer=L.layerGroup().addTo(map);
     render();
   }).catch(function(){ msg.textContent='読み込みに失敗しました。ページを再読み込みしてください。'; });
+  return ready; }
+  if('IntersectionObserver' in window){ var nio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ nio.disconnect(); start(); } },{rootMargin:'600px'}); nio.observe(mapEl); } else start();
   btn.addEventListener('click',function(){
     if(!navigator.geolocation){ msg.textContent='この端末では位置情報が使えません。下の「地域・エリアから探す」から都道府県を選んでください。'; return; }
     btn.disabled=true; msg.textContent='現在地を確認しています…';
@@ -762,11 +766,11 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
         fetch('https://script.google.com/macros/s/AKfycbw5fWMGBB5glT-CAK0E_RUurrdMMw8tlRvU2g7dSs0LM2yVP9GJS2K11-pdbtv4BXAJOw/exec',{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
           body:JSON.stringify({key:'tanteiportal',mode:'geo',lat:Math.round(me[0]*100)/100,lng:Math.round(me[1]*100)/100,device:dev,ref:String(document.referrer||'').slice(0,200)})}).catch(function(){});
       }catch(e){}
-      items.forEach(function(it){ it.d=(it.lat!=null)?km(me[0],me[1],it.lat,it.lng):null; });
+      start().then(function(){ items.forEach(function(it){ it.d=(it.lat!=null)?km(me[0],me[1],it.lat,it.lng):null; });
       items.sort(function(a,b){return (a.d==null)-(b.d==null)||(a.d||0)-(b.d||0);});
       msg.textContent='現在地から近い順に並べました。';
       btn.disabled=false; btn.textContent='現在地を更新する';
-      render();
+      render(); });
     },function(err){
       btn.disabled=false;
       /* 拒否（code 1）は端末・ブラウザ側の設定で起きる。サイトからは許可を出し直せないので、直し方を端末ごとに案内する（2026-11-14） */
@@ -800,10 +804,10 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
       if(!g){ msg.textContent='その住所の位置が見つかりませんでした。「〇〇県〇〇市」のように市区町村まででもお試しください。'; return; }
       var t=(j[0].properties&&j[0].properties.title)||q;
       me=[g.coordinates[1],g.coordinates[0]]; meLabel=t;
-      items.forEach(function(it){ it.d=(it.lat!=null)?km(me[0],me[1],it.lat,it.lng):null; });
+      start().then(function(){ items.forEach(function(it){ it.d=(it.lat!=null)?km(me[0],me[1],it.lat,it.lng):null; });
       items.sort(function(a,b){return (a.d==null)-(b.d==null)||(a.d||0)-(b.d||0);});
       msg.textContent='「'+t+'」から近い順に並べました。';
-      render();
+      render(); });
     }).catch(function(){ msg.textContent='位置の確認に失敗しました。時間をおいてもう一度お試しください。'; });
   });
 })();
