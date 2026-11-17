@@ -101,3 +101,4 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 - `tantei-portal-tools/listed_geo.py` が掲載済み（all.json の m=0）全社の位置を国土地理院の住所検索で求め、`tantei-portal-data/listed_geo.json` に書く。住所は biz_extra.json の officeAddress（無ければ届出住所の市区町村まで。届出住所の番地は使わない）。〒・ビル名などで失敗するので、短くしながら順に試す。listed-hero.yml の中で毎回実行（承認＝biz_extra.json / all.json の更新で動く）。
 - 地図（トップの地図・近くの掲載済み・map.html）の `tkOfficeGeo` はこのファイルを先に読み、まだ載っていない新しい掲載だけブラウザで検索する。index.html・map.html・build_site.py（NEAR_JS とトップのテンプレート）の3か所に同じものがある。
+- listed-hero.yml の書き戻し（2026-11-17）：承認（GAS）と同時に走って rebase が競合したら、最新の main に戻し、撮影・背景画像・listed_geo.json は直前の結果を戻したうえで `tantei-portal-tools/listed_all.sh`（組み直しの全スクリプト）をやり直して再コミットする（最大6回）。GAS 側の変更は消さない。最後まで push できなければジョブが失敗表示になる。組み直しのスクリプトを足したら listed_all.sh にも足すこと。

@@ -72,10 +72,28 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add img/listed biz *.html */*.html tantei-portal-data/listed_geo.json
+          # 承認（GAS）が同時に biz/*.html などを更新すると rebase が競合する。そのときは最新の main に戻して
+          # 組み直しをやり直す（GAS 側の変更を消さない）。最後まで push できなければ失敗として表示する（2026-11-17）。
+          MSG="全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
+          add() { git add img/listed biz *.html */*.html tantei-portal-data/listed_geo.json; }
+          add
           if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
-          git commit -m "全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
-          for n in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
+          git commit -q -m "$MSG"
+          SNAP=$(git rev-parse HEAD)
+          for n in 1 2 3 4 5 6; do
+            if git pull --rebase -q && git push -q; then echo "push しました（${n}回目）"; exit 0; fi
+            echo "競合したので最新の main の上でやり直します（${n}回目）"
+            git rebase --abort 2>/dev/null || true
+            git fetch -q origin main && git reset -q --hard origin/main
+            git checkout "$SNAP" -- img/listed tantei-portal-data/listed_geo.json 2>/dev/null || true
+            bash tantei-portal-tools/listed_all.sh
+            add
+            if git diff --cached --quiet; then echo "最新の main で反映済み"; exit 0; fi
+            git commit -q -m "$MSG"
+            sleep $((n * 5))
+          done
+          echo "::error::書き戻しを6回試しましたが push できませんでした"
+          exit 1
       - name: 変わったページを IndexNow（Bing など）に知らせる
         continue-on-error: true
         run: python tantei-portal-tools/indexnow_ping.py "${{ github.event.before }}"
