@@ -97,6 +97,53 @@ def gallery(items):
             '<p style="font-size:.78rem;color:#6b7a8c;margin:0 0 12px">横にスクロールできます。写真をタップすると大きく表示します。</p>')
 
 
+# 写真の自動スライド（2026-11-18、biz_profile.json の "autoslide": true の業者だけ）。
+# 3.5秒ごとに1枚ずつ送り、最後まで行ったら先頭へ。触っている間・画面外・動きを減らす設定の端末では止める。
+AUTOSLIDE_JS = (
+    "<script>(function(){var g=document.querySelector('.biz-gallery[data-autoslide]');if(!g)return;"
+    "if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;"
+    "var hold=false,vis=false,t;function stop(){hold=true;clearTimeout(t);t=setTimeout(function(){hold=false;},6000);}"
+    "['pointerdown','touchstart','wheel','mouseenter','focusin'].forEach(function(e){g.addEventListener(e,stop,{passive:true});});"
+    "g.addEventListener('mouseleave',function(){hold=false;});"
+    "if('IntersectionObserver' in window){new IntersectionObserver(function(es){vis=es[0].isIntersecting;}).observe(g);}else{vis=true;}"
+    "setInterval(function(){if(hold||!vis||document.hidden)return;var f=g.querySelector('figure');if(!f)return;"
+    "var step=f.getBoundingClientRect().width+14;"
+    "if(g.scrollLeft+g.clientWidth>=g.scrollWidth-4){g.scrollTo({left:0,behavior:'smooth'});}"
+    "else{g.scrollBy({left:step,behavior:'smooth'});}},3500);})();</script>")
+
+
+def sticky_cta(bottom_cta):
+    """画面下に固定の相談ボタン（2026-11-18、biz_profile.json の "sticky_cta": true の業者だけ）。
+    ボタンは下の相談欄（GAS が書き出した biz-cta）から電話と LINE を拾う。上の相談欄・下の相談欄が
+    見えている間は隠す（同じボタンが二重に見えないように）。"""
+    tel = re.search(r'<a class="biz-cta-tel" href="(tel:[^"]+)"', bottom_cta or "")
+    line = re.search(r'<a class="biz-cta-line" href="([^"]+)"', bottom_cta or "")
+    if not tel and not line:
+        return ""
+    btn = ("flex:1;display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;"
+           "font-weight:700;font-size:.95rem;text-decoration:none;")
+    a = []
+    if line:
+        a.append('<a href="%s" target="_blank" rel="noopener" data-cv="sticky-line" style="%sbackground:#06c755;color:#fff">LINEで相談</a>'
+                 % (esc(line.group(1)), btn))
+    if tel:
+        a.append('<a href="%s" data-cv="sticky-tel" style="%sbackground:#f0a020;color:#2b1a00">電話で相談</a>'
+                 % (esc(tel.group(1)), btn))
+    bar = ('<div class="biz-sticky" style="position:fixed;left:0;right:0;bottom:0;z-index:900;display:flex;gap:8px;'
+           'padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);'
+           'box-shadow:0 -2px 12px rgba(13,27,42,.18);transform:translateY(110%);transition:transform .25s;'
+           'max-width:640px;margin:0 auto">' + "".join(a) + '</div>')
+    js = ("<script>(function(){var b=document.querySelector('.biz-sticky');if(!b)return;"
+          "var cs=document.querySelectorAll('.biz-cta'),on={};function upd(){var show=window.scrollY>300;"
+          "for(var k in on){if(on[k])show=false;}b.style.transform=show?'translateY(0)':'translateY(110%)';"
+          "document.body.style.paddingBottom=show?'72px':'';}"
+          "if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){"
+          "on[e.target.dataset.sk]=e.isIntersecting;});upd();});"
+          "cs.forEach(function(c,i){c.dataset.sk=i;io.observe(c);});}"
+          "window.addEventListener('scroll',upd,{passive:true});upd();})();</script>")
+    return bar + js
+
+
 def dl(rows):
     return "<dl>" + "".join(
         '<dt>%s</dt><dd style="white-space:pre-wrap">%s</dd>' % (esc(k), linkify(str(v)))
@@ -193,9 +240,13 @@ def render_card(bid, page, entry, biz, prof):
         parts.append('<section class="biz-svc-wrap"><h2 class="svc-title">%sの紹介</h2>%s</section>' % (name, intro))
     parts.append(head(name + "のプロフィール") + dl(profile))
     gal = gallery(prof.get("gallery") or [])
+    if gal and prof.get("autoslide"):
+        gal = gal.replace('<div class="biz-gallery"', '<div class="biz-gallery" data-autoslide', 1) + AUTOSLIDE_JS
     if gal:
         parts.append(head(name + "の実績・資格") + gal)
     parts.append(bottom_cta)
+    if prof.get("sticky_cta"):
+        parts.append(sticky_cta(bottom_cta))
     parts.append('<p style="%s">%s</p>' % (NOTE_STYLE, esc(note)))
     new_card = CARD_OPEN + MARK + "".join(p for p in parts if p) + "</div>\n"
     return page[:start] + new_card + page[trail:]
