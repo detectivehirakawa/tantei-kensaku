@@ -44,7 +44,7 @@
   "src": "https://first-okinawatantei.com/images/main.webp"
  },
  "91250011": {
-  "site": "https://sagauwaki.com",
+  "site": "https://sagauwaki.com/",
   "src": "https://sagauwaki.com/wp-content/uploads/2024/11/20241110_235133821_iOS.webp"
  },
  "97230013": {
@@ -70,5 +70,9 @@
  "24240005": {
   "site": "https://s-signal.co.jp/",
   "src": "https://s-signal.co.jp/aoi/wp-content/uploads/2026/10/image-1.png"
+ },
+ "90259046": {
+  "site": "https://sagauwaki.com/",
+  "src": "https://sagauwaki.com/wp-content/uploads/2024/11/20241110_235133821_iOS.webp"
  }
 }
