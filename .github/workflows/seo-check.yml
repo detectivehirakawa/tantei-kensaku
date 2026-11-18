@@ -1,0 +1,20 @@
+name: seo-check
+# 検索エンジン向けの設定（noindex・robots.txt・sitemap・構造化データ）がくずれていないか、push のたびに点検する（2026-11-18）
+on:
+  push:
+    branches: [main]
+    paths: ["**.html", "sitemap.xml", "robots.txt", "tantei-portal-tools/seo_check.py", ".github/workflows/seo-check.yml"]
+  workflow_dispatch:
+concurrency:
+  group: seo-check
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python tantei-portal-tools/seo_check.py

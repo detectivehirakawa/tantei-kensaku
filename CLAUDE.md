@@ -108,3 +108,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - 承認で屋号（dispName）が変わると、GAS は本人のページと一覧ページの名前は直すが、ほかの業者ページの「〇〇のほかの届出業者」の一覧は直さない。`tantei-portal-tools/render_neighbors.py` が all.json から全ページの一覧を作り直す（同じ市区町村を届出番号順に並べ、本人の次から8件・最後まで行ったら先頭に戻る。見出しは「8件を表示・全N件」）。変わったページだけ書き換え、「このページの更新日」を今日にする。
 - listed-hero.yml（render_display_no.py の前）と listed_all.sh で毎回実行。all.json の更新でも listed-hero.yml が動くようにした。
 - サイト全体の整合性点検は運営者PCの detective-portal/fix/audit.py（リポジトリ外）。
+
+## 検索エンジン向けの設定（2026-11-18）
+- noindex は contact.html と edit.html（フォーム）だけ。業者ページ・一覧・コラムは index 維持。転送ページと mypage/ は例外。
+- robots.txt で noindex のページをブロックしない（Google が noindex を読めなくなる）。sitemap に noindex・転送・?付きURLを入れない。
+- 構造化データの Dataset（data.html）は license 必須（data.html#cite の引用条件を指す）。
+- 点検は `python tantei-portal-tools/seo_check.py`。push のたびに seo-check.yml が自動で実行し、外れたら失敗する。
