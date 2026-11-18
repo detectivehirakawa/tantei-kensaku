@@ -266,6 +266,26 @@ def sns_label(page):
     return CTA_WEB_RE.sub(rep, page)
 
 
+CERT_KANA_RE = re.compile(r"(<div class=\"cert-name\">(?:(?!</div>).)*?<span style='display:block;color:#888;font-size:\.68em;margin-top:6px'>（)((?:(?!</div>).)*?)(）</span></div>)", re.S)
+CONTACT_NAME_RE = re.compile(r'(contact\.html\?id=\d{8}&name=)[^&"]*')
+
+
+def fix_display_name(page, entry):
+    """屋号（dispName/dispKana）を変えた業者の、掲載証のふりがなとフォームへのリンクの名前を今の屋号にそろえる。
+    GAS の差し替えは、ふりがなが行ごとの <span> に分かれていると当たらないため（2026-11-18、コネクト探偵社で発生）。"""
+    kana = str((entry or {}).get("dispKana") or "").strip()
+    name = str((entry or {}).get("dispName") or "").strip()
+    if kana:
+        def rep(m):
+            now = re.sub(r"<[^>]+>", "", m.group(2))
+            return m.group(0) if now == kana else m.group(1) + html.escape(kana) + m.group(3)
+        page = CERT_KANA_RE.sub(rep, page, count=1)
+    if name:
+        from urllib.parse import quote
+        page = CONTACT_NAME_RE.sub(lambda m: m.group(1) + quote(name), page)
+    return page
+
+
 def main():
     extra = json.load(open(os.path.join(DATA, "biz_extra.json"), encoding="utf-8"))
     permitted = json.load(open(os.path.join(DATA, "permitted.json"), encoding="utf-8"))
@@ -288,7 +308,7 @@ def main():
             new = render_card(bid, page, entry, all_biz.get(bid), profiles.get(bid) or {})
             if new is None:
                 print(bid, "カードの位置を特定できないのでスキップ"); continue
-        new = sns_label(new)
+        new = fix_display_name(sns_label(new), entry)
         if new != page:
             open(path, "w", encoding="utf-8").write(new)
             changed += 1
