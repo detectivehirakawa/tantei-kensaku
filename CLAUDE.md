@@ -118,3 +118,7 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 ## トップの「最近掲載された探偵社」（2026-11-18、運営者指示「よくある質問の上に」）
 - `tantei-portal-tools/render_recent.py` が index.html の `<!--recent-listed:start-->`〜`end` を書き換える（無ければよくある質問の直前に入れる＝フルビルド後も戻る）。掲載から30日以内・新しい順に最大12件、足りなければ最新4件。
 - 掲載日は `tantei-portal-data/listed_dates.json`（permitted.json に新しく入った日を自動記録。2026-11-11以前の掲載は移転日の11/11）。listed-hero.yml と listed_all.sh で毎回実行。
+
+## sitemap.xml の lastmod（2026-11-18、運営者指示「日付は正しくして」）
+- `tantei-portal-tools/make_sitemap.py` が作る。lastmod は「見える中身（タイトル・説明文・本文の文字）が変わった日」。リンク属性や画像の ?v= だけの変更では変わらない。前回の日付とハッシュは `tantei-portal-data/sitemap_lastmod.json`。
+- listed-hero.yml と listed_all.sh で毎回実行。手元の detective-portal/make_sitemap.py もこれを呼ぶ。ページを追加・更新したら push 前にこれを実行すること（git の日付は使わない）。

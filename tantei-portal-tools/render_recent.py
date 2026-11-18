@@ -10,6 +10,7 @@
 - listed-hero.yml の中で毎回実行（承認されれば自動）。何度実行しても同じ結果になる。
 """
 import datetime
+import hashlib
 import html
 import json
 import os
@@ -29,7 +30,8 @@ CSS = """<style>
 .t-recent-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
 .t-recent-list a{display:flex;flex-direction:column;height:100%;border:1px solid var(--t-line,#dde5f0);border-radius:8px;overflow:hidden;background:#fff;color:inherit;text-decoration:none;transition:box-shadow .15s}
 .t-recent-list a:hover{box-shadow:0 4px 14px rgba(20,33,61,.12)}
-.t-recent-list img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#eef2f7}
+.t-recent-list img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#eef2f7}
+.t-recent-list .ph{display:block;width:100%;aspect-ratio:16/9;background:#fff;border-bottom:1px solid var(--t-line,#dde5f0)}
 .t-recent-list .bd{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px}
 .t-recent-list .dt{font-size:.72rem;color:#0f7a3d;font-weight:700}
 .t-recent-list .nm{font-weight:700;font-size:.95rem;line-height:1.4}
@@ -69,6 +71,7 @@ def main():
     with open(os.path.join(ROOT, "all.json"), encoding="utf-8") as f:
         rows = {r["i"]: r for r in json.load(f) if r.get("m") == 0}
     extra = load("biz_extra.json", {})
+    profiles = load("biz_profile.json", {})
     order = sorted((i for i in new_dates if i in rows), key=lambda i: (new_dates[i], permitted.index(i)), reverse=True)
     since = (today - datetime.timedelta(days=DAYS)).isoformat()
     pick = [i for i in order if new_dates[i] >= since][:MAX]
@@ -81,8 +84,12 @@ def main():
         name = e.get("dispName") or r.get("n", "")
         place = city_of(e.get("officeAddress") or r.get("a", ""), r.get("p", ""))
         d = datetime.date.fromisoformat(new_dates[i])
-        img = (f'<img src="./img/listed/{i}.webp" alt="" width="320" height="180" loading="lazy" decoding="async">'
-               if os.path.exists(os.path.join(ROOT, "img", "listed", f"{i}.webp")) else "")
+        f = os.path.join(ROOT, "img", "listed", f"{i}.webp")
+        ver = hashlib.md5(open(f, "rb").read()).hexdigest()[:8] if os.path.exists(f) else ""
+        if (profiles.get(i) or {}).get("card_image") is False or not ver:
+            img = '<span class="ph" aria-hidden="true"></span>'  # 画像なし＝白い枠（biz_profile.json の card_image: false で指定）
+        else:
+            img = f'<img src="./img/listed/{i}.webp?v={ver}" alt="" width="320" height="180" loading="lazy" decoding="async">'
         catch = str(e.get("catch") or "").strip()
         items.append(
             f'<li><a href="./biz/{i}.html">{img}<span class="bd"><span class="dt">{d.month}月{d.day}日 掲載</span>'

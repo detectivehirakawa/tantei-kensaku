@@ -17,6 +17,7 @@ on:
       - 'all.json'
       - 'tantei-portal-tools/listed_geo.py'
       - 'tantei-portal-tools/render_recent.py'
+      - 'tantei-portal-tools/make_sitemap.py'
       - 'all.json'
       - 'biz/*.html'
   workflow_dispatch:
@@ -74,6 +75,9 @@ jobs:
       - name: トップの「最近掲載された探偵社」欄を更新（render_recent.py・listed_dates.json。2026-11-18 運営者指示）
         continue-on-error: true
         run: python tantei-portal-tools/render_recent.py
+      - name: sitemap.xml を更新（lastmod は中身が変わったページだけ今日にする。2026-11-18）
+        continue-on-error: true
+        run: python tantei-portal-tools/make_sitemap.py
       - name: 変更があればコミット
         run: |
           git config user.name "github-actions[bot]"
@@ -81,7 +85,7 @@ jobs:
           # 承認（GAS）が同時に biz/*.html などを更新すると rebase が競合する。そのときは最新の main に戻して
           # 組み直しをやり直す（GAS 側の変更を消さない）。最後まで push できなければ失敗として表示する（2026-11-17）。
           MSG="全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
-          add() { git add img/listed biz *.html */*.html tantei-portal-data/listed_geo.json tantei-portal-data/listed_dates.json; }
+          add() { git add img/listed biz *.html */*.html tantei-portal-data/listed_geo.json tantei-portal-data/listed_dates.json sitemap.xml tantei-portal-data/sitemap_lastmod.json; }
           add
           if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
           git commit -q -m "$MSG"
@@ -91,7 +95,7 @@ jobs:
             echo "競合したので最新の main の上でやり直します（${n}回目）"
             git rebase --abort 2>/dev/null || true
             git fetch -q origin main && git reset -q --hard origin/main
-            git checkout "$SNAP" -- img/listed tantei-portal-data/listed_geo.json tantei-portal-data/listed_dates.json 2>/dev/null || true
+            git checkout "$SNAP" -- img/listed tantei-portal-data/listed_geo.json tantei-portal-data/listed_dates.json tantei-portal-data/sitemap_lastmod.json 2>/dev/null || true
             bash tantei-portal-tools/listed_all.sh
             add
             if git diff --cached --quiet; then echo "最新の main で反映済み"; exit 0; fi

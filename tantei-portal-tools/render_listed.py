@@ -252,6 +252,20 @@ def render_card(bid, page, entry, biz, prof):
     return page[:start] + new_card + page[trail:]
 
 
+SNS_HOSTS = (("instagram.com", "Instagram"), ("x.com", "X"), ("twitter.com", "X"), ("facebook.com", "Facebook"),
+             ("tiktok.com", "TikTok"), ("youtube.com", "YouTube"), ("ameblo.jp", "ブログ"))
+CTA_WEB_RE = re.compile(r'(<a class="biz-cta-web" href="([^"]+)"[^>]*>)公式サイトを見る(?:（[^）<]*）)?(</a>)')
+
+
+def sns_label(page):
+    """ホームページを持たずSNSを公式サイトにしている業者は「公式サイトを見る（Instagram）」のように書く（2026-11-18 運営者指示）。"""
+    def rep(m):
+        host = re.sub(r"^https?://(www\.|m\.)?", "", m.group(2)).split("/")[0].lower()
+        name = next((n for h, n in SNS_HOSTS if host == h or host.endswith("." + h)), "")
+        return m.group(1) + "公式サイトを見る" + (f"（{name}）" if name else "") + m.group(3)
+    return CTA_WEB_RE.sub(rep, page)
+
+
 def main():
     extra = json.load(open(os.path.join(DATA, "biz_extra.json"), encoding="utf-8"))
     permitted = json.load(open(os.path.join(DATA, "permitted.json"), encoding="utf-8"))
@@ -262,16 +276,19 @@ def main():
 
     changed = 0
     for bid in sorted(permitted):
-        if bid in legacy:
-            print(bid, "以前の構成のまま（_legacy）"); continue
         entry = extra.get(bid)
         path = os.path.join(BIZ, bid + ".html")
         if not entry or not os.path.exists(path):
             print(bid, "掲載内容またはページが無いのでスキップ"); continue
         page = open(path, encoding="utf-8").read()
-        new = render_card(bid, page, entry, all_biz.get(bid), profiles.get(bid) or {})
-        if new is None:
-            print(bid, "カードの位置を特定できないのでスキップ"); continue
+        if bid in legacy:
+            print(bid, "以前の構成のまま（_legacy）")
+            new = page
+        else:
+            new = render_card(bid, page, entry, all_biz.get(bid), profiles.get(bid) or {})
+            if new is None:
+                print(bid, "カードの位置を特定できないのでスキップ"); continue
+        new = sns_label(new)
         if new != page:
             open(path, "w", encoding="utf-8").write(new)
             changed += 1
