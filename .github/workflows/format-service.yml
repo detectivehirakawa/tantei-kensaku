@@ -1,0 +1,49 @@
+name: format-service
+# 掲載承認の直後に、サービス内容へ文ごとの改行と **太字** だけを入れる（2026-11-18）。
+# GAS の requestFormat_ が repository_dispatch(format-service) で起動する。
+# Claude Code は月額プランのトークン（CLAUDE_CODE_OAUTH_TOKEN）で動かす＝追加料金なし。
+# 文言が変わった結果は、このスクリプトと GAS の両方で弾く（その時は承認時の自動太字のまま）。
+# 公開リポジトリのため、ログにトークン・シークレットを出さないこと。
+on:
+  repository_dispatch:
+    types: [format-service]
+  workflow_dispatch:
+    inputs:
+      text:
+        description: "試しに整形する文章（GAS には送らない）"
+        required: true
+concurrency:
+  group: format-service
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tantei-portal-tools
+          sparse-checkout-cone-mode: true
+      - name: Save input
+        env:
+          PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+          TEXT: ${{ github.event.inputs.text }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python3 -c "import json,os;json.dump({'service':os.environ['TEXT'].replace('\\\\n','\n')},open('/tmp/payload.json','w',encoding='utf-8'),ensure_ascii=False)"
+          else
+            printf '%s' "$PAYLOAD" > /tmp/payload.json
+          fi
+      - run: npm install -g @anthropic-ai/claude-code
+      - name: Claude Code formats and sends to GAS
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          FMT_SECRET: ${{ secrets.FMT_SECRET }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python3 tantei-portal-tools/format_service.py /tmp/payload.json --dry
+          else
+            python3 tantei-portal-tools/format_service.py /tmp/payload.json
+          fi
