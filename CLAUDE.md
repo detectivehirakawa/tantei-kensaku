@@ -122,3 +122,9 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 ## sitemap.xml の lastmod（2026-11-18、運営者指示「日付は正しくして」）
 - `tantei-portal-tools/make_sitemap.py` が作る。lastmod は「見える中身（タイトル・説明文・本文の文字）が変わった日」。リンク属性や画像の ?v= だけの変更では変わらない。前回の日付とハッシュは `tantei-portal-data/sitemap_lastmod.json`。
 - listed-hero.yml と listed_all.sh で毎回実行。手元の detective-portal/make_sitemap.py もこれを呼ぶ。ページを追加・更新したら push 前にこれを実行すること（git の日付は使わない）。
+
+## リンク設置の確認方法（2026-11-18、GAS バージョン71・VERSION 2026-11-18b、運営者指示「リンクを張ってくれているのに読めていない」）
+- リンク確認フォーム（linkCheckReply_）とリンクの自動確認（autoLinkCheck）は、どちらも `findBacklink_` で探す。知らされたページになければ、そのページ・トップのリンクと sitemap.xml から、リンク集・会社概要・コラムなどらしいページを優先して同じサイト内を最大30ページ見る。届出番号（管理番号）が載っているかも同時に見る。
+- 取りに行くときはブラウザと同じ User-Agent を使う（「Google-Apps-Script」を名乗ると断るサーバーがある）。
+- それでも相手のサーバーが Google からの読み込みを断る場合（例: researchmiyagi-fukushima.com は 403）は「自動では読めませんでした」として、申込者には「担当者が目で確認します（再送は不要）」、運営者には承認リンク付きで知らせる。申込者に「見つかりませんでした」とは送らない。
+- 試し: `<exec URL>?mode=linktest&key=<BOOTSTRAP_KEY>&url=<URL>&id=<届出番号>`（記録・メールなし）。
