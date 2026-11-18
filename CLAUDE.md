@@ -114,3 +114,7 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - robots.txt で noindex のページをブロックしない（Google が noindex を読めなくなる）。sitemap に noindex・転送・?付きURLを入れない。
 - 構造化データの Dataset（data.html）は license 必須（data.html#cite の引用条件を指す）。
 - 点検は `python tantei-portal-tools/seo_check.py`。push のたびに seo-check.yml が自動で実行し、外れたら失敗する。
+
+## トップの「最近掲載された探偵社」（2026-11-18、運営者指示「よくある質問の上に」）
+- `tantei-portal-tools/render_recent.py` が index.html の `<!--recent-listed:start-->`〜`end` を書き換える（無ければよくある質問の直前に入れる＝フルビルド後も戻る）。掲載から30日以内・新しい順に最大12件、足りなければ最新4件。
+- 掲載日は `tantei-portal-data/listed_dates.json`（permitted.json に新しく入った日を自動記録。2026-11-11以前の掲載は移転日の11/11）。listed-hero.yml と listed_all.sh で毎回実行。
