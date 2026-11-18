@@ -6,6 +6,7 @@
 3. robots.txt が noindex のページをブロックしていない（ブロックすると Google が noindex を読めない）
 4. sitemap.xml に noindex・転送・存在しないページ・?付きURLが入っていない
 5. 構造化データ（ld+json）がすべて JSON として読める。Dataset には name・description・license・creator がある
+6. contact.html?… / edit.html?… へのリンクに rel="nofollow" がある（業者ページ1件に2本ずつ＝約15,000本の?付きURLにGoogleのクロールを使わせない）
 
 手元でも:  python tantei-portal-tools/seo_check.py
 """
@@ -19,6 +20,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://tantei-kensaku.jp/"
 MUST_NOINDEX = {"contact.html", "edit.html"}
 NOINDEX_RE = re.compile(r'<meta[^>]+name="robots"[^>]+content="[^"]*noindex', re.I)
+FORM_LINK_RE = re.compile(r'<a (?![^>]*\brel="[^"]*nofollow)[^>]*href="[^"]*(?:contact|edit)\.html\?')
 LD_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
 DATASET_NEED = ("name", "description", "license", "creator")
 
@@ -70,6 +72,8 @@ def main():
             errors.append(f"{r}: noindex がない")
         if ni and r not in MUST_NOINDEX and not is_redirect(t) and not r.startswith("mypage/"):
             errors.append(f"{r}: noindex が付いている（index 維持のはず）")
+        if FORM_LINK_RE.search(t):
+            errors.append(f"{r}: フォームへの?付きリンクに nofollow がない")
         for m in LD_RE.finditer(t):
             try:
                 walk_ld(json.loads(m.group(1).replace("<\\/", "</")), r)
