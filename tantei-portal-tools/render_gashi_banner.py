@@ -58,7 +58,7 @@ CSS = (
 HTML = (
     '<!--gashi-banner:start--><style>' + CSS + '</style>'
     f'<a class="gk" id="gkBanner" href="{URL}" target="_blank" rel="noopener" aria-label="探偵賀詞交歓会 2027 の参加申込ページへ">'
-    '<span class="gk-pr">PR</span>'
+    '<span class="gk-pr">当社運営イベント</span>'
     '<span class="gk-l"><span class="gk-en">The Annual Gathering of Detectives · Vol.3</span>'
     '<span class="gk-ttl">探偵賀詞交歓会<span class="gk-y"> 2027</span></span>'
     '<span class="gk-cp" style="display:block">年に一度、<b>全国の探偵が渋谷に集まる夜</b>。<br>同業の仲間や士業・業界の外の方と、新年のあいさつを。</span>'
@@ -71,7 +71,10 @@ HTML = (
     '<script>(function(){var b=document.getElementById("gkBanner");if(!b)return;'
     'var d=Math.ceil((new Date("2027-01-13T00:00:00+09:00")-new Date())/864e5);'
     'if(d<0){b.style.display="none";return;}var c=document.getElementById("gkCd");'
-    'if(c)c.textContent=d>0?"開催まであと"+d+"日":"本日開催";})();</script>'
+    'if(c)c.textContent=d>0?"開催まであと"+d+"日":"本日開催";'
+    # スマホのトップは「地域・エリアから探す」の下へ移す（2026-11-19 運営者指示）
+    'function mv(){var s=document.getElementById("area");if(s&&window.matchMedia("(max-width:720px)").matches){b.style.margin="0 0 16px";s.parentNode.insertBefore(b,s.nextSibling);}}'
+    'if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mv);else mv();})();</script>'
     '<!--gashi-banner:end-->\n'
 )
 
