@@ -38,9 +38,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- . ':(exclude)_q'
           if git diff --cached --quiet; then echo "公開する分はありません"; exit 0; fi
+          BASE=$(git rev-parse HEAD)
           git commit -m "都道府県コラムの予約公開（$(TZ=Asia/Tokyo date +%F)）"
           for i in 1 2 3 4 5; do
-            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              python tantei-portal-tools/indexnow_ping.py "$BASE" || true
+              exit 0
+            fi
             sleep 15
           done
           exit 1
