@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- . ':!_q'
+          git add -A -- . ':(exclude)_q'
           if git diff --cached --quiet; then echo "公開する分はありません"; exit 0; fi
           git commit -m "都道府県コラムの予約公開（$(TZ=Asia/Tokyo date +%F)）"
           for i in 1 2 3 4 5; do
