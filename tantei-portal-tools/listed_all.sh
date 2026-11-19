@@ -15,4 +15,5 @@ FORCE= python tantei-portal-tools/listed_bg.py || true
 python tantei-portal-tools/listed_geo.py || true
 python tantei-portal-tools/render_recent.py || true
 python tantei-portal-tools/render_listed_order.py || true
+python tantei-portal-tools/render_gashi_banner.py || true
 python tantei-portal-tools/make_sitemap.py || true

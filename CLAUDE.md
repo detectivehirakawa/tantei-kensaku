@@ -131,3 +131,6 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 ## 一覧の掲載済みの並び（2026-11-19、運営者指示「文字の量で掲載順位が変わるように」）
 - `tantei-portal-tools/render_listed_order.py` が都道府県・市区町村ページの pref-row-featured の行を、biz_extra.json の文章項目の文字数（空白・【見出し】・URL・写真・電話は数えない）が多い順に並べ替える。同数は今の順。listed-hero.yml と listed_all.sh で毎回実行。
+
+## 賀詞交歓会のバナー（2026-11-19、運営者指示）
+- `tantei-portal-tools/render_gashi_banner.py` がトップ・都道府県・市区町村ページの `<main ...>` 直後に `<!--gashi-banner:start-->`〜`end` を入れる（背景 img/pr/gashi-banner-bg.webp、カウントダウンはJS）。2027-01-13を過ぎた実行で自動撤去。listed-hero.yml と listed_all.sh で毎回実行。
