@@ -4,7 +4,7 @@ GitHub Actions（.github/workflows/listed-hero.yml）が、掲載の承認（per
 撮っていない事務所、または公式サイトのURLが変わった事務所だけを撮り直す。
 """
 import hashlib, json, os, re, shutil, subprocess, sys, tempfile
-from PIL import Image
+from PIL import Image, ImageStat
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "tantei-portal-data")
@@ -39,14 +39,22 @@ def main():
         if idx.get(i) == u and os.path.exists(img) and i not in force:
             continue
         tmp = os.path.join(tempfile.gettempdir(), f"hero_{i}.png")
-        try:
-            subprocess.run([CHROME, "--headless=new", "--no-sandbox", "--disable-gpu", "--hide-scrollbars", "--mute-audio",
-                            "--virtual-time-budget=8000", "--window-size=1280,720", f"--screenshot={tmp}", u],
-                           capture_output=True, timeout=120)
-        except Exception as e:
-            print(i, "撮影失敗", u, e); continue
-        if not os.path.exists(tmp):
-            print(i, "撮影失敗", u); continue
+        # 重いサイトは表示前に撮れて真っ白になる（例: 45230065）。白ければ待ち時間を延ばして撮り直す（2026-11-19）
+        ok = False
+        for budget in (8000, 20000, 40000):
+            if os.path.exists(tmp):
+                os.remove(tmp)
+            try:
+                subprocess.run([CHROME, "--headless=new", "--no-sandbox", "--disable-gpu", "--hide-scrollbars", "--mute-audio",
+                                f"--virtual-time-budget={budget}", "--window-size=1280,720", f"--screenshot={tmp}", u],
+                               capture_output=True, timeout=180)
+            except Exception as e:
+                print(i, "撮影失敗", u, budget, e); continue
+            if os.path.exists(tmp) and ImageStat.Stat(Image.open(tmp).convert("L")).stddev[0] >= 12:
+                ok = True
+                break
+        if not ok:
+            print(i, "撮影失敗（白い画面）", u); continue
         Image.open(tmp).convert("RGB").crop((0, 0, 1280, 720)).resize((960, 540)).save(img, "WEBP", quality=70)
         os.remove(tmp)
         idx[i] = u
