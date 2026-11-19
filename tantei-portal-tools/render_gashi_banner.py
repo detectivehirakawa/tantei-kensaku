@@ -39,16 +39,19 @@ CSS = (
     ".gk-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:10px;font-weight:800;font-size:15px;color:#2a1d05;"
     "background:linear-gradient(180deg,#fff1c4,#e8c46a 60%,#c99a3c);box-shadow:0 4px 0 #8a6420,0 8px 18px rgba(232,196,106,.3);transition:transform .15s}"
     ".gk:hover .gk-btn{transform:translateY(-2px)}.gk-btn small{font-size:11px;opacity:.75}.gk-sub{font-size:11px;color:#a9a08a;text-align:center}"
-    # スマホは 16:9 の横長に詰める（2026-11-19 運営者指示「面積を3分の1程度に」）
-    ".gk-spl{display:none}"
-    "@media(max-width:720px){.gk{aspect-ratio:16/9;grid-template-columns:1.2fr 1fr;border-radius:12px}"
-    ".gk::before{background-position:center 70%}"
-    ".gk-l{display:flex;flex-direction:column;justify-content:center;padding:12px 8px 12px 14px}"
-    ".gk-en{font-size:7.5px;letter-spacing:.18em}.gk-ttl{font-size:clamp(19px,6vw,24px);margin:5px 0 6px;line-height:1.2}"
-    ".gk-cp,.gk-hist,.gk-info,.gk-sub{display:none!important}.gk-spl{display:block;font-size:11px;line-height:1.55;color:#e9e4d6}.gk-spl b{color:var(--gold2)}"
-    ".gk-r{gap:6px;padding:12px 12px 12px 10px}.gk-date{flex-direction:column;align-items:flex-start;gap:2px}.gk-date b{font-size:clamp(28px,9vw,36px)}.gk-date span{font-size:10.5px;line-height:1.35}"
-    ".gk-ttl{white-space:nowrap;letter-spacing:.03em}.gk-y{display:block;font-size:.78em}.gk-date span br{display:none}.gk-cd{font-size:10.5px;padding:2px 8px}"
-    ".gk-btn{padding:8px 6px;font-size:12.5px;border-radius:8px;box-shadow:0 3px 0 #8a6420}.gk-btn small{display:none}"
+    # スマホは1列・文字を小さくして、PCと同じ文面を出す（2026-11-19 運営者指示）
+    "@media(max-width:720px){.gk{grid-template-columns:1fr;border-radius:12px}"
+    ".gk::before{background-position:center 30%}"
+    ".gk-l{padding:12px 14px 10px}"
+    ".gk-en{font-size:7px;letter-spacing:.14em}.gk-ttl{font-size:clamp(20px,6.4vw,25px);margin:3px 0 4px;line-height:1.2;white-space:nowrap;letter-spacing:.03em}"
+    ".gk-cp{font-size:11px;line-height:1.55;margin:0 0 8px}"
+    ".gk-hist{gap:6px}.gk-hist span{font-size:8.5px;padding:3px 4px;border-radius:6px}.gk-hist b{font-size:14px}"
+    ".gk-r{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 10px;padding:10px 14px 12px;border-left:0;border-top:1px solid rgba(232,196,106,.25)}"
+    ".gk-date{gap:6px}.gk-date b{font-size:30px}.gk-date span{font-size:10px;line-height:1.35}"
+    ".gk-cd{justify-self:end;align-self:center;font-size:10px;padding:2px 8px}"
+    ".gk-info{grid-column:1/-1;font-size:10px;line-height:1.55}"
+    ".gk-btn{grid-column:1/-1;padding:9px 8px;font-size:13.5px;border-radius:8px;box-shadow:0 3px 0 #8a6420}.gk-btn small{font-size:10px}"
+    ".gk-sub{grid-column:1/-1;font-size:9px;line-height:1.4}"
     ".gk-pr{top:5px;right:5px;font-size:9px}}"
 )
 
@@ -59,7 +62,6 @@ HTML = (
     '<span class="gk-l"><span class="gk-en">The Annual Gathering of Detectives · Vol.3</span>'
     '<span class="gk-ttl">探偵賀詞交歓会<span class="gk-y"> 2027</span></span>'
     '<span class="gk-cp" style="display:block">年に一度、<b>全国の探偵が渋谷に集まる夜</b>。<br>同業の仲間や士業・業界の外の方と、新年のあいさつを。</span>'
-    '<span class="gk-spl">全国の探偵が渋谷に集まる夜。<br>過去<b>100名</b>参加・1名6,600円</span>'
     '<span class="gk-hist"><span>VOL.1 2025<b>70名</b></span><span>VOL.2 2026<b>100名</b></span><span class="now">VOL.3 2027<b>あなたも</b></span></span></span>'
     '<span class="gk-r"><span class="gk-date"><b>1.13</b><span>水曜日<br>18:30〜21:00</span></span>'
     '<span class="gk-cd" id="gkCd"></span>'
