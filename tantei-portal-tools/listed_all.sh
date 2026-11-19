@@ -14,4 +14,5 @@ FORCE= python tantei-portal-tools/listed_heroes.py || true
 FORCE= python tantei-portal-tools/listed_bg.py || true
 python tantei-portal-tools/listed_geo.py || true
 python tantei-portal-tools/render_recent.py || true
+python tantei-portal-tools/render_listed_order.py || true
 python tantei-portal-tools/make_sitemap.py || true

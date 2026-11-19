@@ -17,6 +17,7 @@ on:
       - 'all.json'
       - 'tantei-portal-tools/listed_geo.py'
       - 'tantei-portal-tools/render_recent.py'
+      - 'tantei-portal-tools/render_listed_order.py'
       - 'tantei-portal-tools/make_sitemap.py'
       - 'all.json'
       - 'biz/*.html'
@@ -75,6 +76,9 @@ jobs:
       - name: トップの「最近掲載された探偵社」欄を更新（render_recent.py・listed_dates.json。2026-11-18 運営者指示）
         continue-on-error: true
         run: python tantei-portal-tools/render_recent.py
+      - name: 都道府県・市区町村ページの掲載済みの並びを文字の量が多い順に（render_listed_order.py。2026-11-19 運営者指示）
+        continue-on-error: true
+        run: python tantei-portal-tools/render_listed_order.py
       - name: sitemap.xml を更新（lastmod は中身が変わったページだけ今日にする。2026-11-18）
         continue-on-error: true
         run: python tantei-portal-tools/make_sitemap.py

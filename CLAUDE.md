@@ -128,3 +128,6 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - 取りに行くときはブラウザと同じ User-Agent を使う（「Google-Apps-Script」を名乗ると断るサーバーがある）。
 - それでも相手のサーバーが Google からの読み込みを断る場合（例: researchmiyagi-fukushima.com は 403）は「自動では読めませんでした」として、申込者には「担当者が目で確認します（再送は不要）」、運営者には承認リンク付きで知らせる。申込者に「見つかりませんでした」とは送らない。
 - 試し: `<exec URL>?mode=linktest&key=<BOOTSTRAP_KEY>&url=<URL>&id=<届出番号>`（記録・メールなし）。
+
+## 一覧の掲載済みの並び（2026-11-19、運営者指示「文字の量で掲載順位が変わるように」）
+- `tantei-portal-tools/render_listed_order.py` が都道府県・市区町村ページの pref-row-featured の行を、biz_extra.json の文章項目の文字数（空白・【見出し】・URL・写真・電話は数えない）が多い順に並べ替える。同数は今の順。listed-hero.yml と listed_all.sh で毎回実行。
