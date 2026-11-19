@@ -62,6 +62,9 @@ def main():
     pages = [p for p in glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True)
              if not rel(p).startswith((".", "node_modules/", "img/"))]
     noindex = set()
+    # 掲載削除（excluded.json）の業者ページは「掲載停止」表示＋noindex にする方針（2026-11-19）
+    exf = os.path.join(ROOT, "tantei-portal-data", "excluded.json")
+    excluded = {f"biz/{i}.html" for i in json.load(open(exf, encoding="utf-8"))} if os.path.exists(exf) else set()
     for p in pages:
         r, t = rel(p), read(p)
         head = t[:6000]
@@ -70,7 +73,9 @@ def main():
             noindex.add(r)
         if r in MUST_NOINDEX and not ni:
             errors.append(f"{r}: noindex がない")
-        if ni and r not in MUST_NOINDEX and not is_redirect(t) and not r.startswith("mypage/"):
+        if r in excluded and not ni:
+            errors.append(f"{r}: 掲載削除のページに noindex がない")
+        if ni and r not in MUST_NOINDEX and r not in excluded and not is_redirect(t) and not r.startswith("mypage/"):
             errors.append(f"{r}: noindex が付いている（index 維持のはず）")
         if FORM_LINK_RE.search(t):
             errors.append(f"{r}: フォームへの?付きリンクに nofollow がない")
