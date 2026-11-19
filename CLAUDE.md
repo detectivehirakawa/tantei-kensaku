@@ -134,3 +134,8 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 ## 賀詞交歓会のバナー（2026-11-19、運営者指示）
 - `tantei-portal-tools/render_gashi_banner.py` がトップ・都道府県・市区町村ページの `<main ...>` 直後に `<!--gashi-banner:start-->`〜`end` を入れる（背景 img/pr/gashi-banner-bg.webp、カウントダウンはJS）。2027-01-13を過ぎた実行で自動撤去。listed-hero.yml と listed_all.sh で毎回実行。
+
+## 都道府県コラムの予約公開（2026-11-19、運営者指示「46都道府県×3本を1日3本ずつ・新着に入れない・県ページに入れる」）
+- 県のコラムは `<県slug>/column/` に置く（大分県と同じ構造）。県ページには `<!--pref-col-->`〜`<!--/pref-col-->` の「〇〇県のコラム」欄、市区町村ページの「選ぶときのポイント」に県のコラムへの案内。県の記事はトップ・コラム一覧・サイドバーの新着に出さない（コラム一覧の下に「都道府県のコラム」の入口）。
+- 予約分は **column-queue ブランチ** の `queue/<日付>/`（manifest.json・files/・box.html）。`publish-pref-columns.yml` が毎朝7時（JST）に `tantei-portal-tools/publish_pref_columns.py` で公開し、`tantei-portal-data/pref_columns_published.json` に記録（公開済みの日付は再適用しない）。
+- 記事の原稿・生成は運営者PCの detective-portal（columns/<slug>.html、columns/pref_pack/：SPEC.md・packs.json・schedule.json・meta/・build_queue.py）。

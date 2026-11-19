@@ -1,0 +1,46 @@
+# 都道府県コラムの予約公開（2026-11-19 運営者指示「46都道府県×3本を1日3本ずつ」）。
+# 予約分は column-queue ブランチの <日付>/ にある。毎朝7時（日本時間）にその日の分を公開する。
+name: publish-pref-columns
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 22:00 UTC = 7:00 JST
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'この日付までを公開（YYYY-MM-DD、空なら今日）'
+        required: false
+        default: ''
+permissions:
+  contents: write
+concurrency:
+  group: publish-pref-columns
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: column-queue
+          path: _q
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 予約分を公開
+        run: python tantei-portal-tools/publish_pref_columns.py _q/queue ${{ github.event.inputs.date }}
+      - name: 点検
+        run: python tantei-portal-tools/seo_check.py
+      - name: 書き戻し
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- . ':!_q'
+          if git diff --cached --quiet; then echo "公開する分はありません"; exit 0; fi
+          git commit -m "都道府県コラムの予約公開（$(TZ=Asia/Tokyo date +%F)）"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 15
+          done
+          exit 1
