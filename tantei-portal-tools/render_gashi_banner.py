@@ -72,8 +72,8 @@ HTML = (
     'var d=Math.ceil((new Date("2027-01-13T00:00:00+09:00")-new Date())/864e5);'
     'if(d<0){b.style.display="none";return;}var c=document.getElementById("gkCd");'
     'if(c)c.textContent=d>0?"開催まであと"+d+"日":"本日開催";'
-    # スマホのトップは「地域・エリアから探す」の下へ移す（2026-11-19 運営者指示）
-    'function mv(){var s=document.getElementById("area");if(s&&window.matchMedia("(max-width:720px)").matches){b.style.margin="0 0 16px";s.parentNode.insertBefore(b,s.nextSibling);}}'
+    # スマホのトップは「地域・エリアから探す」の上へ移す（2026-11-19 運営者指示）
+    'function mv(){var s=document.getElementById("area");if(s&&window.matchMedia("(max-width:720px)").matches){b.style.margin="0 0 16px";s.parentNode.insertBefore(b,s);}}'
     'if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mv);else mv();})();</script>'
     '<!--gashi-banner:end-->\n'
 )
