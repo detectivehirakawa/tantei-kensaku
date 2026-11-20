@@ -11,7 +11,10 @@
 .intro-card{background:var(--bg-soft);border-left:3px solid var(--accent);padding:18px 20px;margin-bottom:18px;font-size:1rem;line-height:1.8}
 .intro-card b{color:var(--accent-ink)}
 .form-card{background:#fff;border:1px solid var(--line);padding:24px 20px;font-size:1rem}
-.form-card fieldset{border:0;padding:0;margin:0 0 22px}
+.form-card fieldset{border:0;padding:0;margin:0 0 22px;min-width:0;max-width:100%}
+.form-card input,.form-card textarea,.form-card select,.form-card img,.form-card table{max-width:100%;box-sizing:border-box}
+.form-card{overflow-wrap:anywhere;min-width:0}
+.form-card input[type=file]{width:100%;min-width:0;font-size:.85rem}
 .form-card fieldset legend{font-size:.92rem;color:var(--accent-ink);font-weight:700;letter-spacing:.05em;padding:0 0 10px;border-bottom:1px solid var(--line);width:100%;margin-bottom:4px}
 .form-card label{display:block;margin:16px 0 7px;font-size:1rem;color:var(--ink);font-weight:500}
 .form-card label small{color:var(--body);font-weight:400;font-size:.85rem}
