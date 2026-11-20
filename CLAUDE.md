@@ -93,6 +93,8 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - GAS の手元の正本は C:\Users\racoo\detective-portal\gas\Code.gs（Web上と一致を確認してから反映した）。
 - リンクの自動確認（GAS v65・VERSION 2026-11-16b）：autoLinkCheck が毎日6時（トリガー）に、未承認の「掲載充実」申込（90日以内）のホームページを見に行く。リンク＋届出番号（管理番号）があれば自動承認、リンクだけなら運営者にワンクリック承認リンクを送り申込者に「確認しました」。確認済みは Script Properties の alc:<submitId>。手動実行は <exec>?mode=linkauto&key=<BOOTSTRAP_KEY>&do=run（do=install でトリガー作り直し）。
 
+- 表示番号を事業者が選ぶ（2026-11-20、GAS バージョン74・VERSION 2026-11-20c、運営者指示）：`disp-no.js`（contact.html / edit.html）が、all.json の j がある業者にだけ届出番号欄の下へ2つの番号の選択肢を出し、`payload.dispNo` で送る。GAS は「ページ番号か、その業者の管理番号」だけ受け付けて fields.inputNo に入れ、承認時に display_no.json へ。ページ番号へ戻す希望は自動では戻らない（ご要望内容の先頭に出るので、display_no.json から手で外す）。
+
 ## 管理番号でも検索に出るように（2026-11-16、運営者指示「あくまで検索にヒットさせるだけ」）
 
 - `tantei-portal-tools/render_kanri_no.py`：all.json の j（管理番号）がある約2,560社の掲載ページに、届出情報の最後へ2つの番号を併記した一文（`<!--kno-->`）と、構造化データ identifier に管理番号を追加。表示番号・URL・リンクは変えない。display_no.json の業者は対象外（render_display_no.py が両方出す）。listed-hero.yml で毎回実行。

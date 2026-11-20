@@ -555,6 +555,7 @@
       contactName: nm, contact: ct, email: document.getElementById('email').value.trim(),
       message: msg, submitId: submitId };
     if (window.NR && NR.on()) { var nrErr = NR.apply(payload); if (nrErr) { out.className = 'form-msg err'; out.textContent = nrErr; btn.disabled = false; return; } }
+    if (window.DN && DN.get()) payload.dispNo = DN.get();
     if (!isRemove) payload.fields = buildFields();
     if (isEdit) {
       payload.fields.keepPhotos = keepPhotos.filter(function(u, i){
@@ -586,4 +587,5 @@
 })();
 </script>
 <script src="./new-reg.js?v=20261120b"></script>
+<script src="./disp-no.js?v=20261120a"></script>
 </body></html>

@@ -690,6 +690,7 @@
       message: msg, submitId: submitId };
     if (isEdit && mpTok()) payload.mpToken = mpTok();
     if (window.NR && NR.on()) { var nrErr = NR.apply(payload); if (nrErr) { out.className = 'form-msg err'; out.textContent = nrErr; btn.disabled = false; return; } }
+    if (window.DN && DN.get()) payload.dispNo = DN.get();
     if (!isRemove) payload.fields = buildFields();
     if (isEdit) {
       payload.fields.keepPhotos = keepPhotos.filter(function(u, i){
@@ -723,4 +724,5 @@
 </script>
 <script>(function(){var l=document.getElementById('lineUrl');if(!l)return;l.addEventListener('change',function(){if(l.value.trim()){var c=document.querySelector('#contactMethods input[value="LINE"]');if(c)c.checked=true;}});})();</script>
 <script src="./new-reg.js?v=20261120b"></script>
+<script src="./disp-no.js?v=20261120a"></script>
 </body></html>
