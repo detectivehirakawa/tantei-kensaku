@@ -8,8 +8,8 @@
   if (!sel) return;
   var anchor = sel.closest('label') || sel;
   var css = document.createElement('style');
-  css.textContent = '.nr-btn{display:block;width:100%;margin:2px 0 14px;padding:12px 14px;border:1px dashed var(--accent,#1668d8);background:#f3f8ff;color:var(--accent-ink,#0f4fa8);font:inherit;font-size:.92rem;font-weight:700;text-align:left;cursor:pointer;border-radius:6px;line-height:1.6}'
-    + '.nr-btn::after{content:" ＋";float:right}.nr-btn[aria-expanded=true]::after{content:" －"}'
+  css.textContent = '.form-card button.nr-btn,.nr-btn{display:block;width:100%;margin:2px 0 14px;padding:12px 14px;border:1px dashed var(--accent,#1668d8);background:#f3f8ff;color:var(--accent-ink,#0f4fa8);font:inherit;font-size:.92rem;font-weight:700;text-align:left;cursor:pointer;border-radius:6px;line-height:1.6}'
+    + '.form-card button.nr-btn:hover{background:#e8f1ff}.nr-btn::after{content:" ＋";float:right}.nr-btn[aria-expanded=true]::after{content:" －"}'
     + '.nr-box{border:1px solid #cbd9ea;background:#f8fbff;border-radius:6px;padding:14px 14px 4px;margin:0 0 16px}'
     + '.nr-box p{font-size:.86rem;line-height:1.75;margin:0 0 12px;color:var(--body,#333)}'
     + '.nr-box select{width:100%;box-sizing:border-box;padding:12px;border:1px solid var(--line,#ccd);font:inherit;background:#fff}'
