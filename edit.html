@@ -452,10 +452,21 @@
     var m = String(entry.url || '').match(LINE_RE);
     if (m) { setVal('lineUrl', m[0]); setVal('url', stripLine(entry.url)); }
   }
+  /* マイページにログイン中（同じ届出番号）なら、送信するとすぐに反映される（2026-11-20） */
+  function mpTok(){
+    try {
+      var tk = localStorage.getItem('tk_mypage'); if (!tk) return '';
+      var b = tk.split('.')[0].replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
+      var o = JSON.parse(decodeURIComponent(escape(atob(b))));
+      var cur = (document.getElementById('selfId').value || '').trim();
+      return (o && o.id === cur && o.exp > Date.now() / 1000) ? tk : '';
+    } catch (e) { return ''; }
+  }
   function enterEdit(entry){
     isEdit = true;
     document.getElementById('pageTitle').textContent = '掲載内容の編集（無料）';
     document.getElementById('introCard').innerHTML = '<b>現在の掲載内容を読み込みました。</b>変更したい項目だけ書き換えて送信してください。運営者が内容を確認したうえで掲載ページに反映します（反映のお知らせはメールでお送りします）。';
+    if (mpTok()) document.getElementById('introCard').innerHTML = '<b>マイページからの編集です。</b>変更したい項目を書き換えて送信すると、<b>すぐに掲載ページに反映されます</b>（表示まで数分かかることがあります）。';
     var cb = document.querySelector('.condition-box'); if (cb) cb.style.display = 'none';
     var ag = document.getElementById('agree'); if (ag) ag.required = false;
     ['dispName','dispKana','catch','service','area','price','hours','officeAddress','repName','pubphone','url','other'].forEach(function(k){ setVal(k, entry[k]); });
@@ -675,6 +686,7 @@
     var payload = { key: GAS_KEY, mode: 'contact', id: idInput, name: name, type: isEdit ? 'edit' : type,
       contactName: nm, contact: ct, email: document.getElementById('email').value.trim(),
       message: msg, submitId: submitId };
+    if (isEdit && mpTok()) payload.mpToken = mpTok();
     if (window.NR && NR.on()) { var nrErr = NR.apply(payload); if (nrErr) { out.className = 'form-msg err'; out.textContent = nrErr; btn.disabled = false; return; } }
     if (!isRemove) payload.fields = buildFields();
     if (isEdit) {
@@ -690,7 +702,7 @@
     }).then(function(r){ return r.json(); }).then(function(j){
       if(j && j.ok){
         out.className = 'form-msg ok';
-        out.textContent = isEdit ? '編集内容を受け付けました。運営者が確認のうえ掲載ページに反映し、メールでお知らせします。' : 'お問い合わせを受け付けました。担当者よりご連絡いたします。';
+        out.textContent = j.applied ? '掲載ページに反映しました。表示が変わるまで数分かかることがあります。' : isEdit ? '編集内容を受け付けました。運営者が確認のうえ掲載ページに反映し、メールでお知らせします。' : 'お問い合わせを受け付けました。担当者よりご連絡いたします。';
         document.getElementById('f').reset();
         svcOriginal = null; svcTouched = false; joinService();
         selectedPhotos = [];
