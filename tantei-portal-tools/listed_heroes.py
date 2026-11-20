@@ -55,6 +55,16 @@ def main():
                 break
         if not ok:
             print(i, "撮影失敗（白い画面）", u); continue
+        # 相手サイトが自動処理のサーバーからのアクセスを拒否すると、403などのエラー画面が撮れる（例: 44250032）。その画面は使わない（2026-11-20）
+        try:
+            dom = subprocess.run([CHROME, "--headless=new", "--no-sandbox", "--disable-gpu", "--virtual-time-budget=5000", "--dump-dom", u],
+                                 capture_output=True, timeout=120).stdout.decode("utf-8", "replace")
+        except Exception:
+            dom = ""
+        t = re.search(r"<title[^>]*>(.*?)</title>", dom, re.S | re.I)
+        if t and re.search(r"\b(40[0-9]|50[0-9])\b|forbidden|access denied|not found|アクセス.{0,6}(拒否|制限|できません)", t.group(1), re.I):
+            print(i, "撮影中止（エラー画面）", u, t.group(1).strip()[:60])
+            os.remove(tmp); continue
         Image.open(tmp).convert("RGB").crop((0, 0, 1280, 720)).resize((960, 540)).save(img, "WEBP", quality=70)
         os.remove(tmp)
         idx[i] = u
