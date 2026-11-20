@@ -624,7 +624,7 @@ footer.t-foot a:hover{text-decoration:underline}
       return '<a class="result-item" href="./biz/'+r.i+'.html">'+
         '<span class="r-name">'+esc(r.n)+(r.m === 0 ? ' <span class="r-badge">✓ 掲載済み</span>' : (typ && web[r.i] ? ' <span class="r-badge r-badge--hp">HPで確認</span>' : ''))+'</span>'+
         '<span class="r-addr">'+(dq ? '届出番号 '+esc(r.j && r.j.indexOf(dq) === 0 ? r.j : r.i)+'　' : '')+esc(r.a)+'</span></a>';
-    }).join('') || '<div class="no-hit">' + (typ ? 'この条件で「' + esc(typ) + '」に対応していると確認できた事務所は、まだありません。調査の種類を外すと、届出業者すべてから探せます。' : '該当する業者が見つかりません') + '</div>';
+    }).join('') || '<div class="no-hit">' + (typ ? 'この条件で「' + esc(typ) + '」に対応していると確認できた事務所は、まだありません。調査の種類を外すと、届出業者すべてから探せます。' : '該当する業者が見つかりません<br><small>令和8年5月31日より後に届出をした探偵業者様は、<a href="./contact.html?new=1">こちらから掲載ページを作成できます（無料）</a></small>') + '</div>';
   }
   fetch('./all.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){
     data = j;
