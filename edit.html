@@ -341,7 +341,8 @@
 
 <button type="submit" id="btn">送信する</button>
 <div class="form-msg" id="formMsg"></div>
-<div class="form-foot">送信いただいた内容は、自動で掲載されることはありません。担当者が内容を確認し、手動で掲載ページに反映いたします（反映まで数日いただく場合があります）。ご記入いただいた連絡先が外部に公開されることはありません。</div>
+<div class="form-rule" style="margin-top:14px;padding:12px 14px;border:1px solid #f0c9c9;background:#fff6f6;border-radius:6px;font-size:.85rem;line-height:1.8;color:#5a1f1f"><b style="color:#d62828">ご記入の前に</b><br>次の内容は掲載できません。見つけた場合は、運営者が修正または掲載を停止することがあります。<br>・個人情報（依頼者や調査の対象となった方など、第三者を特定できる情報）<br>・ほかの事業者や個人への誹謗中傷<br>・事実と異なる内容、誇大な表現<br>・法令に反する内容（違法な調査の案内など）</div>
+<div class="form-foot" id="formFoot">送信いただいた内容は、自動で掲載されることはありません。担当者が内容を確認し、手動で掲載ページに反映いたします（反映まで数日いただく場合があります）。担当者電話番号とメールアドレスが外部に公開されることはありません。</div>
 </form>
 </div>
 </main>
@@ -466,6 +467,7 @@
     isEdit = true;
     document.getElementById('pageTitle').textContent = '掲載内容の編集（無料）';
     document.getElementById('introCard').innerHTML = '<b>現在の掲載内容を読み込みました。</b>変更したい項目だけ書き換えて送信してください。運営者が内容を確認したうえで掲載ページに反映します（反映のお知らせはメールでお送りします）。';
+    if (mpTok()) document.getElementById('formFoot').textContent = 'マイページからの編集は、送信するとすぐに掲載ページへ反映されます（表示が変わるまで数分かかることがあります）。担当者電話番号とメールアドレスが外部に公開されることはありません。';
     if (mpTok()) document.getElementById('introCard').innerHTML = '<b>マイページからの編集です。</b>変更したい項目を書き換えて送信すると、<b>すぐに掲載ページに反映されます</b>（表示まで数分かかることがあります）。';
     var cb = document.querySelector('.condition-box'); if (cb) cb.style.display = 'none';
     var ag = document.getElementById('agree'); if (ag) ag.required = false;
