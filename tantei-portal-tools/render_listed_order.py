@@ -29,6 +29,15 @@ def text_len(e):
 
 def main():
     extra = json.load(open(os.path.join(ROOT, "tantei-portal-data", "biz_extra.json"), encoding="utf-8"))
+    # 管理番号で申し込んだ業者は biz_extra.json のキーが管理番号になっている（例: 10240018 → 10249010）。
+    # ページ番号でも引けるようにする（2026-11-21、総合探偵insight が0文字扱いで最下位になっていた）
+    try:
+        for r in json.load(open(os.path.join(ROOT, "all.json"), encoding="utf-8")):
+            i, j = str(r.get("i") or ""), str(r.get("j") or "")
+            if i and j and i not in extra and j in extra:
+                extra[i] = extra[j]
+    except (OSError, ValueError):
+        pass
     pages = glob.glob(os.path.join(ROOT, "*.html")) + glob.glob(os.path.join(ROOT, "*", "*.html"))
     changed = 0
     for p in pages:
@@ -39,7 +48,8 @@ def main():
         if len(rows) < 2:
             continue
         # 行が続いている部分（間に別の行がない）だけを並べ替える
-        if any(rows[k].end() != rows[k + 1].start() for k in range(len(rows) - 1)):
+        # 行の間が空白・改行だけなら続いているとみなす（福岡県ページに空行が1つ入っていて並び替えが止まっていた 2026-11-21）
+        if any(t[rows[k].end():rows[k + 1].start()].strip() for k in range(len(rows) - 1)):
             print("!! 掲載済みの行が連続していない:", os.path.relpath(p, ROOT))
             continue
         old = [m.group(0) for m in rows]
@@ -51,6 +61,8 @@ def main():
         if not old[-1].endswith("\n"):
             new[-1] = new[-1][:-1]
         if new == old:
+            continue
+        if "".join(new) == t[rows[0].start():rows[-1].end()]:
             continue
         t = t[:rows[0].start()] + "".join(new) + t[rows[-1].end():]
         open(p, "w", encoding="utf-8", newline="").write(t)
