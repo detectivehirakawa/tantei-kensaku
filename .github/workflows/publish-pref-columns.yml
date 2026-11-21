@@ -32,6 +32,7 @@ jobs:
         run: |
           python tantei-portal-tools/publish_pref_columns.py _q/queue ${{ github.event.inputs.date }}
           python tantei-portal-tools/render_media_link.py
+          python tantei-portal-tools/render_supervisor_role.py
       - name: 点検
         run: python tantei-portal-tools/seo_check.py
       - name: 書き戻し
