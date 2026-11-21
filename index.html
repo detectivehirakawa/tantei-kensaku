@@ -763,6 +763,8 @@ window.tkOfficeGeo=window.tkOfficeGeo||function(geo,extra){
     var all=res[0], geo=res[1], extra=res[2]; heroes=res[4]||{};
     items=all.filter(function(r){return r.m===0;}).map(function(r){var g=geo[r.i]||{};
       return {i:r.i,n:r.n,a:r.a,c:r.c||'',lat:(g.lat!=null?g.lat:null),lng:(g.lng!=null?g.lng:null),x:extra[r.i]||null,d:null};});
+    /* 位置を指定するまでは掲載済みを毎回ランダムな順に並べる（特定の事務所だけが上に出続けないように 2026-11-21 運営者指示） */
+    for(var si=items.length-1;si>0;si--){var sj=Math.floor(Math.random()*(si+1)),st=items[si];items[si]=items[sj];items[sj]=st;}
     red=L.divIcon({className:'pin-permitted',html:'<div style="width:18px;height:18px;background:#d0392b;border:3px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.5)"></div>',iconSize:[18,18],iconAnchor:[9,9]});
     map=L.map('nearMap',{scrollWheelZoom:false}).setView([36.2,138.5],5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
