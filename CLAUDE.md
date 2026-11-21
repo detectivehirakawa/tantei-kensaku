@@ -172,3 +172,4 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - ヘッダー（「掲載のお申込み」の次）とフッターのリンクは `tantei-portal-tools/render_media_link.py` が全ページに入れる（何度実行しても同じ）。listed-hero.yml・listed_all.sh・publish-pref-columns.yml で毎回実行。手元でページを作り直したら、push 前にこれを実行すること。
 - 2つの番号の案内（`<!--kno-->`）は、2026-11-22 から掲載証のすぐ下に出す（display_no.json の業者にも、欄の名前なしで出す）。
 - 監修者の肩書は「探偵業界アナリスト・探偵業データ研究家／合同会社EXE RESEARCH 代表」（2026-11-22 運営者指示）。コラムは `tantei-portal-tools/render_supervisor_role.py` がそろえる（publish-pref-columns.yml で毎回実行。予約分は古い肩書で作ってあるため）。
+- 都道府県ページの一覧は、全画面幅で最初の10件だけ表示し、残りはボタンで開閉する（2026-11-22 運営者指示）。部品は運営者PCの detective-portal/pref_sp.py（`<!--pref-sp--><!--fold10-->`）。絞り込み欄に入力中と、#n<届出番号> で開いたときは自動で全件表示。市区町村ページは従来どおりスマホだけ30件。
