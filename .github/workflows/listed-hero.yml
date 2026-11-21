@@ -58,6 +58,7 @@ jobs:
           python tantei-portal-tools/render_media_link.py
           python tantei-portal-tools/render_llmo.py
           python tantei-portal-tools/render_city_extra.py
+          python tantei-portal-tools/render_pref_extra.py
       - name: 日本語フォントと Pillow
         run: |
           sudo apt-get update -qq

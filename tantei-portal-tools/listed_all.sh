@@ -11,6 +11,7 @@ python tantei-portal-tools/render_kanri_no.py || true
 python tantei-portal-tools/render_media_link.py || true
 python tantei-portal-tools/render_llmo.py || true
 python tantei-portal-tools/render_city_extra.py || true
+python tantei-portal-tools/render_pref_extra.py || true
 FORCE= python tantei-portal-tools/listed_heroes.py || true
 FORCE= python tantei-portal-tools/listed_bg.py || true
 python tantei-portal-tools/listed_geo.py || true

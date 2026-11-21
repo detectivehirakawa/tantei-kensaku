@@ -19,7 +19,7 @@ from collections import Counter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "tantei-portal-data")
-ENABLED = []          # 運営者の確認が済んだ都道府県の slug を入れる（"ALL" で全県）
+ENABLED = "ALL"      # 2026-11-22 運営者指示「全都道府県で公開」
 A, B = "<!--pref-extra-->", "<!--/pref-extra-->"
 STYLE = ("<style>.pref-extra p{line-height:1.9;margin:.4em 0 .9em}.pref-extra h3{font-size:1rem;margin:1.5em 0 .5em;color:#0f4fa8}"
          ".pref-extra .px-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:.6em 0 1em}"
@@ -145,7 +145,7 @@ def build(slug):
 
 
 def apply(html, block):
-    html = re.sub(re.escape(A) + r".*?" + re.escape(B) + r"\n?", "", html, flags=re.S)
+    html = re.sub(r"\n?" + re.escape(A) + r".*?" + re.escape(B) + r"\n?", "", html, flags=re.S)
     # 置き場所：業者の一覧と、その注記（<div class="note">）のすぐ後
     m = re.search(r'</table></div>\s*</section>(?:\s*<div class="note">.*?</div>)?', html, re.S)
     if not m:
