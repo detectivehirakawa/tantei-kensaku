@@ -492,8 +492,8 @@ footer.t-foot a:hover{text-decoration:underline}
 .t-wrap .biz-svc{font-size:1rem;color:var(--t-ink)}
 .t-wrap .biz-svc p{margin:0 0 12px;line-height:1.95}
 .t-wrap .svc-h{font-family:var(--t-round);font-size:1.08rem;font-weight:700;color:#fff;background:linear-gradient(120deg,#0d3f8f 0%,#1559c4 60%,#2f86d6 100%);margin:24px 0 14px;padding:10px 14px;border-radius:6px;line-height:1.5}
-.t-wrap .svc-pt{display:flex;align-items:baseline;gap:8px;font-family:var(--t-round);font-size:1.05rem;font-weight:700;color:var(--t-blue-d);margin:18px 0 6px;padding-bottom:6px;border-bottom:1px dashed var(--t-line);line-height:1.5}
-.t-wrap .svc-no{flex:0 0 auto;font-size:1.35em;color:var(--t-blue);line-height:1}
+.t-wrap .svc-pt{display:block;position:relative;padding-left:1.75em;font-family:var(--t-round);font-size:1.05rem;font-weight:700;color:var(--t-blue-d);margin:18px 0 6px;padding-bottom:6px;border-bottom:1px dashed var(--t-line);line-height:1.5}
+.t-wrap .svc-no{position:absolute;left:0;top:.05em;font-size:1.35em;color:var(--t-blue);line-height:1}
 .t-wrap .svc-pt+p{color:var(--body)}
 .t-wrap .svc-ul{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:6px}
 .t-wrap .svc-ul li{position:relative;background:var(--t-pale);border-radius:6px;padding:9px 12px 9px 32px;line-height:1.7}
