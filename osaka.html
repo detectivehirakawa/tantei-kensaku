@@ -58,7 +58,7 @@
   input.addEventListener('input', render);
 })();
 </script>
-<!--pref-sp--><style>
+<!--pref-sp--><!--fold10--><style>
 @media(max-width:700px){
  .t-pagehero p{line-height:1.7}
  .t-pagehero p .t-stat{margin:0 6px 4px 0}
@@ -74,35 +74,53 @@
  #tbl.sp-cards td.sp-sub{order:2;font-size:.82rem;color:#4a5b70;line-height:1.6}
  #tbl.sp-cards td.sp-sub::before{content:attr(data-label)"：";color:#7a8a9c}
  #tbl.sp-cards td.sp-hide{display:none}
- #tbl.sp-cards.sp-lim tbody tr:nth-child(n+31){display:none!important}
- .sp-more{display:block;width:100%;font:inherit;font-weight:700;font-size:.95rem;color:#fff;background:var(--t-blue,#1559c4);border:0;border-radius:8px;padding:13px;margin:4px 0 0;cursor:pointer}
 }
+#tbl.sp-lim tbody tr:nth-child(n+11){display:none!important}
+.sp-more{display:block;width:100%;font:inherit;font-weight:700;font-size:.95rem;color:#fff;background:var(--t-blue,#1559c4);border:0;border-radius:8px;padding:13px;margin:10px 0 0;cursor:pointer}
+.sp-more[aria-expanded="true"]{background:#fff;color:var(--t-blue,#1559c4);border:1px solid var(--t-blue,#1559c4)}
 </style>
 <script>
 (function(){
-  if(!window.matchMedia('(max-width:700px)').matches)return;
   var t=document.getElementById('tbl');if(!t||!t.tHead)return;
-  var heads=[].map.call(t.tHead.rows[0].cells,function(c){return c.textContent.trim();});
   var rows=[].slice.call(t.tBodies[0].rows);
-  rows.forEach(function(tr){
-    [].forEach.call(tr.cells,function(td,i){
-      var txt=td.textContent.replace(/\s+/g,'');
-      var onlyMosaic=td.querySelector('.mosaic')&&!td.textContent.replace(td.querySelector('.mosaic').textContent,'').trim();
-      if(td.querySelector('a[href*="biz/"]'))td.className+=' sp-name';
-      else if(!txt||onlyMosaic)td.className+=' sp-hide';
-      else{td.className+=' sp-sub';td.setAttribute('data-label',heads[i]||'');}
+  if(window.matchMedia('(max-width:700px)').matches){
+    var heads=[].map.call(t.tHead.rows[0].cells,function(c){return c.textContent.trim();});
+    rows.forEach(function(tr){
+      [].forEach.call(tr.cells,function(td,i){
+        var txt=td.textContent.replace(/\s+/g,'');
+        var onlyMosaic=td.querySelector('.mosaic')&&!td.textContent.replace(td.querySelector('.mosaic').textContent,'').trim();
+        if(td.querySelector('a[href*="biz/"]'))td.className+=' sp-name';
+        else if(!txt||onlyMosaic)td.className+=' sp-hide';
+        else{td.className+=' sp-sub';td.setAttribute('data-label',heads[i]||'');}
+      });
     });
-  });
-  t.classList.add('sp-cards');
-  var N=30;if(rows.length<=N)return;
-  t.classList.add('sp-lim');
+    t.classList.add('sp-cards');
+  }
+  var N=10;if(rows.length<=N)return;
+  var rest=rows.length-N,open=false;
   var btn=document.createElement('button');btn.type='button';btn.className='sp-more';
-  btn.textContent='残り'+(rows.length-N)+'件をすべて表示';
-  (t.parentNode.classList.contains('table-scroll')?t.parentNode:t).insertAdjacentElement('afterend',btn);
-  var open=false;
-  btn.addEventListener('click',function(){open=true;t.classList.remove('sp-lim');btn.remove();});
+  var box=t.parentNode.classList.contains('table-scroll')?t.parentNode:t;
+  box.insertAdjacentElement('afterend',btn);
   var q=document.getElementById('q');
-  if(q)q.addEventListener('input',function(){if(open)return;var on=!q.value.trim();t.classList.toggle('sp-lim',on);btn.style.display=on?'':'none';});
+  function draw(){
+    var searching=q&&q.value.trim();
+    t.classList.toggle('sp-lim',!open&&!searching);
+    btn.style.display=searching?'none':'';
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.textContent=open?'閉じる ▲':'残り'+rest+'件を表示 ▼';
+  }
+  btn.addEventListener('click',function(){
+    open=!open;draw();
+    if(!open){var y=box.getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo(0,y<0?0:y);}
+  });
+  if(q)q.addEventListener('input',draw);
+  function byHash(){
+    var m=/^#n\d+$/.exec(location.hash||'');if(!m)return;
+    var r=document.getElementById(location.hash.slice(1));
+    if(r&&rows.indexOf(r)>=N){open=true;draw();r.scrollIntoView({block:'center'});}
+  }
+  window.addEventListener('hashchange',byHash);
+  draw();byHash();
 })();
 </script>
 </body></html>
