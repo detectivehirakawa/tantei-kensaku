@@ -14,6 +14,7 @@
 - [届出データ（統計）](https://tantei-kensaku.jp/data.html): 都道府県別・市区町村別の届出業者数、人口10万人あたりの数、届出年別の推移
 - [地図から探す](https://tantei-kensaku.jp/map.html): 全国の届出業者を地図で表示
 - [掲載基準・編集方針](https://tantei-kensaku.jp/policy.html)
+- [メディア・報道関係の方へ（届出データの提供・取材）](https://tantei-kensaku.jp/media.html)
 - [運営者情報](https://tantei-kensaku.jp/about.html)
 - [掲載データの根拠資料](https://tantei-kensaku.jp/column/todokede-data-konkyo-shiryo.html): 届出資料の集め方と個人情報の扱い
 

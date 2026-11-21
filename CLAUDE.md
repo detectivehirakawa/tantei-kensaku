@@ -166,3 +166,8 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 ## 運営への通知メールの宛先（2026-11-20、GAS バージョン75・VERSION 2026-11-20d、運営者指示）
 - 掲載申込・編集・リンク確認などの運営あて通知は info@exeresearch.jp に届く（Code.gs の NOTIFY_TO）。業者あてメールの差出人は従来どおりスクリプト所有者のGmail。
+
+## メディア・報道関係の方へ（media.html、2026-11-22 運営者指示）
+- 届出データの提供と取材の案内ページ。本文は運営者PCの detective-portal/make_media.py で作る（policy.html を型にする）。代表者名・メール・電話番号の掲載は運営者が了承済み。
+- ヘッダー（「掲載のお申込み」の次）とフッターのリンクは `tantei-portal-tools/render_media_link.py` が全ページに入れる（何度実行しても同じ）。listed-hero.yml・listed_all.sh・publish-pref-columns.yml で毎回実行。手元でページを作り直したら、push 前にこれを実行すること。
+- 2つの番号の案内（`<!--kno-->`）は、2026-11-22 から掲載証のすぐ下に出す（display_no.json の業者にも、欄の名前なしで出す）。

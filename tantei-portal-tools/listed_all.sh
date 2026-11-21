@@ -8,6 +8,7 @@ python tantei-portal-tools/render_hp_types.py || true
 python tantei-portal-tools/render_neighbors.py || true
 python tantei-portal-tools/render_display_no.py || true
 python tantei-portal-tools/render_kanri_no.py || true
+python tantei-portal-tools/render_media_link.py || true
 python tantei-portal-tools/render_llmo.py || true
 python tantei-portal-tools/render_city_extra.py || true
 FORCE= python tantei-portal-tools/listed_heroes.py || true
