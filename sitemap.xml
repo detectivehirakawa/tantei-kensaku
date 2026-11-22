@@ -73,6 +73,10 @@
   <url><loc>https://tantei-kensaku.jp/column/todokede-nashi-tantei-irai.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
   <url><loc>https://tantei-kensaku.jp/column/wakaresaseya-uwaki-chosa-chigai.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
   <url><loc>https://tantei-kensaku.jp/column/youtuber-uwaki-chosa-yarase.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/column/hokkaido-isharyo-uwaki-shoko.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/column/hokkaido-rikon-chotei-uwaki.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/column/hokkaido-uwaki-chosa-tantei.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/column/</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
   <url><loc>https://tantei-kensaku.jp/oita/column/</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
   <url><loc>https://tantei-kensaku.jp/oita/column/oita-daigakumae-uwaki-chosa.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
   <url><loc>https://tantei-kensaku.jp/oita/column/oita-isharyo-uwaki-shoko.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
@@ -256,34 +260,34 @@
   <url><loc>https://tantei-kensaku.jp/hiroshima/kure.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
   <url><loc>https://tantei-kensaku.jp/hiroshima/mihara.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
   <url><loc>https://tantei-kensaku.jp/hiroshima/miyoshi.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/asahikawa.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/chitose.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/ebetsu.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/eniwa.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/hakodate.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/hokuto.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/ishikari.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/kitahiroshima.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/kitami.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/kushiro.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/muroran.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/nanae.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/obihiro.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/otaru.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/otofuke.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-atsubetsu.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-chuo.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-higashi.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-kita.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-kiyota.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-minami.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-nishi.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-shiroishi.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-teine.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-toyohira.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/tomakomai.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/wakkanai.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
-  <url><loc>https://tantei-kensaku.jp/hokkaido/yoichi.html</loc><lastmod>2026-11-19</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/asahikawa.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/chitose.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/ebetsu.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/eniwa.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/hakodate.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/hokuto.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/ishikari.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/kitahiroshima.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/kitami.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/kushiro.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/muroran.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/nanae.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/obihiro.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/otaru.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/otofuke.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-atsubetsu.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-chuo.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-higashi.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-kita.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-kiyota.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-minami.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-nishi.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-shiroishi.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-teine.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/sapporo-toyohira.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/tomakomai.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/wakkanai.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tantei-kensaku.jp/hokkaido/yoichi.html</loc><lastmod>2026-11-22</lastmod><priority>0.7</priority></url>
   <url><loc>https://tantei-kensaku.jp/hyogo/aioi.html</loc><lastmod>2026-11-20</lastmod><priority>0.7</priority></url>
   <url><loc>https://tantei-kensaku.jp/hyogo/akashi.html</loc><lastmod>2026-11-20</lastmod><priority>0.7</priority></url>
   <url><loc>https://tantei-kensaku.jp/hyogo/amagasaki.html</loc><lastmod>2026-11-20</lastmod><priority>0.7</priority></url>
