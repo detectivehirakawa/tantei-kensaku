@@ -178,3 +178,7 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - `tantei-portal-tools/render_pref_extra.py` が47都道府県ページの一覧のすぐ後に書き足す：要点（件数・全国順位・人口10万人あたり）、多い市区町村の上位10、届出をした時期、管轄の家庭裁判所、よくある質問3問（画面とFAQPage）。
 - 数字は all.json と `tantei-portal-data/pref_population.json`（令和7年国勢調査の都道府県人口）から毎回計算。`<!--pref-extra-->`〜`<!--/pref-extra-->` を作り直す。listed-hero.yml と listed_all.sh で毎回実行（件数が変わっても自動で直る）。
 - 料金の目安は根拠データが無いので入れていない。
+
+## 業者ページの定型文とモザイク（2026-11-25）
+- 検索表示の急落（11/20〜、登録推定2,370→523）への対策。未掲載ページの注意書き3つを短文に、モザイクは中身の文字なし `<span class="mosaic" aria-hidden="true" data-n="8"></span>`（幅は portal.css の data-n）。portal.css は ?v=20261125a。
+- 書き換えは detective-portal/fix/thin_notes_1125.py、生成元は build_site.py、承認GASは v78（VERSION 2026-11-25a）で旧・新どちらの書き方でも承認できる。ダミー文字「非」を本文に戻さないこと。
