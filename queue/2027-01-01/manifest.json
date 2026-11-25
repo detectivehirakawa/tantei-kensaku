@@ -1,14 +1,14 @@
 {
- "slug": "yamanashi",
- "pref": "山梨県",
+ "slug": "miyagi",
+ "pref": "宮城県",
  "main": {
-  "slug": "yamanashi-uwaki-chosa-tantei",
-  "title": "山梨県で浮気調査を探偵に頼むなら"
+  "slug": "miyagi-uwaki-chosa-tantei",
+  "title": "宮城県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "yamanashi/column/yamanashi-uwaki-chosa-tantei.html",
-  "yamanashi/column/yamanashi-rikon-chotei-uwaki.html",
-  "yamanashi/column/yamanashi-isharyo-uwaki-shoko.html",
-  "yamanashi/column/index.html"
+  "miyagi/column/miyagi-uwaki-chosa-tantei.html",
+  "miyagi/column/miyagi-rikon-chotei-uwaki.html",
+  "miyagi/column/miyagi-isharyo-uwaki-shoko.html",
+  "miyagi/column/index.html"
  ]
 }

@@ -1,14 +1,14 @@
 {
- "slug": "nara",
- "pref": "奈良県",
+ "slug": "kumamoto",
+ "pref": "熊本県",
  "main": {
-  "slug": "nara-uwaki-chosa-tantei",
-  "title": "奈良県で浮気調査を探偵に頼むなら"
+  "slug": "kumamoto-uwaki-chosa-tantei",
+  "title": "熊本県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "nara/column/nara-uwaki-chosa-tantei.html",
-  "nara/column/nara-rikon-chotei-uwaki.html",
-  "nara/column/nara-isharyo-uwaki-shoko.html",
-  "nara/column/index.html"
+  "kumamoto/column/kumamoto-uwaki-chosa-tantei.html",
+  "kumamoto/column/kumamoto-rikon-chotei-uwaki.html",
+  "kumamoto/column/kumamoto-isharyo-uwaki-shoko.html",
+  "kumamoto/column/index.html"
  ]
 }

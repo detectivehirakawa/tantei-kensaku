@@ -1,14 +1,14 @@
 {
- "slug": "niigata",
- "pref": "新潟県",
+ "slug": "nagano",
+ "pref": "長野県",
  "main": {
-  "slug": "niigata-uwaki-chosa-tantei",
-  "title": "新潟県で浮気調査を探偵に頼むなら"
+  "slug": "nagano-uwaki-chosa-tantei",
+  "title": "長野県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "niigata/column/niigata-uwaki-chosa-tantei.html",
-  "niigata/column/niigata-rikon-chotei-uwaki.html",
-  "niigata/column/niigata-isharyo-uwaki-shoko.html",
-  "niigata/column/index.html"
+  "nagano/column/nagano-uwaki-chosa-tantei.html",
+  "nagano/column/nagano-rikon-chotei-uwaki.html",
+  "nagano/column/nagano-isharyo-uwaki-shoko.html",
+  "nagano/column/index.html"
  ]
 }

@@ -1,14 +1,14 @@
 {
- "slug": "okinawa",
- "pref": "沖縄県",
+ "slug": "shizuoka",
+ "pref": "静岡県",
  "main": {
-  "slug": "okinawa-uwaki-chosa-tantei",
-  "title": "沖縄県で浮気調査を探偵に頼むなら"
+  "slug": "shizuoka-uwaki-chosa-tantei",
+  "title": "静岡県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "okinawa/column/okinawa-uwaki-chosa-tantei.html",
-  "okinawa/column/okinawa-rikon-chotei-uwaki.html",
-  "okinawa/column/okinawa-isharyo-uwaki-shoko.html",
-  "okinawa/column/index.html"
+  "shizuoka/column/shizuoka-uwaki-chosa-tantei.html",
+  "shizuoka/column/shizuoka-rikon-chotei-uwaki.html",
+  "shizuoka/column/shizuoka-isharyo-uwaki-shoko.html",
+  "shizuoka/column/index.html"
  ]
 }
