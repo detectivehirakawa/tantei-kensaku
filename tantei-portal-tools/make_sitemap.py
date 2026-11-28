@@ -104,6 +104,52 @@ def main():
         with open(STATE, "w", encoding="utf-8", newline="\n") as f:
             f.write(st)
     print(f"sitemap.xml: {len(lines)} URL / 中身が変わった・新しいページ {changed} 件（lastmod={today}）")
+    write_groups(lines)
+
+
+# 種類別のサイトマップ（2026-11-28、運営者承認）。sitemap.xml は GAS・delist.py・週次記録などが読むので全件のまま残し、
+# 同じ行を3つに分けたものを別に出す。Search Console で種類ごとの登録率を見るためと、中身のあるページを先に見てもらうため。
+#   sitemap-main.xml     … トップ・一覧・地図・コラム・市区町村など業者ページ以外
+#   sitemap-biz-rich.xml … 業者ページのうち、掲載済み（all.json の m=0）か、ホームページで確認した紹介文がある（biz_web.json の summary）もの
+#   sitemap-biz.xml      … それ以外の業者ページ
+# 振り分けが変わっても各ページの URL・lastmod は sitemap.xml と同じ。robots.txt にも4つとも書いてある。
+GROUPS = ("sitemap-main.xml", "sitemap-biz-rich.xml", "sitemap-biz.xml")
+
+
+def rich_ids():
+    ids = set()
+    try:
+        ids |= {r["i"] for r in json.load(open(os.path.join(PUB, "all.json"), encoding="utf-8")) if r.get("m") == 0}
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    try:
+        ids |= {k for k, v in json.load(open(os.path.join(PUB, "tantei-portal-data", "biz_web.json"), encoding="utf-8")).items()
+                if isinstance(v, dict) and v.get("summary")}
+    except (OSError, ValueError, AttributeError):
+        pass
+    return ids
+
+
+def write_groups(lines):
+    rich = rich_ids()
+    buckets = {g: [] for g in GROUPS}
+    biz = SITE_URL + "biz/"
+    for ln in lines:
+        url = ln.split("<loc>", 1)[1].split("</loc>", 1)[0]
+        if not url.startswith(biz):
+            buckets["sitemap-main.xml"].append(ln)
+        elif url[len(biz):-5] in rich:
+            buckets["sitemap-biz-rich.xml"].append(ln)
+        else:
+            buckets["sitemap-biz.xml"].append(ln)
+    for g, ls in buckets.items():
+        xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+               + "\n".join(ls) + "\n</urlset>\n")
+        out = os.path.join(PUB, g)
+        if not os.path.exists(out) or read(out) != xml:
+            with open(out, "w", encoding="utf-8", newline="\n") as f:
+                f.write(xml)
+        print(f"{g}: {len(ls)} URL")
 
 
 if __name__ == "__main__":

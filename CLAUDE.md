@@ -191,3 +191,7 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 
 ## 都道府県の件数表記をそろえる（2026-11-27）
 - `tantei-portal-tools/render_counts.py` が、都道府県・市区町村ページなどの「〇〇県 123件」（t-stat）と地方の都道府県リスト（`<small>123</small>`）を all.json の実数にそろえる。業者の追加・削除のあとに古い数字が残り、同じページの中で食い違っていた（794ページ中566ページ）。listed-hero.yml と listed_all.sh で毎回実行する。
+
+## 種類別のサイトマップ（2026-11-28、運営者承認）
+- `make_sitemap.py` が sitemap.xml（全件・今までどおり）に加えて、同じ行を3つに分けた `sitemap-main.xml`（業者ページ以外）・`sitemap-biz-rich.xml`（掲載済み＋biz_web.json に紹介文がある業者）・`sitemap-biz.xml`（それ以外の業者）を書く。robots.txt に4つとも記載し、Search Console（sc-domain:tantei-kensaku.jp）にも送信済み。
+- sitemap.xml は GAS・delist.py・週次記録が読むので、分割後も全件のまま残す。種類ごとの登録率は Search Console の「ページ」でサイトマップを選ぶと見られる。

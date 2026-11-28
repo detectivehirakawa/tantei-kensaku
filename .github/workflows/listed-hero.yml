@@ -96,7 +96,7 @@ jobs:
           # 承認（GAS）が同時に biz/*.html などを更新すると rebase が競合する。そのときは最新の main に戻して
           # 組み直しをやり直す（GAS 側の変更を消さない）。最後まで push できなければ失敗として表示する（2026-11-17）。
           MSG="全国探偵検索: 掲載済み探偵社の掲載ページの構成・ヒーロー画像を更新（自動）"
-          add() { git add img/listed biz *.html */*.html tantei-portal-data/listed_geo.json tantei-portal-data/listed_dates.json sitemap.xml tantei-portal-data/sitemap_lastmod.json; }
+          add() { git add img/listed biz *.html */*.html tantei-portal-data/listed_geo.json tantei-portal-data/listed_dates.json sitemap.xml sitemap-main.xml sitemap-biz-rich.xml sitemap-biz.xml tantei-portal-data/sitemap_lastmod.json; }
           add
           if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
           git commit -q -m "$MSG"

@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://tantei-kensaku.jp/sitemap.xml
+Sitemap: https://tantei-kensaku.jp/sitemap-main.xml
+Sitemap: https://tantei-kensaku.jp/sitemap-biz-rich.xml
+Sitemap: https://tantei-kensaku.jp/sitemap-biz.xml
