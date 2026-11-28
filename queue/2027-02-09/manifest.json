@@ -1,14 +1,15 @@
 {
- "slug": "wakayama",
- "pref": "和歌山県",
+ "slug": "kyoto",
+ "pref": "京都府",
  "main": {
-  "slug": "wakayama-uwaki-chosa-tantei",
-  "title": "和歌山県で浮気調査を探偵に頼むなら"
+  "slug": "kyoto-uwaki-chosa-tantei",
+  "title": "京都府で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "wakayama/column/wakayama-uwaki-chosa-tantei.html",
-  "wakayama/column/wakayama-rikon-chotei-uwaki.html",
-  "wakayama/column/wakayama-isharyo-uwaki-shoko.html",
-  "wakayama/column/index.html"
+  "kyoto/column/kyoto-uwaki-chosa-tantei.html",
+  "kyoto/column/kyoto-rikon-chotei-uwaki.html",
+  "kyoto/column/kyoto-isharyo-uwaki-shoko.html",
+  "kyoto/column/kyoto-uwaki-chosa-tantei.html",
+  "kyoto/column/index.html"
  ]
 }

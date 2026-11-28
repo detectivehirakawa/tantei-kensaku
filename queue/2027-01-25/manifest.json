@@ -1,14 +1,13 @@
 {
- "slug": "kagoshima",
- "pref": "鹿児島県",
+ "slug": "fukushima",
+ "pref": "福島県",
  "main": {
-  "slug": "kagoshima-uwaki-chosa-tantei",
-  "title": "鹿児島県で浮気調査を探偵に頼むなら"
+  "slug": "fukushima-uwaki-chosa-tantei",
+  "title": "福島県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "kagoshima/column/kagoshima-uwaki-chosa-tantei.html",
-  "kagoshima/column/kagoshima-rikon-chotei-uwaki.html",
-  "kagoshima/column/kagoshima-isharyo-uwaki-shoko.html",
-  "kagoshima/column/index.html"
+  "fukushima/column/fukushima-uwaki-chosa-tantei.html",
+  "fukushima/column/fukushima-rikon-chotei-uwaki.html",
+  "fukushima/column/index.html"
  ]
 }

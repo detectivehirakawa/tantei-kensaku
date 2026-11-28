@@ -1,14 +1,12 @@
 {
- "slug": "okayama",
- "pref": "岡山県",
+ "slug": "hiroshima",
+ "pref": "広島県",
  "main": {
-  "slug": "okayama-uwaki-chosa-tantei",
-  "title": "岡山県で浮気調査を探偵に頼むなら"
+  "slug": "hiroshima-uwaki-chosa-tantei",
+  "title": "広島県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "okayama/column/okayama-uwaki-chosa-tantei.html",
-  "okayama/column/okayama-rikon-chotei-uwaki.html",
-  "okayama/column/okayama-isharyo-uwaki-shoko.html",
-  "okayama/column/index.html"
+  "hiroshima/column/hiroshima-uwaki-chosa-tantei.html",
+  "hiroshima/column/index.html"
  ]
 }

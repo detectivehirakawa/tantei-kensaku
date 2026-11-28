@@ -1,14 +1,16 @@
 {
- "slug": "ishikawa",
- "pref": "石川県",
+ "slug": "kyoto",
+ "pref": "京都府",
  "main": {
-  "slug": "ishikawa-uwaki-chosa-tantei",
-  "title": "石川県で浮気調査を探偵に頼むなら"
+  "slug": "kyoto-uwaki-chosa-tantei",
+  "title": "京都府で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "ishikawa/column/ishikawa-uwaki-chosa-tantei.html",
-  "ishikawa/column/ishikawa-rikon-chotei-uwaki.html",
-  "ishikawa/column/ishikawa-isharyo-uwaki-shoko.html",
-  "ishikawa/column/index.html"
+  "kyoto/column/kyoto-uwaki-chosa-tantei.html",
+  "kyoto/column/kyoto-rikon-chotei-uwaki.html",
+  "kyoto/column/kyoto-isharyo-uwaki-shoko.html",
+  "kyoto/column/kyoto-uwaki-chosa-tantei.html",
+  "kyoto/column/kyoto-rikon-chotei-uwaki.html",
+  "kyoto/column/index.html"
  ]
 }

@@ -1,14 +1,14 @@
 {
- "slug": "aomori",
- "pref": "青森県",
+ "slug": "okayama",
+ "pref": "岡山県",
  "main": {
-  "slug": "aomori-uwaki-chosa-tantei",
-  "title": "青森県で浮気調査を探偵に頼むなら"
+  "slug": "okayama-uwaki-chosa-tantei",
+  "title": "岡山県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "aomori/column/aomori-uwaki-chosa-tantei.html",
-  "aomori/column/aomori-rikon-chotei-uwaki.html",
-  "aomori/column/aomori-isharyo-uwaki-shoko.html",
-  "aomori/column/index.html"
+  "okayama/column/okayama-uwaki-chosa-tantei.html",
+  "okayama/column/okayama-rikon-chotei-uwaki.html",
+  "okayama/column/okayama-isharyo-uwaki-shoko.html",
+  "okayama/column/index.html"
  ]
 }

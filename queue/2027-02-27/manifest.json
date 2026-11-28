@@ -1,14 +1,12 @@
 {
- "slug": "toyama",
- "pref": "富山県",
+ "slug": "gifu",
+ "pref": "岐阜県",
  "main": {
-  "slug": "toyama-uwaki-chosa-tantei",
-  "title": "富山県で浮気調査を探偵に頼むなら"
+  "slug": "gifu-uwaki-chosa-tantei",
+  "title": "岐阜県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "toyama/column/toyama-uwaki-chosa-tantei.html",
-  "toyama/column/toyama-rikon-chotei-uwaki.html",
-  "toyama/column/toyama-isharyo-uwaki-shoko.html",
-  "toyama/column/index.html"
+  "gifu/column/gifu-uwaki-chosa-tantei.html",
+  "gifu/column/index.html"
  ]
 }

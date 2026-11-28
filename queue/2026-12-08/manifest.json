@@ -1,14 +1,12 @@
 {
- "slug": "hiroshima",
- "pref": "広島県",
+ "slug": "ibaraki",
+ "pref": "茨城県",
  "main": {
-  "slug": "hiroshima-uwaki-chosa-tantei",
-  "title": "広島県で浮気調査を探偵に頼むなら"
+  "slug": "ibaraki-uwaki-chosa-tantei",
+  "title": "茨城県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "hiroshima/column/hiroshima-uwaki-chosa-tantei.html",
-  "hiroshima/column/hiroshima-rikon-chotei-uwaki.html",
-  "hiroshima/column/hiroshima-isharyo-uwaki-shoko.html",
-  "hiroshima/column/index.html"
+  "ibaraki/column/ibaraki-uwaki-chosa-tantei.html",
+  "ibaraki/column/index.html"
  ]
 }

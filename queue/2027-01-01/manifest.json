@@ -1,14 +1,14 @@
 {
- "slug": "miyagi",
- "pref": "宮城県",
+ "slug": "hiroshima",
+ "pref": "広島県",
  "main": {
-  "slug": "miyagi-uwaki-chosa-tantei",
-  "title": "宮城県で浮気調査を探偵に頼むなら"
+  "slug": "hiroshima-uwaki-chosa-tantei",
+  "title": "広島県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "miyagi/column/miyagi-uwaki-chosa-tantei.html",
-  "miyagi/column/miyagi-rikon-chotei-uwaki.html",
-  "miyagi/column/miyagi-isharyo-uwaki-shoko.html",
-  "miyagi/column/index.html"
+  "hiroshima/column/hiroshima-uwaki-chosa-tantei.html",
+  "hiroshima/column/hiroshima-rikon-chotei-uwaki.html",
+  "hiroshima/column/hiroshima-isharyo-uwaki-shoko.html",
+  "hiroshima/column/index.html"
  ]
 }

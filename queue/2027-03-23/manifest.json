@@ -1,14 +1,14 @@
 {
- "slug": "yamagata",
- "pref": "山形県",
+ "slug": "tochigi",
+ "pref": "栃木県",
  "main": {
-  "slug": "yamagata-uwaki-chosa-tantei",
-  "title": "山形県で浮気調査を探偵に頼むなら"
+  "slug": "tochigi-uwaki-chosa-tantei",
+  "title": "栃木県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "yamagata/column/yamagata-uwaki-chosa-tantei.html",
-  "yamagata/column/yamagata-rikon-chotei-uwaki.html",
-  "yamagata/column/yamagata-isharyo-uwaki-shoko.html",
-  "yamagata/column/index.html"
+  "tochigi/column/tochigi-uwaki-chosa-tantei.html",
+  "tochigi/column/tochigi-rikon-chotei-uwaki.html",
+  "tochigi/column/tochigi-isharyo-uwaki-shoko.html",
+  "tochigi/column/index.html"
  ]
 }

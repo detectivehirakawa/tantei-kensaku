@@ -1,14 +1,13 @@
 {
- "slug": "kagawa",
- "pref": "香川県",
+ "slug": "kumamoto",
+ "pref": "熊本県",
  "main": {
-  "slug": "kagawa-uwaki-chosa-tantei",
-  "title": "香川県で浮気調査を探偵に頼むなら"
+  "slug": "kumamoto-uwaki-chosa-tantei",
+  "title": "熊本県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "kagawa/column/kagawa-uwaki-chosa-tantei.html",
-  "kagawa/column/kagawa-rikon-chotei-uwaki.html",
-  "kagawa/column/kagawa-isharyo-uwaki-shoko.html",
-  "kagawa/column/index.html"
+  "kumamoto/column/kumamoto-uwaki-chosa-tantei.html",
+  "kumamoto/column/kumamoto-rikon-chotei-uwaki.html",
+  "kumamoto/column/index.html"
  ]
 }

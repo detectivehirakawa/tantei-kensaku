@@ -1,14 +1,12 @@
 {
- "slug": "iwate",
- "pref": "岩手県",
+ "slug": "shizuoka",
+ "pref": "静岡県",
  "main": {
-  "slug": "iwate-uwaki-chosa-tantei",
-  "title": "岩手県で浮気調査を探偵に頼むなら"
+  "slug": "shizuoka-uwaki-chosa-tantei",
+  "title": "静岡県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "iwate/column/iwate-uwaki-chosa-tantei.html",
-  "iwate/column/iwate-rikon-chotei-uwaki.html",
-  "iwate/column/iwate-isharyo-uwaki-shoko.html",
-  "iwate/column/index.html"
+  "shizuoka/column/shizuoka-uwaki-chosa-tantei.html",
+  "shizuoka/column/index.html"
  ]
 }

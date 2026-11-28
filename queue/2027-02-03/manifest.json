@@ -1,14 +1,13 @@
 {
- "slug": "shiga",
- "pref": "滋賀県",
+ "slug": "shizuoka",
+ "pref": "静岡県",
  "main": {
-  "slug": "shiga-uwaki-chosa-tantei",
-  "title": "滋賀県で浮気調査を探偵に頼むなら"
+  "slug": "shizuoka-uwaki-chosa-tantei",
+  "title": "静岡県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "shiga/column/shiga-uwaki-chosa-tantei.html",
-  "shiga/column/shiga-rikon-chotei-uwaki.html",
-  "shiga/column/shiga-isharyo-uwaki-shoko.html",
-  "shiga/column/index.html"
+  "shizuoka/column/shizuoka-uwaki-chosa-tantei.html",
+  "shizuoka/column/shizuoka-rikon-chotei-uwaki.html",
+  "shizuoka/column/index.html"
  ]
 }

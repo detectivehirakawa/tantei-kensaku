@@ -1,14 +1,12 @@
 {
- "slug": "tochigi",
- "pref": "栃木県",
+ "slug": "nagano",
+ "pref": "長野県",
  "main": {
-  "slug": "tochigi-uwaki-chosa-tantei",
-  "title": "栃木県で浮気調査を探偵に頼むなら"
+  "slug": "nagano-uwaki-chosa-tantei",
+  "title": "長野県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "tochigi/column/tochigi-uwaki-chosa-tantei.html",
-  "tochigi/column/tochigi-rikon-chotei-uwaki.html",
-  "tochigi/column/tochigi-isharyo-uwaki-shoko.html",
-  "tochigi/column/index.html"
+  "nagano/column/nagano-uwaki-chosa-tantei.html",
+  "nagano/column/index.html"
  ]
 }

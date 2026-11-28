@@ -1,14 +1,13 @@
 {
- "slug": "saga",
- "pref": "佐賀県",
+ "slug": "tochigi",
+ "pref": "栃木県",
  "main": {
-  "slug": "saga-uwaki-chosa-tantei",
-  "title": "佐賀県で浮気調査を探偵に頼むなら"
+  "slug": "tochigi-uwaki-chosa-tantei",
+  "title": "栃木県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "saga/column/saga-uwaki-chosa-tantei.html",
-  "saga/column/saga-rikon-chotei-uwaki.html",
-  "saga/column/saga-isharyo-uwaki-shoko.html",
-  "saga/column/index.html"
+  "tochigi/column/tochigi-uwaki-chosa-tantei.html",
+  "tochigi/column/tochigi-rikon-chotei-uwaki.html",
+  "tochigi/column/index.html"
  ]
 }

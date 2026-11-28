@@ -1,14 +1,14 @@
 {
- "slug": "kumamoto",
- "pref": "熊本県",
+ "slug": "ibaraki",
+ "pref": "茨城県",
  "main": {
-  "slug": "kumamoto-uwaki-chosa-tantei",
-  "title": "熊本県で浮気調査を探偵に頼むなら"
+  "slug": "ibaraki-uwaki-chosa-tantei",
+  "title": "茨城県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "kumamoto/column/kumamoto-uwaki-chosa-tantei.html",
-  "kumamoto/column/kumamoto-rikon-chotei-uwaki.html",
-  "kumamoto/column/kumamoto-isharyo-uwaki-shoko.html",
-  "kumamoto/column/index.html"
+  "ibaraki/column/ibaraki-uwaki-chosa-tantei.html",
+  "ibaraki/column/ibaraki-rikon-chotei-uwaki.html",
+  "ibaraki/column/ibaraki-isharyo-uwaki-shoko.html",
+  "ibaraki/column/index.html"
  ]
 }

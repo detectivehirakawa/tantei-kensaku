@@ -1,14 +1,14 @@
 {
- "slug": "kyoto",
- "pref": "京都府",
+ "slug": "chiba",
+ "pref": "千葉県",
  "main": {
-  "slug": "kyoto-uwaki-chosa-tantei",
-  "title": "京都府で浮気調査を探偵に頼むなら"
+  "slug": "chiba-uwaki-chosa-tantei",
+  "title": "千葉県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "kyoto/column/kyoto-uwaki-chosa-tantei.html",
-  "kyoto/column/kyoto-rikon-chotei-uwaki.html",
-  "kyoto/column/kyoto-isharyo-uwaki-shoko.html",
-  "kyoto/column/index.html"
+  "chiba/column/chiba-uwaki-chosa-tantei.html",
+  "chiba/column/chiba-rikon-chotei-uwaki.html",
+  "chiba/column/chiba-isharyo-uwaki-shoko.html",
+  "chiba/column/index.html"
  ]
 }

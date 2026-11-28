@@ -1,14 +1,12 @@
 {
- "slug": "fukushima",
- "pref": "福島県",
+ "slug": "kyoto",
+ "pref": "京都府",
  "main": {
-  "slug": "fukushima-uwaki-chosa-tantei",
-  "title": "福島県で浮気調査を探偵に頼むなら"
+  "slug": "kyoto-uwaki-chosa-tantei",
+  "title": "京都府で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "fukushima/column/fukushima-uwaki-chosa-tantei.html",
-  "fukushima/column/fukushima-rikon-chotei-uwaki.html",
-  "fukushima/column/fukushima-isharyo-uwaki-shoko.html",
-  "fukushima/column/index.html"
+  "kyoto/column/kyoto-uwaki-chosa-tantei.html",
+  "kyoto/column/index.html"
  ]
 }

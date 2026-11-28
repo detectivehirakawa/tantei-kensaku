@@ -1,14 +1,14 @@
 {
- "slug": "miyazaki",
- "pref": "宮崎県",
+ "slug": "fukushima",
+ "pref": "福島県",
  "main": {
-  "slug": "miyazaki-uwaki-chosa-tantei",
-  "title": "宮崎県で浮気調査を探偵に頼むなら"
+  "slug": "fukushima-uwaki-chosa-tantei",
+  "title": "福島県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "miyazaki/column/miyazaki-uwaki-chosa-tantei.html",
-  "miyazaki/column/miyazaki-rikon-chotei-uwaki.html",
-  "miyazaki/column/miyazaki-isharyo-uwaki-shoko.html",
-  "miyazaki/column/index.html"
+  "fukushima/column/fukushima-uwaki-chosa-tantei.html",
+  "fukushima/column/fukushima-rikon-chotei-uwaki.html",
+  "fukushima/column/fukushima-isharyo-uwaki-shoko.html",
+  "fukushima/column/index.html"
  ]
 }

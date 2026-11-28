@@ -1,14 +1,13 @@
 {
- "slug": "nagano",
- "pref": "長野県",
+ "slug": "ibaraki",
+ "pref": "茨城県",
  "main": {
-  "slug": "nagano-uwaki-chosa-tantei",
-  "title": "長野県で浮気調査を探偵に頼むなら"
+  "slug": "ibaraki-uwaki-chosa-tantei",
+  "title": "茨城県で浮気調査を探偵に頼むなら"
  },
  "files": [
-  "nagano/column/nagano-uwaki-chosa-tantei.html",
-  "nagano/column/nagano-rikon-chotei-uwaki.html",
-  "nagano/column/nagano-isharyo-uwaki-shoko.html",
-  "nagano/column/index.html"
+  "ibaraki/column/ibaraki-uwaki-chosa-tantei.html",
+  "ibaraki/column/ibaraki-rikon-chotei-uwaki.html",
+  "ibaraki/column/index.html"
  ]
 }
