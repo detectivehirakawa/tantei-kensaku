@@ -142,6 +142,11 @@ Apps Script「探偵ポータル問い合わせ受付」の Code.gs は、2026-1
 - 予約分は **column-queue ブランチ** の `queue/<日付>/`（manifest.json・files/・box.html）。`publish-pref-columns.yml` が毎朝7時（JST）に `tantei-portal-tools/publish_pref_columns.py` で公開し、`tantei-portal-data/pref_columns_published.json` に記録（公開済みの日付は再適用しない）。
 - 記事の原稿・生成は運営者PCの detective-portal（columns/<slug>.html、columns/pref_pack/：SPEC.md・packs.json・schedule.json・meta/・build_queue.py）。
 
+## 県コラムは3日に1本・2週間ごとの効果測定（2026-11-28 運営者指示）
+- 予約は1本ずつ3日おき（2026-11-29〜2027-11-12、117本）。作り直しは detective-portal/columns/pref_pack/build_queue1.py（schedule1.json）。旧 build_queue.py（1日1県）は使わない。
+- 1本ずつ出すため、build_columns.py の relink が「まだ公開日が来ていない記事」へのリンクを外して文字だけにする。後の日付のフォルダには同じ県の公開済み記事をリンクを付け直した版で入れ直している。
+- 効果測定はサイト全体を2週間に1回（Windowsタスク「探偵検索_効果測定_2週ごと」、2026-12-12から9:30）: detective-portal/fix/col_measure/site_measure.py（＋県コラムは col_measure.py）。結果はデスクトップ「探偵検索_効果測定_YYYYMMDD.txt」。リライトは候補から数ページずつ。
+
 ## 更新・訂正履歴（changelog.html）の書き方（2026-11-20 運営者指示・徹底）
 - 1項目1文で短く。件数・番号・地名の例などの細かい情報は書かない
 - **コラム関連（追加・公開・一覧の変更など）は一切書かない**
