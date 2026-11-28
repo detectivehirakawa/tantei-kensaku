@@ -308,6 +308,9 @@
   document.getElementById('pageTitle').textContent = isRemove ? '掲載情報の削除に関するお問い合わせ' : '掲載ページ充実に関するお問い合わせ（無料）';
   document.getElementById('upgradeBlock').style.display = isRemove ? 'none' : '';
   document.getElementById('removeBlock').style.display = isRemove ? '' : 'none';
+  /* 削除モードでは同意欄が非表示なので必須を外す（外さないとブラウザが送信を止めて何も起きない。2026-11-28） */
+  if (isRemove) { var agR = document.getElementById('agree'); if (agR) agR.required = false;
+    var pvB = document.getElementById('previewBtn'); if (pvB) pvB.style.display = 'none'; }
   if (id) document.getElementById('selfId').value = id;
 
   document.getElementById('introCard').innerHTML = isRemove
